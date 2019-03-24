@@ -1,0 +1,214 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LevelManager : MonoBehaviour {
+
+    [Header("Level prefabs")]
+    public LevelData LevelData;
+    
+    private Transform _myTransform;
+    private Field[,] _levelFieldMatrix = null;
+
+    public float CircleForAnimalsMin = 0.1f;
+    public float CircleForHomeMin = 0.35f;
+    public float CircleForHomeMax = 0.65f;
+    public float CircleForAnimalsMax = 0.9f;
+    [SerializeField]
+    private List<Vector2Int> _circleHomeList = new List<Vector2Int> { };
+    [SerializeField]
+    private List<Vector2Int> _circleAnimalsList = new List<Vector2Int> { };
+    [SerializeField]
+    private List<Vector2Int> _circleForestBoundaryList = new List<Vector2Int> { };
+
+    private void Awake()
+    {
+        _myTransform = transform;        
+        
+        if (LevelData.Xmax < LevelData.Xmin)
+            LevelData.Xmax = LevelData.Xmin;
+        if (LevelData.Ymax < LevelData.Ymin)
+            LevelData.Ymax = LevelData.Ymin;
+    }
+
+    private void Start()
+    {
+        CreateLevelFields();
+    }
+
+    private void CreateLevelFields()
+    {
+        _levelFieldMatrix = new Field[LevelData.Xmax +2, LevelData.Ymax +2];
+
+        /*
+        for (int i = LevelData.Xmax; i <= 19; i++)
+        {
+            int a = 1;
+            int A = i;
+            int b = (int)Mathf.Floor(i * 0.1f) + 1;
+            int B = (int)Mathf.Round(i * 0.9f);
+            int c = (int)Mathf.Floor(i * 0.35f) + 1;
+            int C = (int)Mathf.Round(i * 0.65f);
+            
+            Debug.Log(i);
+            Debug.Log(a + " " + A);
+            Debug.Log(b + " " + B);
+            Debug.Log(c + " " + C);
+            Debug.Log("************************");
+        }*/
+
+        //CircleForHome
+        int CircleForHomeXmin = (int)Mathf.Floor(LevelData.Xmax * CircleForHomeMin) + 1;
+        int CircleForHomeXmax = (int)Mathf.Round(LevelData.Xmax * CircleForHomeMax);
+        int CircleForHomeYmin = (int)Mathf.Floor(LevelData.Ymax * CircleForHomeMin) + 1;
+        int CircleForHomeYmax = (int)Mathf.Round(LevelData.Ymax * CircleForHomeMax);
+
+        //CircleNotForAnimals
+        int CircleForAnimalsXmin = (int)Mathf.Floor(LevelData.Xmax * CircleForAnimalsMin) + 1;
+        int CircleForAnimalsXmax = (int)Mathf.Round(LevelData.Xmax * CircleForAnimalsMax);
+        int CircleForAnimalsYmin = (int)Mathf.Floor(LevelData.Ymax * CircleForAnimalsMin) + 1;
+        int CircleForAnimalsYmax = (int)Mathf.Round(LevelData.Ymax * CircleForAnimalsMax);
+
+        //CircleForBuldozers
+        int CircleForBuldozersXmin = 0;
+        int CircleForBuldozersXmax = LevelData.Xmax + 1;
+        int CircleForBuldozersYmin = 0;
+        int CircleForBuldozersYmax = LevelData.Ymax + 1;
+
+        //Set Homes' and Animals' Domains
+        for (int x = 1; x <= LevelData.Xmax; x++)
+        {
+            for (int y = 1; y <= LevelData.Ymax; y++)
+            {
+                //Domain for Homes
+                if ((x >= CircleForHomeXmin) &&
+                    (x <= CircleForHomeXmax) &&
+                    (y >= CircleForHomeYmin) &&
+                    (y <= CircleForHomeYmax))
+                {
+                    _circleHomeList.Add(new Vector2Int(x, y));
+                }
+
+                //Domain for Animals
+                if ((x > CircleForAnimalsXmin) &&
+                    (x <= CircleForAnimalsXmax) &&
+                    (y > CircleForAnimalsYmin) &&
+                    (y <= CircleForAnimalsYmax))
+                {
+                    _circleAnimalsList.Add(new Vector2Int(x, y));
+                }
+            }
+        }
+
+        //Remove Homes from Animal fields
+        //for (int i = 0; i < _circleHomeList.Count; i++)
+        //{
+        //    _circleAnimalsList.Remove(_circleHomeList[i]);
+        //}
+
+        //Build Forest
+        GameObject ForestParent = new GameObject("ForestParent");
+        ForestParent.transform.parent = transform;
+
+        for (int x = 1; x <= LevelData.Xmax; x++)
+        {
+            for (int y = 1; y <= LevelData.Ymax; y++)
+            {
+                FieldForest ForestClone = Instantiate(LevelData.FieldForestPrefab, new Vector3(x, y, 0.0f), Quaternion.identity, ForestParent.transform);
+
+                int TreesListIndex = Random.Range(0, LevelData.LevelTreesList.Count);
+                ForestClone.TreesOnMyField = Instantiate(LevelData.LevelTreesList[TreesListIndex], ForestClone.TreesPosition.position, Quaternion.identity, ForestClone.TreesPosition);
+
+                _levelFieldMatrix[x, y] = ForestClone;
+            }
+        }
+
+        //Set Homes
+        GameObject HomeParent = new GameObject("HomeParent");
+        HomeParent.transform.parent = transform;
+
+        if (LevelData.LevelHomeList.Count != 0)
+        {
+            for (int i = 0; i < LevelData.LevelHomeList.Count; i++)
+            {
+                if (_circleHomeList.Count == 0)
+                    return;
+
+                int ranIndex = Random.Range(0, _circleHomeList.Count);
+
+                Vector2Int ranHomePosition = _circleHomeList[ranIndex];
+
+                Destroy(_levelFieldMatrix[ranHomePosition.x, ranHomePosition.y].gameObject);
+                _levelFieldMatrix[ranHomePosition.x, ranHomePosition.y] = null;
+
+                FieldHome HomeClone = Instantiate(LevelData.LevelHomeList[i], new Vector3(ranHomePosition.x, ranHomePosition.y, 0.0f), Quaternion.identity, HomeParent.transform);
+
+                HomeClone.MyFieldPosition = new Vector2Int(ranHomePosition.x, ranHomePosition.y);
+
+                _levelFieldMatrix[ranHomePosition.x, ranHomePosition.y] = HomeClone;
+
+                //Vector2Int positionToRemove = _circleHomeList[i];
+
+                //_circleAnimalsList.Remove(positionToRemove);
+
+                _circleAnimalsList.Remove(ranHomePosition);
+
+                _circleHomeList.RemoveAt(ranIndex);
+            }
+        }
+
+        _circleHomeList.Clear();
+        
+        //SetAnimals
+        if (LevelData.LevelAnimalsList.Count != 0)
+        {
+            for (int i = 0; i < LevelData.LevelAnimalsList.Count; i++)
+            {
+                if (_circleAnimalsList.Count == 0)
+                    return;
+
+                int ranIndex = Random.Range(0, _circleAnimalsList.Count);
+
+                Vector2Int ranAnimalPosition = _circleAnimalsList[ranIndex];
+
+                FieldForest thisForestField = _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>();
+
+                Animal animalInTheHole = Instantiate(LevelData.LevelAnimalsList[i], thisForestField.AnimalPosition.position, Quaternion.identity, thisForestField.AnimalPosition);
+
+                _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalInMyHole = animalInTheHole;
+
+                //_levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalInMyHole = Instantiate(LevelData.LevelAnimalsList[i], _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalPosition.position, Quaternion.identity, _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalPosition);
+
+                _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().IsAnimalHere = true;
+                
+                _circleAnimalsList.RemoveAt(ranIndex);
+            }
+        }
+
+        _circleAnimalsList.Clear();
+
+        //Set Boundaries
+        GameObject BoundaryParent = new GameObject("BoundaryParent");
+        BoundaryParent.transform.parent = transform;
+
+        for (int x = 0; x <= LevelData.Xmax + 1; x++)
+        {
+            for (int y = 0; y <= LevelData.Ymax + 1; y++)
+            {
+                //FieldForest ForestClone = Instantiate(LevelData.FieldForestPrefab, new Vector3(x, y, 0.0f), Quaternion.identity, ForestParent.transform);
+                //
+                //int TreesListIndex = Random.Range(0, LevelData.LevelTreesList.Count);
+                //ForestClone.TreesOnMyField = Instantiate(LevelData.LevelTreesList[TreesListIndex], ForestClone.TreesPosition.position, Quaternion.identity, ForestClone.TreesPosition);
+                //
+                //_levelFieldMatrix[x, y] = ForestClone;
+
+            if(_levelFieldMatrix[x,y] == null)
+                {
+                    Vector2Int boundaryPosition = new Vector2Int(x, y);
+                    _circleForestBoundaryList.Add(boundaryPosition);
+                }
+
+            }
+        }
+    }     
+}
