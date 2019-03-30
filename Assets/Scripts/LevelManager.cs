@@ -69,12 +69,6 @@ public class LevelManager : MonoBehaviour {
         int CircleForAnimalsYmin = (int)Mathf.Floor(LevelData.Ymax * CircleForAnimalsMin) + 1;
         int CircleForAnimalsYmax = (int)Mathf.Round(LevelData.Ymax * CircleForAnimalsMax);
 
-        //CircleForBuldozers
-        int CircleForBuldozersXmin = 0;
-        int CircleForBuldozersXmax = LevelData.Xmax + 1;
-        int CircleForBuldozersYmin = 0;
-        int CircleForBuldozersYmax = LevelData.Ymax + 1;
-
         //Set Homes' and Animals' Domains
         for (int x = 1; x <= LevelData.Xmax; x++)
         {

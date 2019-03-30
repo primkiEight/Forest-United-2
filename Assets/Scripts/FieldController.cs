@@ -6,6 +6,7 @@ public class FieldController : MonoBehaviour {
 
     [SerializeField]
     private FieldForest SelectedField = null;
+    private GameObject AnimalLimbo;
 
     public FieldForest GetSelectedField
     {
@@ -13,6 +14,17 @@ public class FieldController : MonoBehaviour {
         {
             return SelectedField;
         }
+    }
+
+    public void Awake()
+    {
+        AnimalLimbo = new GameObject("Animal Limbo");
+        AnimalLimbo.SetActive(false);
+    }
+
+    public Transform GetAnimalLimboTransform()
+    {
+        return AnimalLimbo.transform;
     }
 
     //Called by mouseclick from the Field

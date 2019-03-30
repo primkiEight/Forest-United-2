@@ -34,6 +34,17 @@ public abstract class Animal : MonoBehaviour {
             GetComponent<SpriteRenderer>().sprite = MySprite;
     }
 
+    public virtual void Submerge()
+    {
+        //Animiraj zaranjanje
+        Destroy(gameObject, 0.5f);
+    }
+
+    public virtual void Emerge()
+    {
+        //Animiraj izranjanje
+    }
+
     public virtual void Move(float diggingSpeed)
     {
         StartCoroutine("Digging", diggingSpeed);

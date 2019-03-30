@@ -11,19 +11,17 @@ public class LevelData : ScriptableObject {
     */
 
     [HideInInspector]
-    public int Xmin = 3;
+    public int Xmin = 6;
     public int Xmax;
     [HideInInspector]
-    public int Ymin = 3;
+    public int Ymin = 6;
     public int Ymax;
 
     //[Range(1,2)]
     public Vector2 BuldozerMoveSpeed;
     //[Range(1, 2)]
     public Vector2 AnimalMoveSpeed;
-    public FieldForest FieldForestPrefab;
-    //TEST
-    public FieldHome FieldHomePrefab;
+    public FieldForest FieldForestPrefab;    
 
     public List<FieldHome> LevelHomeList= new List<FieldHome> {};
     public List<Animal> LevelAnimalsList = new List<Animal> { };

@@ -19,22 +19,16 @@ MonoBehaviour:
   AnimalMoveSpeed: {x: 0, y: 0}
   FieldForestPrefab: {fileID: 114441192943305382, guid: 3db9fa7f608423c4fa5440ca11447252,
     type: 2}
-  FieldHomePrefab: {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544,
-    type: 2}
   LevelHomeList:
   - {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
   - {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
   LevelAnimalsList:
   - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
+  - {fileID: 114174679075697334, guid: b128ad54b6f53f948997d91ffa3c3ecc, type: 2}
+  - {fileID: 114108543324723584, guid: 59dbdce98ddf83344b0d3c44cc163f2f, type: 2}
   - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
+  - {fileID: 114174679075697334, guid: b128ad54b6f53f948997d91ffa3c3ecc, type: 2}
+  - {fileID: 114108543324723584, guid: 59dbdce98ddf83344b0d3c44cc163f2f, type: 2}
   LevelBuldozersList: []
   LevelTreesList:
   - {fileID: 114418798087987424, guid: ec36046204fc0e64d846b8e1605043bd, type: 2}
