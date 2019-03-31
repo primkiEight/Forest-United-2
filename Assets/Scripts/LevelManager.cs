@@ -16,24 +16,72 @@ public class LevelManager : MonoBehaviour {
     public float CircleForAnimalsMax = 0.9f;
     [SerializeField]
     private List<Vector2Int> _circleHomeList = new List<Vector2Int> { };
+    public List<Vector2Int> LevelHomePositionsList = new List<Vector2Int> { };
     [SerializeField]
     private List<Vector2Int> _circleAnimalsList = new List<Vector2Int> { };
     [SerializeField]
-    private List<Vector2Int> _circleForestBoundaryList = new List<Vector2Int> { };
+    //private List<Vector2Int> _circleForestBoundaryList = new List<Vector2Int> { };
+    //public List<Vector2Int> GetBoundaryList
+    //{
+    //    get
+    //    {
+    //        return _circleForestBoundaryList;
+    //    }
+    //}
+    //
+    private List<FieldForest> _circleBoundaryForestList = new List<FieldForest> { };
+    public List<FieldForest> GetBoundaryForestList
+    {
+        get
+        {
+            return _circleBoundaryForestList;
+        }
+    }
+
+    private BuldozerSpawner _buldozerSpawner;
+
+    //Singleton
+    private static LevelManager _instance;
+    public static LevelManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = (LevelManager)FindObjectOfType(typeof(LevelManager));
+
+                if (_instance == null)
+                    Debug.Log("An instance of InputManager doesn't exist!");
+                //Sad ćemo napisati poruku da ne postoji
+                //i da ga netko treba postaviti na scenu.
+                //To nije konačno rješenje; konačno rješenje bi bilo
+                //napraviti GameObject, dodati mu ovu skriptu, postaviti vrijednosti varijabli i vratimo taj objekt.
+            }
+            return _instance;
+        }
+    }
 
     private void Awake()
     {
+        //Singleton
+        if (Instance != this)
+            Destroy(gameObject);
+
         _myTransform = transform;        
         
         if (LevelData.Xmax < LevelData.Xmin)
             LevelData.Xmax = LevelData.Xmin;
         if (LevelData.Ymax < LevelData.Ymin)
             LevelData.Ymax = LevelData.Ymin;
+
+        _buldozerSpawner = GetComponent<BuldozerSpawner>();
+
+        CreateLevelFields();
     }
 
     private void Start()
     {
-        CreateLevelFields();
+        //CreateLevelFields();        
     }
 
     private void CreateLevelFields()
@@ -139,6 +187,9 @@ public class LevelManager : MonoBehaviour {
 
                 HomeClone.MyFieldPosition = new Vector2Int(ranHomePosition.x, ranHomePosition.y);
 
+                //Adding the home positions to the list, for the buldozers
+                LevelHomePositionsList.Add(HomeClone.MyFieldPosition);
+
                 _levelFieldMatrix[ranHomePosition.x, ranHomePosition.y] = HomeClone;
 
                 //Vector2Int positionToRemove = _circleHomeList[i];
@@ -189,20 +240,23 @@ public class LevelManager : MonoBehaviour {
         {
             for (int y = 0; y <= LevelData.Ymax + 1; y++)
             {
-                //FieldForest ForestClone = Instantiate(LevelData.FieldForestPrefab, new Vector3(x, y, 0.0f), Quaternion.identity, ForestParent.transform);
-                //
-                //int TreesListIndex = Random.Range(0, LevelData.LevelTreesList.Count);
-                //ForestClone.TreesOnMyField = Instantiate(LevelData.LevelTreesList[TreesListIndex], ForestClone.TreesPosition.position, Quaternion.identity, ForestClone.TreesPosition);
-                //
-                //_levelFieldMatrix[x, y] = ForestClone;
-
-            if(_levelFieldMatrix[x,y] == null)
+                if (_levelFieldMatrix[x,y] == null)
                 {
-                    Vector2Int boundaryPosition = new Vector2Int(x, y);
-                    _circleForestBoundaryList.Add(boundaryPosition);
-                }
+                    FieldForest ForestClone = Instantiate(LevelData.FieldForestPrefab, new Vector3(x, y, 0.0f), Quaternion.identity, BoundaryParent.transform);
 
+                    //DODATI DIO KOJI ONEMOGUĆUJE DA KAMERA IDE PREKO OVIH POLJA
+
+                    _levelFieldMatrix[x, y] = ForestClone;
+
+                    Vector2Int boundaryPosition = new Vector2Int(x, y);
+                    ForestClone.MyFieldPosition = boundaryPosition;
+                    ForestClone.GetComponent<BoxCollider2D>().enabled = false;
+                    Destroy(ForestClone.HolePosition.gameObject);
+                    _circleBoundaryForestList.Add(ForestClone);
+                }
             }
         }
-    }     
+
+        _buldozerSpawner.StartSpawning();
+    }
 }

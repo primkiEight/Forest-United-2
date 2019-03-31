@@ -19,6 +19,9 @@ public class LevelData : ScriptableObject {
 
     //[Range(1,2)]
     public Vector2 BuldozerMoveSpeed;
+    public Vector2 BuldozerSpawnerMinNMax;
+    public float TimeForTheFirstBuldozerSpawn;
+    public int NoOfBuldozersToSpawn;
     //[Range(1, 2)]
     public Vector2 AnimalMoveSpeed;
     public FieldForest FieldForestPrefab;    
