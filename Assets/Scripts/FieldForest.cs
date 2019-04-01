@@ -7,15 +7,14 @@ public class FieldForest : Field {
     //[HideInInspector]
     public Animal AnimalInMyHole;
     private Animal _tempAnimalClone;
-    //[HideInInspector]
-    public Buldozer BuldozerOnMyField;
+    
     //[HideInInspector]
     public Trees TreesOnMyField;
 
     public Transform HolePosition;
     public Transform AnimalPosition;
     public Transform TreesPosition;
-    public Transform BuldozerPosition;
+    //public Transform BuldozerPosition;
 
     //[SerializeField]
     public bool IsAnimalHere = false;

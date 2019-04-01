@@ -8,7 +8,14 @@ public class LevelManager : MonoBehaviour {
     public LevelData LevelData;
     
     private Transform _myTransform;
-    private Field[,] _levelFieldMatrix = null;
+    public Field[,] _levelFieldMatrix;
+    //public Field[,] GetFieldMatrix
+    //{
+    //    get
+    //    {
+    //        return _levelFieldMatrix;
+    //    }
+    //}
 
     public float CircleForAnimalsMin = 0.1f;
     public float CircleForHomeMin = 0.35f;
@@ -39,6 +46,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     private BuldozerSpawner _buldozerSpawner;
+    private GameObject _movingBuldozerParent;
 
     //Singleton
     private static LevelManager _instance;
@@ -74,14 +82,20 @@ public class LevelManager : MonoBehaviour {
         if (LevelData.Ymax < LevelData.Ymin)
             LevelData.Ymax = LevelData.Ymin;
 
+        _movingBuldozerParent = new GameObject("MovingBuldozersParent");
         _buldozerSpawner = GetComponent<BuldozerSpawner>();
 
         CreateLevelFields();
     }
 
+    public Transform GetBuldozersParent()
+    {
+        return _movingBuldozerParent.transform;
+    }
+    
     private void Start()
     {
-        //CreateLevelFields();        
+        //CreateLevelFields();
     }
 
     private void CreateLevelFields()

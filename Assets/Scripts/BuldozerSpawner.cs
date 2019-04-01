@@ -10,12 +10,14 @@ public class BuldozerSpawner : MonoBehaviour {
 
     private void Awake()
     {
-        _theLevelManager = LevelManager.Instance;
-        _freq = _theLevelManager.LevelData.TimeForTheFirstBuldozerSpawn;
+        
     }
 
     public void StartSpawning()
     {
+        _theLevelManager = LevelManager.Instance;
+        _freq = _theLevelManager.LevelData.TimeForTheFirstBuldozerSpawn;
+
         StartCoroutine(CoSpawnBuldozer());
     }
 
@@ -38,6 +40,8 @@ public class BuldozerSpawner : MonoBehaviour {
             Buldozer buldozerClone = Instantiate(buldozerToSpawn, randomSpawnPosition.position, Quaternion.identity, _theLevelManager.GetBoundaryForestList[randomIndex].BuldozerPosition);
 
             _theLevelManager.GetBoundaryForestList[randomIndex].BuldozerOnMyField = buldozerClone;
+
+            buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
         }
     }
 
