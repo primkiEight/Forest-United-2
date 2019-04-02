@@ -9,11 +9,11 @@ public class FieldForest : Field {
     private Animal _tempAnimalClone;
     
     //[HideInInspector]
-    public Trees TreesOnMyField;
+    //public Trees TreesOnMyField;
 
     public Transform HolePosition;
     public Transform AnimalPosition;
-    public Transform TreesPosition;
+    //public Transform TreesPosition;
     //public Transform BuldozerPosition;
 
     //[SerializeField]

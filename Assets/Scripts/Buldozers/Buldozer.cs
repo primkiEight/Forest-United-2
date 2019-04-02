@@ -18,9 +18,12 @@ public abstract class Buldozer : MonoBehaviour {
         Left
     }
 
+    private Transform _myTransform;
+
     //[HideInInspector]
     public Vector2Int MyMatrixPosition;
     private Transform _myStartingPosition;
+    private Field _thisField = null;
     private Field _nextField = null;
     private Transform _myNextPosition;
     private Vector2Int _myFinalDestination;
@@ -36,7 +39,8 @@ public abstract class Buldozer : MonoBehaviour {
     public float MovingSpeed;
 
     public float BuldozingDuration;
-    
+    public float WaitOnTheEmptyField;
+
     private Animator _myAnimator;
 
     public AudioClip AudioBuldoze;
@@ -47,7 +51,9 @@ public abstract class Buldozer : MonoBehaviour {
     
     public void Awake()
     {
-        _myStartingPosition = transform;
+        _myTransform = transform;
+
+        _myStartingPosition = _myTransform;
         //MyPosition = new Vector2Int ((int)_myStartingPosition.x, (int)_myStartingPosition.y);
 
         if (GetComponent<Animator>() != null)
@@ -66,6 +72,8 @@ public abstract class Buldozer : MonoBehaviour {
         {
             _myFinalDestination = GetNearestHomePosition();
         }
+
+        _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
 
         SetMyMovingPattern();
 
@@ -202,15 +210,13 @@ public abstract class Buldozer : MonoBehaviour {
             int randomIndex = Random.Range(0, _myMovingPatternList.Count);
             _direction nextDirection = _myMovingPatternList[randomIndex];
 
-            ///PROBLEM S OUT-OF-RANGE ELEMENTIMA MATRICE!!!
-            
-            /*if (nextDirection == _direction.Down)
+            if (nextDirection == _direction.Up)
             {
-                _nextField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y - 1];
+                _nextField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y + 1];
             }
             else if (nextDirection == _direction.Right)
             {
-                _nextField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y - 1];
+                _nextField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x + 1, MyMatrixPosition.y];
             }
             else if (nextDirection == _direction.Down)
             {
@@ -218,24 +224,34 @@ public abstract class Buldozer : MonoBehaviour {
             }
             else if (nextDirection == _direction.Left)
             {
-                _nextField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y - 1];
+                _nextField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x - 1, MyMatrixPosition.y];
             }
-
-            //Provjeri je li buldozer na toj lokaciji, ako je, pokreni njegov Move pa nastavi dalje
+            
+            //Provjeri je li buldozer na toj lokaciji, ako je, pričekaj na ovom polju
             if (_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>() != null)
             {
-                _nextField.BuldozerPosition.GetComponentInChildren<Buldozer>().Move();
+                //_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>().Move();
+                StartCoroutine(CoWaitOnTheField());
+            } else
+            {
+                _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].BuldozerOnMyField = null;
+                _myTransform.parent = _theLevelManager.GetBuldozersParent();
+                //Postavi varijablu odakle krećeš kao svoj transform
+                _myStartingPosition = _myTransform;
+                //Postavi varijablu next target iz buldozer pozicije tog susjednog polja iz matrice
+                _myNextPosition = _nextField.BuldozerPosition;
+
+                //Izbriši iz liste move patterna direction koji ti je bio odabran
+                _myMovingPatternList.Remove(nextDirection);
+                //Postavi bool varijablu koja je triger za Update funkciju
+                TriggerMoving(true);
             }
 
-            //Provjeri je li home na toj lokaciji, ako je, svakako idi tamo
-            //Provjeri je li šuma na toj lokaciji, ako je, svakako idi tamo
-
-            //////////////////////////////Otkvači se s ove pozicije u matrici prema podatku o MyPosition: isprazni buldozer poziciju na ovoj lokaciji
-
+            /*
             _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].BuldozerOnMyField = null;
-            transform.parent = _theLevelManager.GetBuldozersParent();
+            _myTransform.parent = _theLevelManager.GetBuldozersParent();
             //Postavi varijablu odakle krećeš kao svoj transform
-            _myStartingPosition = transform;
+            _myStartingPosition = _myTransform;
             //Postavi varijablu next target iz buldozer pozicije tog susjednog polja iz matrice
             _myNextPosition = _nextField.BuldozerPosition;
 
@@ -243,19 +259,11 @@ public abstract class Buldozer : MonoBehaviour {
             _myMovingPatternList.Remove(nextDirection);
             //Postavi bool varijablu koja je triger za Update funkciju
             TriggerMoving(true);
-
-            //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
-            //Kada je distance od transforma buldozera vrlo blizu target poziciji (>=0.01)
-            //postavi transform buldozera točno prema transformu finalne pozicije
-            //i stavi bool za Move u false.
-
-            //Postavi svoj novi position iz buldozer pozicije ovog polja u matrici
-            //Postavi se u buldozer poziciju ovog polja
-            //Ako je ovdje šuma, pokreni Attack; ako nije, ponovno pokreni ovaj Move
             */
         }
     }
 
+    //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
     private void Update()
     {
         if (_isMoving)
@@ -266,33 +274,77 @@ public abstract class Buldozer : MonoBehaviour {
 
     private void Move()
     {
-        transform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed);
+        _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed);
 
-        if (Vector3.Distance(transform.position, _myNextPosition.position) <= 0.01)
+        //Kada je distance od transforma buldozera vrlo blizu target poziciji (>=0.01)
+        //postavi transform buldozera točno prema transformu finalne pozicije
+        //i stavi bool za Move u false.
+        if (Vector3.Distance(_myTransform.position, _myNextPosition.position) <= 0.01)
         {
-            transform.position = _myNextPosition.position;
-            SetNewPosition();
             TriggerMoving(false);
+            SetNewPosition();
         }
     }
-
+    
+    //Postavi svoj novi position iz buldozer pozicije ovog polja u matrici
+    //Postavi se u buldozer poziciju ovog polja
+    //Ako je ovdje šuma, pokreni Attack; ako nije, ponovno pokreni ovaj Move
     private void SetNewPosition()
     {
+        _myTransform.position = _myNextPosition.position;
+
+        _myTransform.SetParent(_nextField.BuldozerPosition);
+
         _nextField.BuldozerOnMyField = this;
-        transform.parent = _nextField.BuldozerPosition;
+        
         MyMatrixPosition = _nextField.MyFieldPosition;
 
+        //Stavljam da je ovo novo polje trenutno this field, kako bih mogao dohvatiti životinje ili šumu iz njega
+        _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
+
+        //StartMoving();
+        //StartCoroutine(CoWait());
+
+        //Pokreni attack
+        Attack();
+    }
+
+    public IEnumerator CoWaitOnTheField()
+    {
+        yield return new WaitForSeconds(BuldozingDuration);
         StartMoving();
     }
+
 
     public virtual void Attack()
     {
         //Animiraj razaranje
+
+        if(_thisField.TreesOnMyField != null)
+        {
+            Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
+            treesOnThisField.StartBuldozingMe(this);
+        } else
+        {
+            StartCoroutine(CoWaitOnTheField());
+        }
+
+        //while(_thisField.TreesOnMyField != null)
+
+        //if()
+
     }
 
     public virtual void Death()
     {
         //Animiraj smrt
+        if (_thisField.TreesOnMyField != null)
+        {
+            Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
+            treesOnThisField.StopBuldozingMe(this);
+        }
+
+
         Destroy(gameObject, 0.5f);
     }
 

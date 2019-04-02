@@ -52,10 +52,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1b78414ebc265340952289998d9a209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPosition: {x: 0, y: 0}
+  MyMatrixPosition: {x: 0, y: 0}
   MySprite: {fileID: 21300000, guid: 8f22d894172801742b688cdba4d1a733, type: 3}
-  MovingSpeed: 0
-  BuldozingDuration: 0
+  MovingSpeed: 1
+  BuldozingDuration: 3
+  WaitOnTheEmptyField: 0
   AudioBuldoze: {fileID: 0}
   AudioMove: {fileID: 0}
   AudioDeath: {fileID: 0}

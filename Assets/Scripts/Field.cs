@@ -25,5 +25,8 @@ public abstract class Field : MonoBehaviour {
     public Transform BuldozerPosition;
     //[HideInInspector]
     public Buldozer BuldozerOnMyField;
-
+    //[HideInInspector]
+    public Transform TreesPosition;
+    //[HideInInspector]
+    public Trees TreesOnMyField;
 }
