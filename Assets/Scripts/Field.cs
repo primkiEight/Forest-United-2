@@ -29,4 +29,11 @@ public abstract class Field : MonoBehaviour {
     public Transform TreesPosition;
     //[HideInInspector]
     public Trees TreesOnMyField;
+
+    public virtual void SetBuldozerOnMyField(Buldozer buldozerOnMyField)
+    {
+        BuldozerOnMyField = buldozerOnMyField;
+    }
+
+    public void 
 }

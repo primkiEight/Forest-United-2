@@ -234,7 +234,8 @@ public abstract class Buldozer : MonoBehaviour {
                 StartCoroutine(CoWaitOnTheField());
             } else
             {
-                _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].BuldozerOnMyField = null;
+                _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
+                //_theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].BuldozerOnMyField = null;
                 _myTransform.parent = _theLevelManager.GetBuldozersParent();
                 //Postavi varijablu odakle krećeš kao svoj transform
                 _myStartingPosition = _myTransform;
@@ -295,8 +296,9 @@ public abstract class Buldozer : MonoBehaviour {
 
         _myTransform.SetParent(_nextField.BuldozerPosition);
 
-        _nextField.BuldozerOnMyField = this;
-        
+        _nextField.SetBuldozerOnMyField(this);
+        //_nextField.BuldozerOnMyField = this;
+
         MyMatrixPosition = _nextField.MyFieldPosition;
 
         //Stavljam da je ovo novo polje trenutno this field, kako bih mogao dohvatiti životinje ili šumu iz njega
