@@ -4,18 +4,20 @@ using UnityEngine;
 
 public abstract class Animal : MonoBehaviour {
 
-    protected Field[,] _LevelFields;
-    public virtual void Initialize(Field[,] levelFields)
-    {
-        _LevelFields = levelFields;
-    }
+    //protected Field[,] _LevelFields;
+    //public virtual void Initialize(Field[,] levelFields)
+    //{
+    //    _LevelFields = levelFields;
+    //}
 
     public Sprite MySprite;
 
     public float DiggingSpeed;
 
     public float PowerDuration;
-    public GameObject PowerPrefab;
+    public Power MidPowerPrefab;
+    public Power SuperPowerPrefab;
+    //public Transform PowerPosition;
 
     private Animator _myAnimator;
 
@@ -55,6 +57,16 @@ public abstract class Animal : MonoBehaviour {
         AnimateExit();
         yield return new WaitForSeconds(diggingSpeed);
         AnimateEnter();
+    }
+
+    public void CastMidPower()
+    {
+
+    }
+
+    public void CastSuperPower()
+    {
+
     }
 
     public virtual void Attack()

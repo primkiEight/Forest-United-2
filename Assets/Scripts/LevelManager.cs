@@ -26,6 +26,7 @@ public class LevelManager : MonoBehaviour {
     public List<Vector2Int> LevelHomePositionsList = new List<Vector2Int> { };
     [SerializeField]
     private List<Vector2Int> _circleAnimalsList = new List<Vector2Int> { };
+    //private List<Field> _fieldsWithAnimals = new List<Field> { };
     [SerializeField]
     //private List<Vector2Int> _circleForestBoundaryList = new List<Vector2Int> { };
     //public List<Vector2Int> GetBoundaryList
@@ -93,10 +94,19 @@ public class LevelManager : MonoBehaviour {
         return _movingBuldozerParent.transform;
     }
     
-    private void Start()
-    {
-        //CreateLevelFields();
-    }
+    //private void Start()
+    //{
+    //    //CreateLevelFields();
+    //
+    //    //CheckOtherAnimalsInTheHood
+    //
+    //    for (int i = 0; i < _fieldsWithAnimals.Count; i++)
+    //    {
+    //        _fieldsWithAnimals[i].CheckAnimalsInTheHood();
+    //    }
+    //    _fieldsWithAnimals.Clear();
+    //
+    //}
 
     private void CreateLevelFields()
     {
@@ -232,6 +242,8 @@ public class LevelManager : MonoBehaviour {
 
                 FieldForest thisForestField = _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>();
 
+                //_fieldsWithAnimals.Add(thisForestField);
+
                 Animal animalInTheHole = Instantiate(LevelData.LevelAnimalsList[i], thisForestField.AnimalPosition.position, Quaternion.identity, thisForestField.AnimalPosition);
 
                 _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalInMyHole = animalInTheHole;
@@ -271,6 +283,13 @@ public class LevelManager : MonoBehaviour {
             }
         }
 
+
+        
+
+
         _buldozerSpawner.StartSpawning();
+
+
+
     }
 }

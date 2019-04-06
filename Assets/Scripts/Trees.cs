@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class Trees : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void StartBuldozingMe(Buldozer theBuldozer)
+	public void StartBuldozingMe(Buldozer theBuldozer)
     {
         if(theBuldozer != null)
         {
@@ -33,6 +23,11 @@ public class Trees : MonoBehaviour {
             //Zaustavi animaciju uništavanja i pokreni idle animaciju
             StopCoroutine(CoBuldozingMe(theBuldozer));
         }
+
+        //Ako ubijem buldozera, i prije smrti se pokrene ova korutina nakon čega je buldozer odmah uništen,
+        //javi mi da pokušavam dohvatiti nepostojeći objekt (tamo u Buldozer skripti, a ne ovdje makar je ovdje problem)
+        //zato na ovaj način zaustavljam sve koorutine
+        StopAllCoroutines();
     }
 
     private IEnumerator CoBuldozingMe(Buldozer theBuldozer)

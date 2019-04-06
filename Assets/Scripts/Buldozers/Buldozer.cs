@@ -37,6 +37,8 @@ public abstract class Buldozer : MonoBehaviour {
 
     private bool _isMoving = false;
     public float MovingSpeed;
+    private float _buldozingBreakTemp;
+    private float _buldozingBreakPerma = 1;
 
     public float BuldozingDuration;
     public float WaitOnTheEmptyField;
@@ -74,6 +76,8 @@ public abstract class Buldozer : MonoBehaviour {
         }
 
         _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
+
+        _buldozingBreakTemp = _buldozingBreakPerma;
 
         SetMyMovingPattern();
 
@@ -235,7 +239,7 @@ public abstract class Buldozer : MonoBehaviour {
             } else
             {
                 _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
-                //_theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].BuldozerOnMyField = null;
+                
                 _myTransform.parent = _theLevelManager.GetBuldozersParent();
                 //Postavi varijablu odakle krećeš kao svoj transform
                 _myStartingPosition = _myTransform;
@@ -244,23 +248,12 @@ public abstract class Buldozer : MonoBehaviour {
 
                 //Izbriši iz liste move patterna direction koji ti je bio odabran
                 _myMovingPatternList.Remove(nextDirection);
+
+                //Resetiraj brzinu
+                //ReSetBuldozingBreak();
                 //Postavi bool varijablu koja je triger za Update funkciju
                 TriggerMoving(true);
             }
-
-            /*
-            _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].BuldozerOnMyField = null;
-            _myTransform.parent = _theLevelManager.GetBuldozersParent();
-            //Postavi varijablu odakle krećeš kao svoj transform
-            _myStartingPosition = _myTransform;
-            //Postavi varijablu next target iz buldozer pozicije tog susjednog polja iz matrice
-            _myNextPosition = _nextField.BuldozerPosition;
-
-            //Izbriši iz liste move patterna direction koji ti je bio odabran
-            _myMovingPatternList.Remove(nextDirection);
-            //Postavi bool varijablu koja je triger za Update funkciju
-            TriggerMoving(true);
-            */
         }
     }
 
@@ -273,9 +266,19 @@ public abstract class Buldozer : MonoBehaviour {
         }        
     }
 
+    public void SetBuldozingBreak(float _buldozingBreakPower)
+    {
+        _buldozingBreakTemp = _buldozingBreakPower;
+    }
+
+    public void ReSetBuldozingBreak()
+    {
+        _buldozingBreakTemp = _buldozingBreakPerma;
+    }
+
     private void Move()
     {
-        _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed);
+        _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed * _buldozingBreakTemp);
 
         //Kada je distance od transforma buldozera vrlo blizu target poziciji (>=0.01)
         //postavi transform buldozera točno prema transformu finalne pozicije
@@ -283,6 +286,18 @@ public abstract class Buldozer : MonoBehaviour {
         if (Vector3.Distance(_myTransform.position, _myNextPosition.position) <= 0.01)
         {
             TriggerMoving(false);
+
+
+
+            ////OVE DOLJE 3 NAREDBE sam prebacio ovdje (ranije su bile dolje) jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
+            //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
+            _myTransform.position = _myNextPosition.position;
+            _myTransform.SetParent(_nextField.BuldozerPosition);
+            _nextField.SetBuldozerOnMyField(this);
+
+
+
+
             SetNewPosition();
         }
     }
@@ -292,20 +307,16 @@ public abstract class Buldozer : MonoBehaviour {
     //Ako je ovdje šuma, pokreni Attack; ako nije, ponovno pokreni ovaj Move
     private void SetNewPosition()
     {
-        _myTransform.position = _myNextPosition.position;
-
-        _myTransform.SetParent(_nextField.BuldozerPosition);
-
-        _nextField.SetBuldozerOnMyField(this);
-        //_nextField.BuldozerOnMyField = this;
+        ////OVE DOLJE 3 NAREDBE sam prebacio gore jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
+        //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
+        //_myTransform.position = _myNextPosition.position;
+        //_myTransform.SetParent(_nextField.BuldozerPosition);
+        //_nextField.SetBuldozerOnMyField(this);
 
         MyMatrixPosition = _nextField.MyFieldPosition;
 
         //Stavljam da je ovo novo polje trenutno this field, kako bih mogao dohvatiti životinje ili šumu iz njega
         _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
-
-        //StartMoving();
-        //StartCoroutine(CoWait());
 
         //Pokreni attack
         Attack();
@@ -314,6 +325,9 @@ public abstract class Buldozer : MonoBehaviour {
     public IEnumerator CoWaitOnTheField()
     {
         yield return new WaitForSeconds(BuldozingDuration);
+
+        ReSetBuldozingBreak();
+
         StartMoving();
     }
 
@@ -346,8 +360,9 @@ public abstract class Buldozer : MonoBehaviour {
             treesOnThisField.StopBuldozingMe(this);
         }
 
-
-        Destroy(gameObject, 0.5f);
+        //StopAllCoroutines();
+        //Destroy(gameObject, 0.5f);
+        Destroy(gameObject);
     }
 
     public virtual void AnimateMove()

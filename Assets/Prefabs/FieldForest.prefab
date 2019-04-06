@@ -11,6 +11,21 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1624256626532078}
   m_IsPrefabAsset: 1
+--- !u!1 &1454980862239844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4797911480230250}
+  m_Layer: 0
+  m_Name: PlaceBuldozer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1624256626532078
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,16 +59,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1763350239838670
+--- !u!1 &1740172165512922
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4966450483898150}
+  - component: {fileID: 4495757443493476}
   m_Layer: 0
-  m_Name: PlaceBuldozer
+  m_Name: PlacePower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,6 +131,19 @@ Transform:
   m_Father: {fileID: 4140115674185914}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4495757443493476
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1740172165512922}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4629509474996408}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4629509474996408
 Transform:
   m_ObjectHideFlags: 1
@@ -128,9 +156,23 @@ Transform:
   m_Children:
   - {fileID: 4140115674185914}
   - {fileID: 4956157336883382}
-  - {fileID: 4966450483898150}
+  - {fileID: 4797911480230250}
+  - {fileID: 4495757443493476}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4797911480230250
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1454980862239844}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4629509474996408}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4956157336883382
 Transform:
@@ -144,19 +186,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4629509474996408}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4966450483898150
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1763350239838670}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4629509474996408}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &61677438096730524
 BoxCollider2D:
@@ -197,14 +226,19 @@ MonoBehaviour:
   FieldController: {fileID: 0}
   MyFieldPosition: {x: 0, y: 0}
   AnimalInMyHole: {fileID: 0}
+  AnimalPosition: {fileID: 4225433289431078}
+  PowerPosition: {fileID: 4495757443493476}
+  PowerOnMyField: {fileID: 0}
+  BuldozerPosition: {fileID: 4797911480230250}
   BuldozerOnMyField: {fileID: 0}
+  TreesPosition: {fileID: 4956157336883382}
   TreesOnMyField: {fileID: 0}
   HolePosition: {fileID: 4140115674185914}
-  AnimalPosition: {fileID: 4225433289431078}
-  TreesPosition: {fileID: 4956157336883382}
-  BuldozerPosition: {fileID: 4966450483898150}
   IsAnimalHere: 0
   IsFieldActive: 0
+  _theLevelManager: {fileID: 0}
+  AnimalsInTheHood: 0
+  FieldsWithAnimalsInTheHoodList: []
   ActiveColor: {r: 0, g: 1, b: 0.00427413, a: 1}
   InactiveColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &212430124375680374

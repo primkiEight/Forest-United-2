@@ -5,14 +5,15 @@ using UnityEngine;
 public class FieldForest : Field {
 
     //[HideInInspector]
-    public Animal AnimalInMyHole;
+    //public Animal AnimalInMyHole;
     private Animal _tempAnimalClone;
     
     //[HideInInspector]
     //public Trees TreesOnMyField;
 
     public Transform HolePosition;
-    public Transform AnimalPosition;
+    //public Transform AnimalPosition;
+    //public Transform PowerPosition;
     //public Transform TreesPosition;
     //public Transform BuldozerPosition;
 
@@ -21,8 +22,13 @@ public class FieldForest : Field {
     [SerializeField]
     private bool IsFieldActive = false;
 
-    private BoxCollider2D _myBoxCollider2D;
+    public LevelManager _theLevelManager;
 
+    public bool AnimalsInTheHood = false;
+    public List<Field> FieldsWithAnimalsInTheHoodList = new List<Field> { };
+
+    private BoxCollider2D _myBoxCollider2D;
+    
     //TEST
     public Color ActiveColor;
     public Color InactiveColor;
@@ -35,6 +41,15 @@ public class FieldForest : Field {
         mySprite = GetComponent<SpriteRenderer>();
         mySprite.color = InactiveColor;
         MyFieldPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+    }
+
+    private void Start()
+    {
+        _theLevelManager = LevelManager.Instance;
+
+        FieldsWithAnimalsInTheHoodList.Clear();
+
+        CheckAnimalsInTheHood();
     }
 
     private void OnMouseUp()
@@ -85,31 +100,22 @@ public class FieldForest : Field {
         ChangeActive(false);
     }
 
-    //private void SetField(float distance)
-    //{
-        ////IsAnimalHere = true;
-        //Invoke("EmergeAnimalInMyHole", _tempAnimalClone.DiggingSpeed * distance);
-        //AnimalInMyHole = Instantiate(_tempAnimalClone, AnimalPosition.position, Quaternion.identity, AnimalPosition);        
-        ////StartCoroutine("CoEmargeAnimalInMyHole");
-        ////ChangeActive(false);
-
-
-        //Napraviti korutinu??
-        //Prije yielda, ubiti životinju na starom polju i deselektirati to polje
-        //a na novom podesiti sve spremno (ovaj limbo i tako to)
-        //ubaciti animaciju, strelicu iznat tog polja s facom životinje koja se treba pojaviti
-        //disejblati kolider da player ne može kliktati ovo aktivno polje
-        //i nakon yielda pojavi se životinja
-        //ugasi se animacija
-        //collider ponovno postane aktivan
-    //}
-    
     private IEnumerator CoEmargeAnimalInMyHole(FieldForest otherSelectedField)
     {
         //Instantiate the animal temporarily in the AnimalLimbo unvisible/deactivated gameobject
         _tempAnimalClone = Instantiate(otherSelectedField.AnimalInMyHole, AnimalPosition.position, Quaternion.identity, FieldController.GetAnimalLimboTransform());
         //Remove the animal from the previous field, animating it
         otherSelectedField.ClearField();
+        //If there is a buldozer on this field, restore its speed
+        if(BuldozerOnMyField)
+            BuldozerOnMyField.ReSetBuldozingBreak();
+
+        //Check and clear the otherfield's neighbours' lists once the animal is gone from that field
+        
+        otherSelectedField.ReCheckAnimalsInTheHood();
+        otherSelectedField.CheckAnimalsInTheHood();
+        otherSelectedField.Casting();
+
         //Calculate the distance between the fields, and wait for that long for the animal to emarge
         float distance = Vector2.Distance(otherSelectedField.transform.position, transform.position);
         //Deactivate my collider so that the player cannot select me while the animal is getting here
@@ -127,6 +133,12 @@ public class FieldForest : Field {
         _tempAnimalClone.Submerge();
         //Animate the animal emarging
         AnimalInMyHole.Emerge();
+
+        //Provjeriti i očistiti listu susjednih životinja mog polja sada kada je ovdje životinja postavljena
+        CheckAnimalsInTheHood();
+        ReCheckAnimalsInTheHood();
+        Casting();
+
         //Return the status of the boxcollider to active
         _myBoxCollider2D.enabled = true;
         //izbaciti animaciju, strelicu iznat tog polja s facom životinje koja se treba pojaviti
@@ -154,5 +166,121 @@ public class FieldForest : Field {
         }
     }
 
+    //Checks the animals in the neighbour fileds and creates the list of those fields
+    public override void CheckAnimalsInTheHood()
+    {
+        FieldsWithAnimalsInTheHoodList.Clear();
+
+        if (AnimalInMyHole == null)
+        {
+            FieldsWithAnimalsInTheHoodList.Clear();
+            AnimalsInTheHood = false;
+        }
+        else if (AnimalInMyHole != null)
+        {
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x + 1, MyFieldPosition.y].AnimalInMyHole != null)
+            {
+                FieldsWithAnimalsInTheHoodList.Add(_theLevelManager._levelFieldMatrix[MyFieldPosition.x + 1, MyFieldPosition.y]);
+            }
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x - 1, MyFieldPosition.y].AnimalInMyHole != null)
+            {
+                FieldsWithAnimalsInTheHoodList.Add(_theLevelManager._levelFieldMatrix[MyFieldPosition.x - 1, MyFieldPosition.y]);
+            }
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y + 1].AnimalInMyHole != null)
+            {
+                FieldsWithAnimalsInTheHoodList.Add(_theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y + 1]);
+            }
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y - 1].AnimalInMyHole != null)
+            {
+                FieldsWithAnimalsInTheHoodList.Add(_theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y - 1]);
+            }
+
+            if(FieldsWithAnimalsInTheHoodList.Count != 0)
+            {
+                AnimalsInTheHood = true;
+            } else
+            {
+                AnimalsInTheHood = false;
+            }
+        }
+    }
+
+    //Checks the neighbour fields once the animals have shifted
+    public override void ReCheckAnimalsInTheHood()
+    {
+        if (FieldsWithAnimalsInTheHoodList.Count != 0)
+        {
+            for (int i = 0; i < FieldsWithAnimalsInTheHoodList.Count; i++)
+            {
+                FieldsWithAnimalsInTheHoodList[i].CheckAnimalsInTheHood();
+                FieldsWithAnimalsInTheHoodList[i].Casting();
+            }
+        } else
+        {
+            AnimalsInTheHood = false;
+        }
+    }
     
+    public override void Casting()
+    {
+        if (PowerOnMyField)
+            Destroy(PowerOnMyField.gameObject);
+
+        if (AnimalsInTheHood)
+        {
+            CastSuperPower();
+        }
+        else
+        {
+            CastMidPower();
+        }        
+    }
+    
+    public void CastMidPower()
+    {
+        if(PowerOnMyField)
+            Destroy(PowerOnMyField.gameObject);
+
+        if (BuldozerOnMyField != null)
+        {
+            if (AnimalInMyHole)
+            {
+                PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+                PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+                Debug.Log("CastingMidPower");
+            } else
+            {
+                BuldozerOnMyField.ReSetBuldozingBreak();
+            }
+        } else
+        {
+            if (PowerOnMyField)
+                Destroy(PowerOnMyField.gameObject);
+        }       
+    }
+
+    public void CastSuperPower()
+    {
+        if (PowerOnMyField)
+            Destroy(PowerOnMyField.gameObject);
+
+        if (AnimalInMyHole)
+        {
+            if (AnimalInMyHole)
+            {
+                PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+
+                if(BuldozerOnMyField != null)
+                {
+                    PowerOnMyField.DestroyBuldozer(BuldozerOnMyField);
+                    Debug.Log("CastingSuperPower");
+                }
+            }
+        }
+        else
+        {
+            if (PowerOnMyField)
+                Destroy(PowerOnMyField.gameObject);
+        }
+    }
 }

@@ -29,9 +29,6 @@ MonoBehaviour:
   - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
   - {fileID: 114174679075697334, guid: b128ad54b6f53f948997d91ffa3c3ecc, type: 2}
   - {fileID: 114108543324723584, guid: 59dbdce98ddf83344b0d3c44cc163f2f, type: 2}
-  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
-  - {fileID: 114174679075697334, guid: b128ad54b6f53f948997d91ffa3c3ecc, type: 2}
-  - {fileID: 114108543324723584, guid: 59dbdce98ddf83344b0d3c44cc163f2f, type: 2}
   LevelBuldozersList:
   - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
   - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}

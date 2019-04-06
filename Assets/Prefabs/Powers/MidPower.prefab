@@ -9,96 +9,55 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1087021724932390}
+  m_RootGameObject: {fileID: 1859318857909010}
   m_IsPrefabAsset: 1
---- !u!1 &1087021724932390
+--- !u!1 &1859318857909010
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4366428530706980}
-  - component: {fileID: 114174679075697334}
-  - component: {fileID: 212155932284037660}
+  - component: {fileID: 4192199592607080}
+  - component: {fileID: 212086983982540560}
+  - component: {fileID: 114053328189848832}
   m_Layer: 0
-  m_Name: JezTest
+  m_Name: MidPower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1469650457562086
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4025559978998466}
-  m_Layer: 0
-  m_Name: PlacePower
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4025559978998466
+--- !u!4 &4192199592607080
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1469650457562086}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4366428530706980}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4366428530706980
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1087021724932390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 1859318857909010}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
-  m_Children:
-  - {fileID: 4025559978998466}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114174679075697334
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!114 &114053328189848832
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1087021724932390}
+  m_GameObject: {fileID: 1859318857909010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cb1edf3e0b330244a71a47cacb4bd58, type: 3}
+  m_Script: {fileID: 11500000, guid: 57970be6e342b774798dbc051f919e43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MySprite: {fileID: 21300000, guid: 5c6070f888813e54db31c43133cf0e78, type: 3}
-  DiggingSpeed: 0.8
-  PowerDuration: 1
-  MidPowerPrefab: {fileID: 114571441178600318, guid: c0d726be7cb28b245b0c0e7394b6c8cf,
-    type: 2}
-  SuperPowerPrefab: {fileID: 114090949521875224, guid: c7fe234ef17bd84409c68f97464b2635,
-    type: 2}
-  AudioDig: {fileID: 0}
-  AudioActive: {fileID: 0}
-  AudioCasting: {fileID: 0}
-  AudioEnter: {fileID: 0}
-  AudioExit: {fileID: 0}
---- !u!212 &212155932284037660
+--- !u!212 &212086983982540560
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1087021724932390}
+  m_GameObject: {fileID: 1859318857909010}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -128,12 +87,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 5c6070f888813e54db31c43133cf0e78, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e71be9a638981c84db1540e19fbf6e02, type: 3}
+  m_Color: {r: 1, g: 0.5400758, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.6, y: 3.6}
+  m_Size: {x: 2.32, y: 1.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
