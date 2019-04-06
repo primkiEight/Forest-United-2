@@ -236,11 +236,13 @@ public abstract class Buldozer : MonoBehaviour {
             {
                 //_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>().Move();
                 StartCoroutine(CoWaitOnTheField());
+                return;
             } else
             {
                 _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
                 
                 _myTransform.parent = _theLevelManager.GetBuldozersParent();
+
                 //Postavi varijablu odakle krećeš kao svoj transform
                 _myStartingPosition = _myTransform;
                 //Postavi varijablu next target iz buldozer pozicije tog susjednog polja iz matrice
@@ -357,12 +359,13 @@ public abstract class Buldozer : MonoBehaviour {
         if (_thisField.TreesOnMyField != null)
         {
             Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
-            treesOnThisField.StopBuldozingMe(this);
+            //treesOnThisField.StopBuldozingMe(this);
+            treesOnThisField.StopBuldozingMe();
         }
 
-        //StopAllCoroutines();
-        //Destroy(gameObject, 0.5f);
-        Destroy(gameObject);
+        StopAllCoroutines();
+        Destroy(gameObject, 0.5f);
+        //Destroy(gameObject);
     }
 
     public virtual void AnimateMove()
