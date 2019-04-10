@@ -8,14 +8,18 @@ public class CameraController : MonoBehaviour {
     public float PanBorderThickness = 10.0f;
     private Vector2 _panLimit;
 
-    private Vector3 _cameraResPixels;
-    private Vector3 _cameraResWorld;
-
-    private Vector3 dim;
-
     private Transform _myTransform;
     private LevelManager _theLevelManager;
 
+    public float OrtographicZOOMmin = 1.5f;
+    public float ZoomStep = 0.2f;
+    private float _ortographicZOOMmax;
+    private float _levelWidth;
+    private float _levelHight;
+    private float _screenRatio;
+    private float _xBorder;
+    private float _yBorder;
+    
     private void Awake()
     {
         _myTransform = transform;
@@ -25,77 +29,77 @@ public class CameraController : MonoBehaviour {
     {
         _theLevelManager = LevelManager.Instance;
 
+        //PANNING AND CAMERA BORDERS
+
         _panLimit = new Vector2(_theLevelManager.LevelData.Xmax, _theLevelManager.LevelData.Ymax);
 
-        //_myTransform.position = new Vector3((_theLevelManager.LevelData.Xmax + 1.0f) / 2.0f, (_theLevelManager.LevelData.Ymax + 1.0f) / 2.0f, transform.position.z);
+        //ZOOOM with MouseWheel limits
 
-        //_myTransform.position = new Vector3 (0, 0, -10.0f);
-        
-        _cameraResPixels = new Vector3(Screen.width, Screen.height, 0.0f);
-        _cameraResWorld = Camera.main.ScreenToWorldPoint(new Vector3(_cameraResPixels.x / 2,
-            _cameraResPixels.y / 2,
-            0.0f));
+        Camera.main.orthographicSize = OrtographicZOOMmin;
 
-        //Debug.Log("Pixels = " + _cameraResPixels);
-        //Debug.Log("World = " + _cameraResWorld);
-        /*
-        Debug.Log("Camera pixelHieght = " + Camera.main.pixelHeight);
-        Debug.Log("Camera pixelRect = " + Camera.main.pixelRect);
-        Debug.Log("Camera pixelWidth = " + Camera.main.pixelWidth);
-        Debug.Log("Camera scaledPixelHeight = " + Camera.main.scaledPixelHeight);
-        Debug.Log("Camera scaledPixelWidth = " + Camera.main.scaledPixelWidth);
-        Debug.Log("Camera orthographicSize = " + Camera.main.orthographicSize);
-        Debug.Log("Camera cameraToWorldMatrix = " + Camera.main.cameraToWorldMatrix);
-        Debug.Log("Camera worldToCameraMatrix = " + Camera.main.worldToCameraMatrix);
-        Debug.Log("Camera orthographic = " + Camera.main.orthographic);
-        Debug.Log("Camera projectionMatrix = " + Camera.main.projectionMatrix);
-        Debug.Log("Camera scaledPixelHeight = " + Camera.main.scaledPixelHeight);
-        Debug.Log("Camera scaledPixelWidth = " + Camera.main.scaledPixelWidth);
-        Debug.Log("Camera worldToCameraMatrix = " + Camera.main.worldToCameraMatrix);
-        */
-        //float width = (Camera.main.pixelWidth / 2.0f) / Camera.main.orthographicSize;
-        //float height = (Camera.main.pixelHeight / 2.0f) / Camera.main.orthographicSize;
+        _screenRatio = (float)Camera.main.pixelWidth / (float)Camera.main.pixelHeight;
+        _yBorder = Camera.main.orthographicSize;
+        _xBorder = _yBorder * _screenRatio;
 
-        float width = Camera.main.pixelWidth;
-        float height = Camera.main.pixelHeight;
-        float width2 = Camera.main.scaledPixelWidth;
-        float height2 = Camera.main.scaledPixelHeight;
+        _levelWidth = _theLevelManager.LevelData.Xmax;
+        _levelHight = _theLevelManager.LevelData.Ymax;
 
-        dim = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.scaledPixelWidth, Camera.main.scaledPixelHeight, 0.0f));
+        Camera.main.orthographicSize = OrtographicZOOMmin;
 
-        Debug.Log("width in world units = " + width);
-        Debug.Log("height in world units = " + height);
-        Debug.Log("height in world units = " + dim);
-        Debug.Log("scaled width in world units = " + width2);
-        Debug.Log("sclaed height in world units = " + height2);
-
-
+        //Level's hight is larger or equal than it's width
+        if (_levelHight >= _levelWidth)
+        {
+            _ortographicZOOMmax = _levelWidth * Screen.height / Screen.width * 0.5f;
+        }
+        //Level's width is larger than it's width
+        else
+        {
+            _ortographicZOOMmax = _levelHight / 2;
+        }
     }
     
     private void Update()
     {
+        //PANNING AND CAMERA BORDERS
+
         Vector3 pos = transform.position;
 
         if (Input.GetAxisRaw("Vertical") > 0.0f || Input.mousePosition.y >= (Screen.height - PanBorderThickness))
-        {
             pos.y += PanSpeed * Time.deltaTime;
-        }
         else if (Input.GetAxisRaw("Vertical") < 0.0f || Input.mousePosition.y <= PanBorderThickness)
-        {
             pos.y -= PanSpeed * Time.deltaTime;
-        }
 
         if (Input.GetAxisRaw("Horizontal") > 0.0f || Input.mousePosition.x >= (Screen.width - PanBorderThickness))
-        {
             pos.x += PanSpeed * Time.deltaTime;
-        }
         else if (Input.GetAxisRaw("Horizontal") < 0.0f || Input.mousePosition.x <= PanBorderThickness)
-        {
             pos.x -= PanSpeed * Time.deltaTime;
-        }
 
-        pos.x = Mathf.Clamp(pos.x, dim.x + 0.5f, _panLimit.x - dim.x + 0.5f);
-        pos.y = Mathf.Clamp(pos.y, dim.y + 0.5f, _panLimit.y - dim.y + 0.5f);
+        pos.x = Mathf.Clamp(pos.x, _xBorder + 0.5f, _panLimit.x - _xBorder + 0.5f);
+        pos.y = Mathf.Clamp(pos.y, _yBorder + 0.5f, _panLimit.y - _yBorder + 0.5f);
+
         _myTransform.position = pos;
+
+        //ZOOOM with MouseWheel limits
+        if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
+        {
+            if(Camera.main.orthographicSize < _ortographicZOOMmax)
+                Camera.main.orthographicSize += ZoomStep;
+            else if (Camera.main.orthographicSize >= _ortographicZOOMmax)
+                Camera.main.orthographicSize = _ortographicZOOMmax;
+
+            _yBorder = Camera.main.orthographicSize;
+            _xBorder = _yBorder * _screenRatio;
+
+        } else if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
+        {
+            if (Camera.main.orthographicSize > OrtographicZOOMmin)
+                Camera.main.orthographicSize -= ZoomStep;
+            else if (Camera.main.orthographicSize <= OrtographicZOOMmin)
+                Camera.main.orthographicSize = OrtographicZOOMmin;
+
+            _yBorder = Camera.main.orthographicSize;
+            _xBorder = _yBorder * _screenRatio;
+            
+        }
     }
 }

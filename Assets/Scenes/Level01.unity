@@ -151,6 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PanSpeed: 2
   PanBorderThickness: 10
+  OrtographicZOOMmin: 1.5
+  ZoomStep: 0.2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
