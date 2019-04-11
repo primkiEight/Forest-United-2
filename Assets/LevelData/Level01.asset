@@ -18,7 +18,7 @@ MonoBehaviour:
   BuldozerMoveSpeed: {x: 0, y: 0}
   BuldozerSpawnerMinNMax: {x: 2, y: 5}
   TimeForTheFirstBuldozerSpawn: 2
-  NoOfBuldozersToSpawn: 5
+  NoOfBuldozersToSpawn: 8
   AnimalMoveSpeed: {x: 0, y: 0}
   FieldForestPrefab: {fileID: 114441192943305382, guid: 3db9fa7f608423c4fa5440ca11447252,
     type: 2}

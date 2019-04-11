@@ -22,6 +22,8 @@ public abstract class Buldozer : MonoBehaviour {
     private Transform _myNextPosition;
     private Vector2Int _myFinalDestination;
 
+    private Trees _treesOnThisField = null;
+
     private List<Vector2Int> _forestHomesPositionsList = new List<Vector2Int>();
     private int _distanceX;
     private int _distanceY;
@@ -67,13 +69,15 @@ public abstract class Buldozer : MonoBehaviour {
         if (_forestHomesPositionsList != null)
         {
             _myFinalDestination = GetNearestHomePosition();
+
+            SetMyMovingPattern();
         }
 
         _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
 
         _buldozingBreakTemp = _buldozingBreakPerma;
 
-        SetMyMovingPattern();
+        
 
         StartMoving();
     }
@@ -194,6 +198,7 @@ public abstract class Buldozer : MonoBehaviour {
 
     public void TriggerMoving(bool trigger)
     {
+        _buldozingBreakTemp = _buldozingBreakPerma;
         _isMoving = trigger;
     }
 
@@ -202,6 +207,8 @@ public abstract class Buldozer : MonoBehaviour {
         //Animiraj kretnju
 
         //Odaberi na random sljedeću lokaciju iz liste svojih next lokacija
+
+        
 
         if (_myMovingPatternList.Count != 0)
         {
@@ -226,16 +233,19 @@ public abstract class Buldozer : MonoBehaviour {
             }
             
             //Provjeri je li buldozer na toj lokaciji, ako je, pričekaj na ovom polju
-            if (_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>() != null)
-            {
+            //al ne Mario na način da provjeravaš ima li objekta kao child:
+            //if (_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>() != null)
+            //nego tako da provjeriš vrijednost buldozeronmyfield tog polja!
+            if (_nextField.BuldozerOnMyField != null)
+                {
                 //_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>().Move();
-                StartCoroutine(CoWaitOnTheField());
+                StartCoroutine(CoWaitOnTheField(BuldozingDuration));
                 return;
             } else
             {
                 //_theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
                 
-                _myTransform.parent = _theLevelManager.GetBuldozersParent();
+                //_myTransform.parent = _theLevelManager.GetBuldozersParent();
 
                 //Postavi varijablu odakle krećeš kao svoj transform
                 _myStartingPosition = _myTransform;
@@ -245,12 +255,20 @@ public abstract class Buldozer : MonoBehaviour {
                 //Izbriši iz liste move patterna direction koji ti je bio odabran
                 _myMovingPatternList.Remove(nextDirection);
 
-                //Resetiraj brzinu
-                //ReSetBuldozingBreak();
-                //Postavi bool varijablu koja je triger za Update funkciju
-                TriggerMoving(true);
+                //Podešavam zajedničkog parenta dok se mičem
+                _myTransform.parent = _theLevelManager.GetBuldozersParent();
 
+                //Oslobađam ovo polje od buldožera
                 _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
+
+                ////OVDJE POSTAVLJAM DA JE BULDOŽER NOVOG POLJA OVAJ BULDOŽER TIK PRIJE NEGO KRENE PREMA NOVOM POLJU
+                ////STAVIO SAM TO TAKO KAKO BI IZBJEGAO DA 2 BULDOŽERA BUDU NA ISTOM POLJU
+                ////Upitno je hoće li dobro funkcionirati kada stavim moći i životinje
+                //Dogodilo mi se da su 2 svejedno išla na isto polje u situaciji kada su se 2 spawnala jedan do drugog i oba krenula na isto polje
+                _nextField.SetBuldozerOnMyField(this);
+
+                //Postavi bool varijablu koja je triger za Update funkciju za kretanje al prvo resetiraj brzinu na originalnu
+                TriggerMoving(true);
             }
         }
     }
@@ -319,49 +337,91 @@ public abstract class Buldozer : MonoBehaviour {
     //Ako je ovdje šuma, pokreni Attack; ako nije, ponovno pokreni ovaj Move
     private void SetNewPosition()
     {
+        
+
         ////OVE DOLJE 3 NAREDBE sam prebacio gore jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
         //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
         _myTransform.position = _myNextPosition.position;
         _myTransform.SetParent(_nextField.BuldozerPosition);
-        _nextField.SetBuldozerOnMyField(this);
+
+        ////ODAVDE SAM MAKNUO DA JE TEK KADA STIGNE NA OVO POLJE
+        ////BULDOŽER OVOG POLJA OVAJ BULDOŽER
+        ////I STAVIO SAM TO TAKO KAKO BI IZBJEGAO DA 2 BULDOŽERA BUDU NA ISTOM POLJU
+        ////Upitno je hoće li dobro funkcionirati kada stavim moći i životinje
+        //_nextField.SetBuldozerOnMyField(this);
 
         MyMatrixPosition = _nextField.MyFieldPosition;
 
         //Stavljam da je ovo novo polje trenutno this field, kako bih mogao dohvatiti životinje ili šumu iz njega
         _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
 
+
+        //_treesOnThisField = _thisField.TreesOnMyField;
+        //if (_thisField.TreesOnMyField != null)
+        //{
+        //    StartCoroutine("CoAttackTreesOnThisField", _treesOnThisField);
+        //} else
+        //{
+        //    StartMoving();
+        //}
+
+        _treesOnThisField = _thisField.TreesOnMyField;
+        if (_thisField.TreesOnMyField != null)
+        {
+            StartCoroutine(CoAttackTreesOnThisField(_treesOnThisField));
+            return;
+        } else
+        {
+            StartCoroutine(CoWaitOnTheField(0.1f));
+            return;
+        }
+
+
+
+
+        //StartMoving();
+
         //Pokreni attack
-        Attack();
+        //Attack();
     }
 
-    public IEnumerator CoWaitOnTheField()
+    public IEnumerator CoWaitOnTheField(float duration)
     {
-        yield return new WaitForSeconds(BuldozingDuration);
+        yield return new WaitForSeconds(duration);
 
-        ReSetBuldozingBreak();
+        //ReSetBuldozingBreak();
 
         StartMoving();
     }
 
-
-    public virtual void Attack()
+    public IEnumerator CoAttackTreesOnThisField(Trees treesOnThisField)
     {
-        //Animiraj razaranje
-
-        if(_thisField.TreesOnMyField != null)
-        {
-            Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
-            treesOnThisField.StartBuldozingMe(this);
-        } else
-        {
-            StartCoroutine(CoWaitOnTheField());
-        }
-
-        //while(_thisField.TreesOnMyField != null)
-
-        //if()
-
+        treesOnThisField.StartBuldozingMe(this);
+        yield return new WaitForSeconds(BuldozingDuration);
+        StartMoving();
     }
+
+
+
+
+    //public virtual void Attack()
+    //{
+    //    //Animiraj razaranje
+    //
+    //    if(_thisField.TreesOnMyField != null)
+    //    {
+    //        Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
+    //        treesOnThisField.StartBuldozingMe(this);
+    //    } else
+    //    {
+    //        StartCoroutine(CoWaitOnTheField());
+    //    }
+    //
+    //    //while(_thisField.TreesOnMyField != null)
+    //
+    //    //if()
+    //
+    //}
 
     public virtual void Death()
     {
