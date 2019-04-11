@@ -38,7 +38,8 @@ public class Trees : MonoBehaviour {
     private IEnumerator CoBuldozingMe(Buldozer theBuldozer)
     {
         yield return new WaitForSeconds(theBuldozer.BuldozingDuration);
-        theBuldozer.StartMoving();
+        if(theBuldozer != null)
+            theBuldozer.StartMoving();
         Destroy(gameObject);
     }
 }

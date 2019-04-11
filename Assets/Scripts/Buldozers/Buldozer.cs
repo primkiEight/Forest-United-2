@@ -4,12 +4,6 @@ using UnityEngine;
 
 public abstract class Buldozer : MonoBehaviour {
 
-    //protected Field[,] _LevelFields;
-    //public virtual void Initialize(Field[,] levelFields)
-    //{
-    //    _LevelFields = levelFields;
-    //}
-
     private enum _direction
     {
         Up,
@@ -38,7 +32,7 @@ public abstract class Buldozer : MonoBehaviour {
     private bool _isMoving = false;
     public float MovingSpeed;
     private float _buldozingBreakTemp;
-    private float _buldozingBreakPerma = 1;
+    private float _buldozingBreakPerma = 1.0f;
 
     public float BuldozingDuration;
     public float WaitOnTheEmptyField;
@@ -239,7 +233,7 @@ public abstract class Buldozer : MonoBehaviour {
                 return;
             } else
             {
-                _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
+                //_theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
                 
                 _myTransform.parent = _theLevelManager.GetBuldozersParent();
 
@@ -255,6 +249,8 @@ public abstract class Buldozer : MonoBehaviour {
                 //ReSetBuldozingBreak();
                 //Postavi bool varijablu koja je triger za Update funkciju
                 TriggerMoving(true);
+
+                _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
             }
         }
     }
@@ -270,12 +266,26 @@ public abstract class Buldozer : MonoBehaviour {
 
     public void SetBuldozingBreak(float _buldozingBreakPower)
     {
+        //Ne uništava mi buldožera ako ga ovime zaustavim na polju :(
+        
         _buldozingBreakTemp = _buldozingBreakPower;
+        if (_thisField.TreesOnMyField != null)
+        {
+            Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
+            treesOnThisField.StopBuldozingMe();
+        }
+
+
+
     }
 
     public void ReSetBuldozingBreak()
     {
         _buldozingBreakTemp = _buldozingBreakPerma;
+
+        //if (!_isMoving)
+        //    _isMoving = true;
+        
     }
 
     private void Move()
@@ -293,9 +303,9 @@ public abstract class Buldozer : MonoBehaviour {
 
             ////OVE DOLJE 3 NAREDBE sam prebacio ovdje (ranije su bile dolje) jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
             //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
-            _myTransform.position = _myNextPosition.position;
-            _myTransform.SetParent(_nextField.BuldozerPosition);
-            _nextField.SetBuldozerOnMyField(this);
+            //_myTransform.position = _myNextPosition.position;
+            //_myTransform.SetParent(_nextField.BuldozerPosition);
+            //_nextField.SetBuldozerOnMyField(this);
 
 
 
@@ -311,9 +321,9 @@ public abstract class Buldozer : MonoBehaviour {
     {
         ////OVE DOLJE 3 NAREDBE sam prebacio gore jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
         //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
-        //_myTransform.position = _myNextPosition.position;
-        //_myTransform.SetParent(_nextField.BuldozerPosition);
-        //_nextField.SetBuldozerOnMyField(this);
+        _myTransform.position = _myNextPosition.position;
+        _myTransform.SetParent(_nextField.BuldozerPosition);
+        _nextField.SetBuldozerOnMyField(this);
 
         MyMatrixPosition = _nextField.MyFieldPosition;
 
@@ -363,7 +373,7 @@ public abstract class Buldozer : MonoBehaviour {
             treesOnThisField.StopBuldozingMe();
         }
 
-        StopAllCoroutines();
+        //StopAllCoroutines();
         Destroy(gameObject, 0.5f);
         //Destroy(gameObject);
     }

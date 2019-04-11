@@ -37,6 +37,8 @@ public class CameraController : MonoBehaviour {
 
         Camera.main.orthographicSize = OrtographicZOOMmin;
 
+        _myTransform.position = new Vector3((float) ((_panLimit.x + 1) / 2), (float) ((_panLimit.y + 1) / 2), _myTransform.position.z);
+
         _screenRatio = (float)Camera.main.pixelWidth / (float)Camera.main.pixelHeight;
         _yBorder = Camera.main.orthographicSize;
         _xBorder = _yBorder * _screenRatio;

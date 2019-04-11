@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: Level01
   m_EditorClassIdentifier: 
   Xmin: 3
-  Xmax: 10
+  Xmax: 6
   Ymin: 3
-  Ymax: 10
+  Ymax: 6
   BuldozerMoveSpeed: {x: 0, y: 0}
   BuldozerSpawnerMinNMax: {x: 2, y: 5}
   TimeForTheFirstBuldozerSpawn: 2
@@ -30,11 +30,6 @@ MonoBehaviour:
   - {fileID: 114174679075697334, guid: b128ad54b6f53f948997d91ffa3c3ecc, type: 2}
   - {fileID: 114108543324723584, guid: 59dbdce98ddf83344b0d3c44cc163f2f, type: 2}
   LevelBuldozersList:
-  - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
-  - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
-  - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
-  - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
-  - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
   - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
   - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
   - {fileID: 114897070352661558, guid: 57661be0fe17ad045a23087a8cb6775f, type: 2}
