@@ -32,7 +32,8 @@ public class Trees : MonoBehaviour {
 
     public void StopBuldozingMe()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
+        StopCoroutine("CoBuldozingMe");
     }
 
     private IEnumerator CoBuldozingMe(Buldozer theBuldozer)

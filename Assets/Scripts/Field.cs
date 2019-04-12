@@ -35,7 +35,8 @@ public abstract class Field : MonoBehaviour {
     public virtual void SetBuldozerOnMyField(Buldozer buldozerOnMyField)
     {
         BuldozerOnMyField = buldozerOnMyField;
-        Casting();
+        //if(AnimalInMyHole)
+        //    Casting();
     }
 
     public virtual void Casting()

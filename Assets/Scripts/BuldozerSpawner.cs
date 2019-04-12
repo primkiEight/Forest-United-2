@@ -39,10 +39,12 @@ public class BuldozerSpawner : MonoBehaviour {
         {
             Buldozer buldozerClone = Instantiate(buldozerToSpawn, randomSpawnPosition.position, Quaternion.identity, _theLevelManager.GetBoundaryForestList[randomIndex].BuldozerPosition);
 
+            buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
+
             _theLevelManager.GetBoundaryForestList[randomIndex].SetBuldozerOnMyField(buldozerClone);
             //_theLevelManager.GetBoundaryForestList[randomIndex].BuldozerOnMyField = buldozerClone;
 
-            buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
+            //buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
         }
     }
 

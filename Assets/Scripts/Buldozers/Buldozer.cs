@@ -31,6 +31,11 @@ public abstract class Buldozer : MonoBehaviour {
 
     public Sprite MySprite;
 
+    [SerializeField]
+    private bool _breakA = false;
+    [SerializeField]
+    private bool _breakB = false;
+
     private bool _isMoving = false;
     public float MovingSpeed;
     private float _buldozingBreakTemp;
@@ -61,11 +66,20 @@ public abstract class Buldozer : MonoBehaviour {
             GetComponent<SpriteRenderer>().sprite = MySprite;        
     }
 
-    public void Start()
+    private void Start()
     {
         _theLevelManager = LevelManager.Instance;
 
         _forestHomesPositionsList = _theLevelManager.LevelHomePositionsList;
+
+        _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
+
+        StartMyEngines();
+
+    }
+
+    public void StartMyEngines()
+    {
         if (_forestHomesPositionsList != null)
         {
             _myFinalDestination = GetNearestHomePosition();
@@ -73,11 +87,9 @@ public abstract class Buldozer : MonoBehaviour {
             SetMyMovingPattern();
         }
 
-        _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
+        //_thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
 
         _buldozingBreakTemp = _buldozingBreakPerma;
-
-        
 
         StartMoving();
     }
@@ -207,9 +219,6 @@ public abstract class Buldozer : MonoBehaviour {
         //Animiraj kretnju
 
         //Odaberi na random sljedeću lokaciju iz liste svojih next lokacija
-
-        
-
         if (_myMovingPatternList.Count != 0)
         {
             int randomIndex = Random.Range(0, _myMovingPatternList.Count);
@@ -239,7 +248,7 @@ public abstract class Buldozer : MonoBehaviour {
             if (_nextField.BuldozerOnMyField != null)
                 {
                 //_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>().Move();
-                StartCoroutine(CoWaitOnTheField(BuldozingDuration));
+                StartCoroutine(CoWaitOnTheField(0.1f));
                 return;
             } else
             {
@@ -273,19 +282,10 @@ public abstract class Buldozer : MonoBehaviour {
         }
     }
 
-    //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
-    private void Update()
-    {
-        if (_isMoving)
-        {
-            Move();
-        }        
-    }
-
     public void SetBuldozingBreak(float _buldozingBreakPower)
     {
-        //Ne uništava mi buldožera ako ga ovime zaustavim na polju :(
-        
+        _breakA = true;
+
         _buldozingBreakTemp = _buldozingBreakPower;
         if (_thisField.TreesOnMyField != null)
         {
@@ -293,17 +293,21 @@ public abstract class Buldozer : MonoBehaviour {
             treesOnThisField.StopBuldozingMe();
         }
 
-
-
     }
 
     public void ReSetBuldozingBreak()
     {
-        _buldozingBreakTemp = _buldozingBreakPerma;
+        _breakA = false;
+        _breakB = false;
+    }
 
-        //if (!_isMoving)
-        //    _isMoving = true;
-        
+    //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
+    private void Update()
+    {
+        if (_isMoving && !_breakB)
+        {
+            Move();
+        }        
     }
 
     private void Move()
@@ -313,11 +317,13 @@ public abstract class Buldozer : MonoBehaviour {
         //Kada je distance od transforma buldozera vrlo blizu target poziciji (>=0.01)
         //postavi transform buldozera točno prema transformu finalne pozicije
         //i stavi bool za Move u false.
-        if (Vector3.Distance(_myTransform.position, _myNextPosition.position) <= 0.01)
+        if ((Vector3.Distance(_myTransform.position, _myNextPosition.position) <= 0.1f) ||
+            _myTransform.position == _myNextPosition.position)
         {
+            if (_breakA)
+                _breakB = true;
+
             TriggerMoving(false);
-
-
 
             ////OVE DOLJE 3 NAREDBE sam prebacio ovdje (ranije su bile dolje) jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
             //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
@@ -325,10 +331,8 @@ public abstract class Buldozer : MonoBehaviour {
             //_myTransform.SetParent(_nextField.BuldozerPosition);
             //_nextField.SetBuldozerOnMyField(this);
 
-
-
-
-            SetNewPosition();
+            if(!_breakA && !_breakB)
+                SetNewPosition();
         }
     }
     
@@ -337,8 +341,6 @@ public abstract class Buldozer : MonoBehaviour {
     //Ako je ovdje šuma, pokreni Attack; ako nije, ponovno pokreni ovaj Move
     private void SetNewPosition()
     {
-        
-
         ////OVE DOLJE 3 NAREDBE sam prebacio gore jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
         //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
         _myTransform.position = _myNextPosition.position;
@@ -355,16 +357,6 @@ public abstract class Buldozer : MonoBehaviour {
         //Stavljam da je ovo novo polje trenutno this field, kako bih mogao dohvatiti životinje ili šumu iz njega
         _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
 
-
-        //_treesOnThisField = _thisField.TreesOnMyField;
-        //if (_thisField.TreesOnMyField != null)
-        //{
-        //    StartCoroutine("CoAttackTreesOnThisField", _treesOnThisField);
-        //} else
-        //{
-        //    StartMoving();
-        //}
-
         _treesOnThisField = _thisField.TreesOnMyField;
         if (_thisField.TreesOnMyField != null)
         {
@@ -375,14 +367,6 @@ public abstract class Buldozer : MonoBehaviour {
             StartCoroutine(CoWaitOnTheField(0.1f));
             return;
         }
-
-
-
-
-        //StartMoving();
-
-        //Pokreni attack
-        //Attack();
     }
 
     public IEnumerator CoWaitOnTheField(float duration)
@@ -396,32 +380,11 @@ public abstract class Buldozer : MonoBehaviour {
 
     public IEnumerator CoAttackTreesOnThisField(Trees treesOnThisField)
     {
+        //Animiraj rezanje
         treesOnThisField.StartBuldozingMe(this);
         yield return new WaitForSeconds(BuldozingDuration);
         StartMoving();
     }
-
-
-
-
-    //public virtual void Attack()
-    //{
-    //    //Animiraj razaranje
-    //
-    //    if(_thisField.TreesOnMyField != null)
-    //    {
-    //        Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
-    //        treesOnThisField.StartBuldozingMe(this);
-    //    } else
-    //    {
-    //        StartCoroutine(CoWaitOnTheField());
-    //    }
-    //
-    //    //while(_thisField.TreesOnMyField != null)
-    //
-    //    //if()
-    //
-    //}
 
     public virtual void Death()
     {

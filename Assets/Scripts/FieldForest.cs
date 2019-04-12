@@ -80,7 +80,7 @@ public class FieldForest : Field {
                 if (otherSelectedField != null)
                 {
                     //Starting a coroutine for emarging the selected animal
-                    StartCoroutine("CoEmargeAnimalInMyHole", otherSelectedField);
+                    StartCoroutine(CoEmargeAnimalInMyHole(otherSelectedField));
                 }
                 //If there is no active field at all, return
                 else
@@ -107,12 +107,14 @@ public class FieldForest : Field {
         //Remove the animal from the previous field, animating it
         otherSelectedField.ClearField();
         //If there is a buldozer on this field, restore its speed
-        if(BuldozerOnMyField)
+        if(BuldozerOnMyField != null)
             BuldozerOnMyField.ReSetBuldozingBreak();
+            ////BuldozerOnMyField.StartMyEngines();
+            
 
-        //Check and clear the otherfield's neighbours' lists once the animal is gone from that field
-        
-        otherSelectedField.ReCheckAnimalsInTheHood();
+            //Check and clear the otherfield's neighbours' lists once the animal is gone from that field
+
+            otherSelectedField.ReCheckAnimalsInTheHood();
         otherSelectedField.CheckAnimalsInTheHood();
         otherSelectedField.Casting();
 
@@ -226,14 +228,33 @@ public class FieldForest : Field {
         if (PowerOnMyField)
             Destroy(PowerOnMyField.gameObject);
 
-        if (AnimalsInTheHood)
+        ////DODATI OVDJE LOGIKU AKO SU ŽIVOTINJA I SUSJEDE I BULDOŽER
+        ////DODATI OVDJE LOGIKU AKO SU ŽIVOTINJA I NISU SUSJEDE I BULDOŽER
+        ////DODATI OVDJE LOGIKU AKO NIJE ŽIVOTINJA ALI JEST BULDOŽER
+
+        if(BuldozerOnMyField != null && AnimalsInTheHood == true  && AnimalInMyHole == true)
         {
             CastSuperPower();
-        }
-        else
+        } else if (BuldozerOnMyField != null && AnimalsInTheHood == false && AnimalInMyHole == true)
         {
             CastMidPower();
-        }        
+        } else if (BuldozerOnMyField != null && AnimalInMyHole == false)
+        {
+            if (PowerOnMyField)
+                Destroy(PowerOnMyField);
+            BuldozerOnMyField.ReSetBuldozingBreak();
+        }
+
+
+
+        //if (AnimalsInTheHood)
+        //{
+        //    CastSuperPower();
+        //}
+        //else
+        //{
+        //    CastMidPower();
+        //}        
     }
     
     public void CastMidPower()
@@ -241,22 +262,26 @@ public class FieldForest : Field {
         if(PowerOnMyField)
             Destroy(PowerOnMyField.gameObject);
 
-        if (BuldozerOnMyField != null)
-        {
-            if (AnimalInMyHole)
-            {
-                PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-                PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
-                Debug.Log("CastingMidPower");
-            } else
-            {
-                BuldozerOnMyField.ReSetBuldozingBreak();
-            }
-        } else
-        {
-            if (PowerOnMyField)
-                Destroy(PowerOnMyField.gameObject);
-        }       
+        PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+        PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+
+        //if (BuldozerOnMyField != null)
+        //{
+        //    if (AnimalInMyHole)
+        //    {
+        //        PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+        //        PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+        //        Debug.Log("CastingMidPower");
+        //    } else
+        //    {
+        //        BuldozerOnMyField.ReSetBuldozingBreak();
+        //        //////BuldozerOnMyField.StartMyEngines();
+        //    }
+        //} else
+        //{
+        //    if (PowerOnMyField)
+        //        Destroy(PowerOnMyField.gameObject);
+        //}       
     }
 
     public void CastSuperPower()
@@ -264,23 +289,26 @@ public class FieldForest : Field {
         if (PowerOnMyField)
             Destroy(PowerOnMyField.gameObject);
 
-        if (AnimalInMyHole)
-        {
-            if (AnimalInMyHole)
-            {
-                PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+        PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+        PowerOnMyField.DestroyBuldozer(BuldozerOnMyField);
 
-                if(BuldozerOnMyField != null)
-                {
-                    PowerOnMyField.DestroyBuldozer(BuldozerOnMyField);
-                    Debug.Log("CastingSuperPower");
-                }
-            }
-        }
-        else
-        {
-            if (PowerOnMyField)
-                Destroy(PowerOnMyField.gameObject);
-        }
+        //if (AnimalInMyHole)
+        //{
+        //    if (AnimalInMyHole)
+        //    {
+        //        PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+        //
+        //        if(BuldozerOnMyField != null)
+        //        {
+        //            PowerOnMyField.DestroyBuldozer(BuldozerOnMyField);
+        //            Debug.Log("CastingSuperPower");
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    if (PowerOnMyField)
+        //        Destroy(PowerOnMyField.gameObject);
+        //}
     }
 }
