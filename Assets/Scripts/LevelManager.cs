@@ -246,6 +246,8 @@ public class LevelManager : MonoBehaviour {
 
                 Animal animalInTheHole = Instantiate(LevelData.LevelAnimalsList[i], thisForestField.AnimalPosition.position, Quaternion.identity, thisForestField.AnimalPosition);
 
+                thisForestField.SetMound(true);
+
                 _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalInMyHole = animalInTheHole;
 
                 //_levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalInMyHole = Instantiate(LevelData.LevelAnimalsList[i], _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalPosition.position, Quaternion.identity, _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalPosition);
