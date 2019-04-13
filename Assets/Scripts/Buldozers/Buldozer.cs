@@ -35,6 +35,8 @@ public abstract class Buldozer : MonoBehaviour {
     private bool _breakA = false;
     [SerializeField]
     private bool _breakB = false;
+    [SerializeField]
+    private bool _breakC = true;
 
     private bool _isMoving = false;
     public float MovingSpeed;
@@ -73,6 +75,12 @@ public abstract class Buldozer : MonoBehaviour {
         _forestHomesPositionsList = _theLevelManager.LevelHomePositionsList;
 
         _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
+
+        _breakC = false;
+        _breakC = false;
+        _breakC = true;
+
+
 
         StartMyEngines();
 
@@ -286,7 +294,7 @@ public abstract class Buldozer : MonoBehaviour {
     {
         _breakA = true;
 
-        _buldozingBreakTemp = _buldozingBreakPower;
+        //_buldozingBreakTemp = _buldozingBreakPower;
         if (_thisField.TreesOnMyField != null)
         {
             Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
@@ -299,6 +307,9 @@ public abstract class Buldozer : MonoBehaviour {
     {
         _breakA = false;
         _breakB = false;
+        _breakC = true;
+        if (!_isMoving)
+            TriggerMoving(true);
     }
 
     //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
@@ -306,7 +317,46 @@ public abstract class Buldozer : MonoBehaviour {
     {
         if (_isMoving && !_breakB)
         {
-            Move();
+            //Move();
+
+            _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed * _buldozingBreakTemp);
+
+            //Kada je distance od transforma buldozera vrlo blizu target poziciji (>=0.01)
+            //postavi transform buldozera točno prema transformu finalne pozicije
+            //i stavi bool za Move u false.
+
+            float distance = Vector3.Distance(_myTransform.position, _myNextPosition.position);
+
+            if ((distance <= 0.01f) && _breakC)
+            {
+                Debug.Log(distance);
+
+                if(_nextField.AnimalInMyHole != null)
+                    _nextField.Casting();
+
+                if (_breakA)
+                    _breakB = true;
+
+                TriggerMoving(false);
+
+                _breakC = false;
+
+                ////OVE DOLJE 3 NAREDBE sam prebacio ovdje (ranije su bile dolje) jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
+                //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
+                //_myTransform.position = _myNextPosition.position;
+                //_myTransform.SetParent(_nextField.BuldozerPosition);
+                //_nextField.SetBuldozerOnMyField(this);
+
+                if (!_breakA && !_breakB)
+                {
+                    _breakC = true;
+                    SetNewPosition();
+                }
+                    
+            }
+
+
+
         }        
     }
 
@@ -318,12 +368,14 @@ public abstract class Buldozer : MonoBehaviour {
         //postavi transform buldozera točno prema transformu finalne pozicije
         //i stavi bool za Move u false.
         if ((Vector3.Distance(_myTransform.position, _myNextPosition.position) <= 0.1f) ||
-            _myTransform.position == _myNextPosition.position)
+            _breakC)
         {
             if (_breakA)
                 _breakB = true;
 
             TriggerMoving(false);
+
+            _breakC = false;
 
             ////OVE DOLJE 3 NAREDBE sam prebacio ovdje (ranije su bile dolje) jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
             //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje

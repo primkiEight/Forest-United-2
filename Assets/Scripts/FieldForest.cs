@@ -106,9 +106,9 @@ public class FieldForest : Field {
         _tempAnimalClone = Instantiate(otherSelectedField.AnimalInMyHole, AnimalPosition.position, Quaternion.identity, FieldController.GetAnimalLimboTransform());
         //Remove the animal from the previous field, animating it
         otherSelectedField.ClearField();
-        //If there is a buldozer on this field, restore its speed
-        if(BuldozerOnMyField != null)
-            BuldozerOnMyField.ReSetBuldozingBreak();
+        //If there is a buldozer on that field, restore its speed
+        if(otherSelectedField.BuldozerOnMyField != null)
+            otherSelectedField.BuldozerOnMyField.ReSetBuldozingBreak();
             ////BuldozerOnMyField.StartMyEngines();
             
 
@@ -232,13 +232,17 @@ public class FieldForest : Field {
         ////DODATI OVDJE LOGIKU AKO SU ŽIVOTINJA I NISU SUSJEDE I BULDOŽER
         ////DODATI OVDJE LOGIKU AKO NIJE ŽIVOTINJA ALI JEST BULDOŽER
 
-        if(BuldozerOnMyField != null && AnimalsInTheHood == true  && AnimalInMyHole == true)
+        if(BuldozerOnMyField == null && AnimalsInTheHood == true && AnimalInMyHole == true)
         {
             CastSuperPower();
-        } else if (BuldozerOnMyField != null && AnimalsInTheHood == false && AnimalInMyHole == true)
+        }
+        else if (BuldozerOnMyField != null && AnimalsInTheHood == true  && AnimalInMyHole != null)
+        {
+            CastSuperPower();
+        } else if (BuldozerOnMyField != null && AnimalsInTheHood == false && AnimalInMyHole != null)
         {
             CastMidPower();
-        } else if (BuldozerOnMyField != null && AnimalInMyHole == false)
+        } else if (BuldozerOnMyField != null && AnimalInMyHole == null)
         {
             if (PowerOnMyField)
                 Destroy(PowerOnMyField);

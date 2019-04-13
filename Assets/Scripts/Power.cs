@@ -8,11 +8,13 @@ public class Power : MonoBehaviour {
 
     public void BreakBuldozer(Buldozer buldozer)
     {
-        buldozer.SetBuldozingBreak(BuldozingBreak);
+        if(buldozer)
+            buldozer.SetBuldozingBreak(BuldozingBreak);
     }
 
     public void DestroyBuldozer(Buldozer buldozer)
     {
-        buldozer.Death();
+        if(buldozer)
+            buldozer.Death();
     }
 }
