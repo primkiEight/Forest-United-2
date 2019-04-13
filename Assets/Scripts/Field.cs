@@ -4,17 +4,10 @@ using UnityEngine;
 
 public abstract class Field : MonoBehaviour {
 
-    //protected Field[,] _LevelFields;
-    //public virtual void Initialize(Field[,] levelFields)
-    //{
-    //    _LevelFields = levelFields;
-    //}
-
-
     [HideInInspector]
     public FieldController FieldController;
 
-    //[HideInInspector]
+    [HideInInspector]
     public Vector2Int MyFieldPosition;
 
     public Animal AnimalInMyHole;
@@ -35,7 +28,9 @@ public abstract class Field : MonoBehaviour {
     public virtual void SetBuldozerOnMyField(Buldozer buldozerOnMyField)
     {
         BuldozerOnMyField = buldozerOnMyField;
-        //if(AnimalInMyHole)
+
+        //Ovo je upitno treba li ovdje :(
+        //if (AnimalInMyHole != null)
         //    Casting();
     }
 

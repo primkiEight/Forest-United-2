@@ -32,10 +32,13 @@ public abstract class Buldozer : MonoBehaviour {
     public Sprite MySprite;
 
     [SerializeField]
+    //Disables/Enables setting a new field to move to
     private bool _breakA = false;
     [SerializeField]
+    //Desables/Enables Update's move and setting a new field to move to
     private bool _breakB = false;
     [SerializeField]
+    //Enables/Disables moving from the current field
     private bool _breakC = true;
 
     private bool _isMoving = false;
@@ -76,8 +79,8 @@ public abstract class Buldozer : MonoBehaviour {
 
         _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
 
-        _breakC = false;
-        _breakC = false;
+        _breakA = false;
+        _breakB = false;
         _breakC = true;
 
 
@@ -284,15 +287,27 @@ public abstract class Buldozer : MonoBehaviour {
                 //Dogodilo mi se da su 2 svejedno išla na isto polje u situaciji kada su se 2 spawnala jedan do drugog i oba krenula na isto polje
                 _nextField.SetBuldozerOnMyField(this);
 
+                //OVDJE POKUŠAJ UMJESTO U FIELD APSTRAKTNOJ SKRIPTI
+                _nextField.Casting();
+
+
                 //Postavi bool varijablu koja je triger za Update funkciju za kretanje al prvo resetiraj brzinu na originalnu
                 TriggerMoving(true);
             }
         }
     }
 
-    public void SetBuldozingBreak(float _buldozingBreakPower)
+    public void SetBuldozingBreak()
     {
         _breakA = true;
+        
+        //*****************************************************************************************************
+        //upitno je trebam li ovu dolje liniju uključiti ili isključiti
+        //Također Casting na Field skripti kod postavljanja buldožera
+        //jer se taj provjerava kod svakog spawnanja buldožera
+
+        //_breakB = true;
+        _breakC = false;
 
         //_buldozingBreakTemp = _buldozingBreakPower;
         if (_thisField.TreesOnMyField != null)
@@ -300,11 +315,16 @@ public abstract class Buldozer : MonoBehaviour {
             Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
             treesOnThisField.StopBuldozingMe();
         }
+    }
 
+    public void SetBuldozingSpeed(float _buldozingBreakSpeed)
+    {
+        _buldozingBreakTemp = _buldozingBreakSpeed;
     }
 
     public void ReSetBuldozingBreak()
     {
+        //_buldozingBreakTemp = _buldozingBreakPerma;
         _breakA = false;
         _breakB = false;
         _breakC = true;
@@ -317,23 +337,12 @@ public abstract class Buldozer : MonoBehaviour {
     {
         if (_isMoving && !_breakB)
         {
-            //Move();
-
             _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed * _buldozingBreakTemp);
-
-            //Kada je distance od transforma buldozera vrlo blizu target poziciji (>=0.01)
-            //postavi transform buldozera točno prema transformu finalne pozicije
-            //i stavi bool za Move u false.
 
             float distance = Vector3.Distance(_myTransform.position, _myNextPosition.position);
 
             if ((distance <= 0.01f) && _breakC)
             {
-                Debug.Log(distance);
-
-                if(_nextField.AnimalInMyHole != null)
-                    _nextField.Casting();
-
                 if (_breakA)
                     _breakB = true;
 
@@ -341,22 +350,18 @@ public abstract class Buldozer : MonoBehaviour {
 
                 _breakC = false;
 
-                ////OVE DOLJE 3 NAREDBE sam prebacio ovdje (ranije su bile dolje) jer mi destroyanje nije dobro radilo (ne znam radi li sada još uvijek dobro)
-                //buldozer se nije uništavao ako bi postavio životinju nešto kasnije na polje
-                //_myTransform.position = _myNextPosition.position;
-                //_myTransform.SetParent(_nextField.BuldozerPosition);
-                //_nextField.SetBuldozerOnMyField(this);
+                if (_nextField.AnimalInMyHole != null)
+                    _nextField.Casting();
+
+                if (_thisField.AnimalInMyHole != null)
+                    _thisField.Casting();
 
                 if (!_breakA && !_breakB)
                 {
                     _breakC = true;
                     SetNewPosition();
-                }
-                    
+                }   
             }
-
-
-
         }        
     }
 

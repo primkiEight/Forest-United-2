@@ -12,6 +12,8 @@ public class FieldForest : Field {
     //public Trees TreesOnMyField;
 
     public Transform HolePosition;
+    private SpriteRenderer _mound;
+    private float _moundSpeedUp = 1.0f;
     //public Transform AnimalPosition;
     //public Transform PowerPosition;
     //public Transform TreesPosition;
@@ -40,6 +42,8 @@ public class FieldForest : Field {
         _myBoxCollider2D = GetComponent<BoxCollider2D>();
         mySprite = GetComponent<SpriteRenderer>();
         mySprite.color = InactiveColor;
+        _mound = HolePosition.GetComponent<SpriteRenderer>();
+        SetMound(false);
         MyFieldPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
     }
 
@@ -91,13 +95,18 @@ public class FieldForest : Field {
             }
         }
     }
-
+    
     private void ClearField()
     {
         AnimalInMyHole.Submerge();
         AnimalInMyHole = null;
         IsAnimalHere = false;
         ChangeActive(false);
+    }
+
+    public void SetMound(bool visible)
+    {
+        _mound.enabled = visible;
     }
 
     private IEnumerator CoEmargeAnimalInMyHole(FieldForest otherSelectedField)
@@ -128,9 +137,19 @@ public class FieldForest : Field {
         //Wait for distance seconds for the animal to emarge here
         //including the speed of the animal
         //i dodati provjeru je li rupa već iskopana ili nije
-        yield return new WaitForSeconds(distance * _tempAnimalClone.DiggingSpeed);
+
+        if (_mound.enabled == true)
+        {
+            _moundSpeedUp = 0.8f;
+        }
+
+        yield return new WaitForSeconds(distance * _tempAnimalClone.DiggingSpeed * _moundSpeedUp);
+
         //Instantiate the animal (from the limbo) here on this field
         AnimalInMyHole = Instantiate(_tempAnimalClone, AnimalPosition.position, Quaternion.identity, AnimalPosition);
+
+        SetMound(true);
+
         //Destroy the animal in the limbo
         _tempAnimalClone.Submerge();
         //Animate the animal emarging
@@ -294,7 +313,7 @@ public class FieldForest : Field {
             Destroy(PowerOnMyField.gameObject);
 
         PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-        PowerOnMyField.DestroyBuldozer(BuldozerOnMyField);
+        PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
 
         //if (AnimalInMyHole)
         //{

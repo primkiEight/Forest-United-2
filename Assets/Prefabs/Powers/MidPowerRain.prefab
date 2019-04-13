@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4154553876353530}
   - component: {fileID: 212516708082783334}
-  - component: {fileID: 114078614554942116}
+  - component: {fileID: 114220310313384366}
   m_Layer: 0
   m_Name: MidPowerRain
   m_TagString: Untagged
@@ -41,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
---- !u!114 &114078614554942116
+--- !u!114 &114220310313384366
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,10 +49,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1147518818444832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57970be6e342b774798dbc051f919e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a6d73211d70afd4287710c6832b47dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuldozingBreak: 1
+  BuldozingBreak: 0.5
 --- !u!212 &212516708082783334
 SpriteRenderer:
   m_ObjectHideFlags: 1

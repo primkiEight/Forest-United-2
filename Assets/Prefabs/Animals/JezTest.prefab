@@ -84,9 +84,9 @@ MonoBehaviour:
   MySprite: {fileID: 21300000, guid: 5c6070f888813e54db31c43133cf0e78, type: 3}
   DiggingSpeed: 0.8
   PowerDuration: 1
-  MidPowerPrefab: {fileID: 114571441178600318, guid: c0d726be7cb28b245b0c0e7394b6c8cf,
+  MidPowerPrefab: {fileID: 114350346415162804, guid: c0d726be7cb28b245b0c0e7394b6c8cf,
     type: 2}
-  SuperPowerPrefab: {fileID: 114090949521875224, guid: c7fe234ef17bd84409c68f97464b2635,
+  SuperPowerPrefab: {fileID: 114258385207220358, guid: c7fe234ef17bd84409c68f97464b2635,
     type: 2}
   AudioDig: {fileID: 0}
   AudioActive: {fileID: 0}

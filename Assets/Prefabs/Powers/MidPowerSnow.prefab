@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4946822782144160}
   - component: {fileID: 212507526545390432}
-  - component: {fileID: 114571441178600318}
+  - component: {fileID: 114350346415162804}
   m_Layer: 0
   m_Name: MidPowerSnow
   m_TagString: Untagged
@@ -41,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
---- !u!114 &114571441178600318
+--- !u!114 &114350346415162804
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1017473430983158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57970be6e342b774798dbc051f919e43, type: 3}
+  m_Script: {fileID: 11500000, guid: b8b9d77c1541c3f468f2f52967404295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BuldozingBreak: 1
