@@ -21,7 +21,11 @@ GameObject:
   - component: {fileID: 4305724169850554}
   - component: {fileID: 212472966005516682}
   - component: {fileID: 114897070352661558}
-  m_Layer: 0
+  - component: {fileID: 114324279336411664}
+  - component: {fileID: 70382643743414132}
+  - component: {fileID: 50591925800463944}
+  - component: {fileID: 114319835400317922}
+  m_Layer: 11
   m_Name: BuldozerFireTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,6 +45,69 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50591925800463944
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481152756611424}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &70382643743414132
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481152756611424}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.043664824, y: -0.9410522}
+  m_Size: {x: 2.9200246, y: 0.3198388}
+  m_Direction: 1
+--- !u!114 &114319835400317922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481152756611424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4aed6e587d550045b544b0952b811ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sortingOrderBase: 5000
+  _offset: 0
+  _runOnlyOnce: 0
+--- !u!114 &114324279336411664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481152756611424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17d2097e136ee742a9ec67e7f7f88d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OtherLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &114897070352661558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,6 +121,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyMatrixPosition: {x: 0, y: 0}
   MySprite: {fileID: 21300000, guid: 8f22d894172801742b688cdba4d1a733, type: 3}
+  _breakA: 0
+  _breakB: 0
+  _breakC: 0
   MovingSpeed: 0.2
   BuldozingDuration: 5
   WaitOnTheEmptyField: 0
@@ -92,9 +162,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: 1920439863
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8f22d894172801742b688cdba4d1a733, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

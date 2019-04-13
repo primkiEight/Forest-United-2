@@ -49,6 +49,9 @@ public class LevelManager : MonoBehaviour {
     private BuldozerSpawner _buldozerSpawner;
     private GameObject _movingBuldozerParent;
 
+    private CloudSpawner _cloudSpawner;
+    private GameObject _movingCloudsParent;
+
     //Singleton
     private static LevelManager _instance;
     public static LevelManager Instance
@@ -86,6 +89,9 @@ public class LevelManager : MonoBehaviour {
         _movingBuldozerParent = new GameObject("MovingBuldozersParent");
         _buldozerSpawner = GetComponent<BuldozerSpawner>();
 
+        _movingCloudsParent = new GameObject("CloudsParent");
+        _cloudSpawner = GetComponent<CloudSpawner>();
+
         CreateLevelFields();
     }
 
@@ -93,7 +99,12 @@ public class LevelManager : MonoBehaviour {
     {
         return _movingBuldozerParent.transform;
     }
-    
+
+    public Transform GetCloudsParent()
+    {
+        return _movingCloudsParent.transform;
+    }
+
     //private void Start()
     //{
     //    //CreateLevelFields();
@@ -285,13 +296,8 @@ public class LevelManager : MonoBehaviour {
             }
         }
 
-
-        
-
-
         _buldozerSpawner.StartSpawning();
 
-
-
+        _cloudSpawner.StartSpawning();
     }
 }

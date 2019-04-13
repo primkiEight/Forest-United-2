@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Buldozer
+  - Tree
   layers:
   - Default
   - TransparentFX
@@ -13,11 +15,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Clouds2
+  - Clouds1
+  - Fields
+  - Buldozers
+  - Trees
   - 
   - 
   - 
@@ -40,4 +42,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 200539065
+    locked: 0
+  - name: Field
+    uniqueID: 3612369449
+    locked: 0
+  - name: ForestAndBuldozer
+    uniqueID: 1920439863
+    locked: 0
+  - name: Animal
+    uniqueID: 2120359233
+    locked: 0
+  - name: Mound
+    uniqueID: 3984420105
+    locked: 0
+  - name: Powers
+    uniqueID: 3218657829
+    locked: 0
+  - name: Clouds1
+    uniqueID: 995740455
+    locked: 0
+  - name: Clouds2
+    uniqueID: 876734763
     locked: 0

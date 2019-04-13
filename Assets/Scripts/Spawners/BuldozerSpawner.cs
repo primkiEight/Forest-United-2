@@ -8,11 +8,6 @@ public class BuldozerSpawner : MonoBehaviour {
 
     private LevelManager _theLevelManager;
 
-    private void Awake()
-    {
-        
-    }
-
     public void StartSpawning()
     {
         _theLevelManager = LevelManager.Instance;
@@ -42,9 +37,6 @@ public class BuldozerSpawner : MonoBehaviour {
             buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
 
             _theLevelManager.GetBoundaryForestList[randomIndex].SetBuldozerOnMyField(buldozerClone);
-            //_theLevelManager.GetBoundaryForestList[randomIndex].BuldozerOnMyField = buldozerClone;
-
-            //buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
         }
     }
 
@@ -60,6 +52,4 @@ public class BuldozerSpawner : MonoBehaviour {
             _freq = Random.Range(_theLevelManager.LevelData.BuldozerSpawnerMinNMax.x, _theLevelManager.LevelData.BuldozerSpawnerMinNMax.y);
         }        
     }
-
-
 }

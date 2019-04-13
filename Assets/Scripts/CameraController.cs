@@ -14,15 +14,25 @@ public class CameraController : MonoBehaviour {
     public float OrtographicZOOMmin = 1.5f;
     public float ZoomStep = 0.2f;
     private float _ortographicZOOMmax;
+    private float _secondCameraOrtographicProportion;
+    private float _thirdCameraOrtographicProportion;
     private float _levelWidth;
     private float _levelHight;
     private float _screenRatio;
     private float _xBorder;
     private float _yBorder;
-    
+
+    private Camera _mainCamera;
+    public Camera SecondCamera;
+    public Camera ThirdCamera;
+
     private void Awake()
     {
         _myTransform = transform;
+        _mainCamera = gameObject.GetComponent<Camera>();
+
+        _secondCameraOrtographicProportion = SecondCamera.orthographicSize / _mainCamera.orthographicSize;
+        _thirdCameraOrtographicProportion =  ThirdCamera.orthographicSize / _mainCamera.orthographicSize;
     }
 
     private void Start()
@@ -35,28 +45,39 @@ public class CameraController : MonoBehaviour {
 
         //ZOOOM with MouseWheel limits
 
-        Camera.main.orthographicSize = OrtographicZOOMmin;
-
+        _mainCamera.orthographicSize = OrtographicZOOMmin;
+        SecondCamera.orthographicSize = OrtographicZOOMmin * _secondCameraOrtographicProportion;
+        ThirdCamera.orthographicSize = OrtographicZOOMmin * _thirdCameraOrtographicProportion;
+        
         _myTransform.position = new Vector3((float) ((_panLimit.x + 1) / 2), (float) ((_panLimit.y + 1) / 2), _myTransform.position.z);
 
-        _screenRatio = (float)Camera.main.pixelWidth / (float)Camera.main.pixelHeight;
-        _yBorder = Camera.main.orthographicSize;
+        _screenRatio = (float)_mainCamera.pixelWidth / (float)_mainCamera.pixelHeight;
+        _yBorder = _mainCamera.orthographicSize;
         _xBorder = _yBorder * _screenRatio;
 
         _levelWidth = _theLevelManager.LevelData.Xmax;
         _levelHight = _theLevelManager.LevelData.Ymax;
 
-        Camera.main.orthographicSize = OrtographicZOOMmin;
-
         //Level's hight is larger or equal than it's width
         if (_levelHight >= _levelWidth)
         {
+            //Zoom out to the boundaries of the level:
             _ortographicZOOMmax = _levelWidth * Screen.height / Screen.width * 0.5f;
+            
+            //Zoom out only up to 2 times the minimum zoom
+            if (_ortographicZOOMmax >= OrtographicZOOMmin * 2)
+                _ortographicZOOMmax = OrtographicZOOMmin * 2;
+
         }
         //Level's width is larger than it's width
         else
         {
+            //Zoom out to the boundaries of the level:
             _ortographicZOOMmax = _levelHight / 2;
+            
+            //Zoom out only up to 2 times the minimum zoom
+            if (_ortographicZOOMmax >= OrtographicZOOMmin * 2)
+                _ortographicZOOMmax = OrtographicZOOMmin * 2;
         }
     }
     
@@ -84,24 +105,39 @@ public class CameraController : MonoBehaviour {
         //ZOOOM with MouseWheel limits
         if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
         {
-            if(Camera.main.orthographicSize < _ortographicZOOMmax)
-                Camera.main.orthographicSize += ZoomStep;
-            else if (Camera.main.orthographicSize >= _ortographicZOOMmax)
-                Camera.main.orthographicSize = _ortographicZOOMmax;
-
-            _yBorder = Camera.main.orthographicSize;
+            if(_mainCamera.orthographicSize < _ortographicZOOMmax)
+            {
+                _mainCamera.orthographicSize += ZoomStep;
+                SecondCamera.orthographicSize += ZoomStep * _secondCameraOrtographicProportion;
+                ThirdCamera.orthographicSize += ZoomStep * _thirdCameraOrtographicProportion;
+            }                
+            else if (_mainCamera.orthographicSize >= _ortographicZOOMmax)
+            {
+                _mainCamera.orthographicSize = _ortographicZOOMmax;
+                SecondCamera.orthographicSize = _ortographicZOOMmax * _secondCameraOrtographicProportion;
+                ThirdCamera.orthographicSize = _ortographicZOOMmax * _thirdCameraOrtographicProportion;
+            }
+                
+            _yBorder = _mainCamera.orthographicSize;
             _xBorder = _yBorder * _screenRatio;
 
         } else if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
         {
-            if (Camera.main.orthographicSize > OrtographicZOOMmin)
-                Camera.main.orthographicSize -= ZoomStep;
-            else if (Camera.main.orthographicSize <= OrtographicZOOMmin)
-                Camera.main.orthographicSize = OrtographicZOOMmin;
+            if (_mainCamera.orthographicSize > OrtographicZOOMmin)
+            {
+                _mainCamera.orthographicSize -= ZoomStep;
+                SecondCamera.orthographicSize -= ZoomStep * _secondCameraOrtographicProportion;
+                ThirdCamera.orthographicSize -= ZoomStep * _thirdCameraOrtographicProportion;
+            }                
+            else if (_mainCamera.orthographicSize <= OrtographicZOOMmin)
+            {
+                _mainCamera.orthographicSize = OrtographicZOOMmin;
+                SecondCamera.orthographicSize = OrtographicZOOMmin * _secondCameraOrtographicProportion;
+                ThirdCamera.orthographicSize = OrtographicZOOMmin * _thirdCameraOrtographicProportion;
+            }   
 
-            _yBorder = Camera.main.orthographicSize;
-            _xBorder = _yBorder * _screenRatio;
-            
+            _yBorder = _mainCamera.orthographicSize;
+            _xBorder = _yBorder * _screenRatio;            
         }
     }
 }
