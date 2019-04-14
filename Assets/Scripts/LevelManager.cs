@@ -9,34 +9,20 @@ public class LevelManager : MonoBehaviour {
     
     private Transform _myTransform;
     public Field[,] _levelFieldMatrix;
-    //public Field[,] GetFieldMatrix
-    //{
-    //    get
-    //    {
-    //        return _levelFieldMatrix;
-    //    }
-    //}
 
+    [Header("Spawning Areas")]
     public float CircleForAnimalsMin = 0.1f;
     public float CircleForHomeMin = 0.35f;
     public float CircleForHomeMax = 0.65f;
     public float CircleForAnimalsMax = 0.9f;
+    
     [SerializeField]
     private List<Vector2Int> _circleHomeList = new List<Vector2Int> { };
     public List<Vector2Int> LevelHomePositionsList = new List<Vector2Int> { };
     [SerializeField]
     private List<Vector2Int> _circleAnimalsList = new List<Vector2Int> { };
-    //private List<Field> _fieldsWithAnimals = new List<Field> { };
+    
     [SerializeField]
-    //private List<Vector2Int> _circleForestBoundaryList = new List<Vector2Int> { };
-    //public List<Vector2Int> GetBoundaryList
-    //{
-    //    get
-    //    {
-    //        return _circleForestBoundaryList;
-    //    }
-    //}
-    //
     private List<FieldForest> _circleBoundaryForestList = new List<FieldForest> { };
     public List<FieldForest> GetBoundaryForestList
     {
@@ -104,21 +90,7 @@ public class LevelManager : MonoBehaviour {
     {
         return _movingCloudsParent.transform;
     }
-
-    //private void Start()
-    //{
-    //    //CreateLevelFields();
-    //
-    //    //CheckOtherAnimalsInTheHood
-    //
-    //    for (int i = 0; i < _fieldsWithAnimals.Count; i++)
-    //    {
-    //        _fieldsWithAnimals[i].CheckAnimalsInTheHood();
-    //    }
-    //    _fieldsWithAnimals.Clear();
-    //
-    //}
-
+    
     private void CreateLevelFields()
     {
         _levelFieldMatrix = new Field[LevelData.Xmax +2, LevelData.Ymax +2];
@@ -177,12 +149,6 @@ public class LevelManager : MonoBehaviour {
             }
         }
 
-        //Remove Homes from Animal fields
-        //for (int i = 0; i < _circleHomeList.Count; i++)
-        //{
-        //    _circleAnimalsList.Remove(_circleHomeList[i]);
-        //}
-
         //Build Forest
         GameObject ForestParent = new GameObject("ForestParent");
         ForestParent.transform.parent = transform;
@@ -199,6 +165,10 @@ public class LevelManager : MonoBehaviour {
                 _levelFieldMatrix[x, y] = ForestClone;
             }
         }
+
+        //Create Clouds
+        if (LevelData.IncludeClouds)
+            _cloudSpawner.StartSpawning();
 
         //Set Homes
         GameObject HomeParent = new GameObject("HomeParent");
@@ -297,7 +267,5 @@ public class LevelManager : MonoBehaviour {
         }
 
         _buldozerSpawner.StartSpawning();
-
-        _cloudSpawner.StartSpawning();
     }
 }

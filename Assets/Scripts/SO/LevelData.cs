@@ -21,6 +21,7 @@ public class LevelData : ScriptableObject {
     public int NoOfBuldozersToSpawn;
 
     [Header("Cloud Options")]
+    public bool IncludeClouds;
     public Vector2 CloudMoveSpeed;
     public Vector2 CloudSpawnerMinNMax;
     public float TimeForTheFirstCloudSpawn;

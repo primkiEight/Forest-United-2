@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114778261140680280}
   - component: {fileID: 70056738858246346}
   m_Layer: 9
-  m_Name: CloudLayer1
+  m_Name: Cloud2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 876734763
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e07eaac39392e6544b89744fe432a014, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

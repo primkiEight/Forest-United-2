@@ -11,14 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf8ef18ff094744a84db0e049e5f7a2, type: 3}
   m_Name: Level01
   m_EditorClassIdentifier: 
-  Xmax: 17
-  Ymax: 17
+  Xmax: 25
+  Ymax: 50
   Xmin: 3
   Ymin: 3
   BuldozerMoveSpeed: {x: 0, y: 0}
   BuldozerSpawnerMinNMax: {x: 2, y: 5}
   TimeForTheFirstBuldozerSpawn: 2
   NoOfBuldozersToSpawn: 4
+  IncludeClouds: 1
   CloudMoveSpeed: {x: 1, y: 5}
   CloudSpawnerMinNMax: {x: 3, y: 9}
   TimeForTheFirstCloudSpawn: 1

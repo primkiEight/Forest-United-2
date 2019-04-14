@@ -9,18 +9,19 @@ public class Cloud : MonoBehaviour {
     private int _destroyPositionX;
     private Vector3 _destroyPosition = Vector3.zero;
     private Transform _myTransform;
-    //public List<LayerMask> LayerMasksList = new List<LayerMask> { };
-
+    private int _startingLayerIndex;
+    
     private void Awake()
     {
         _myTransform = transform;
 
-        float ranSize = Random.Range(0.8f, 1.2f);
+        float ranSize = Random.Range(1.0f, 2.0f);
 
         Vector3 newSize = Vector3.one * ranSize;
 
         _myTransform.localScale = newSize;
 
+        _startingLayerIndex = gameObject.layer;
     }
 
     public void SetCloudSpeed(float speed)
@@ -34,16 +35,43 @@ public class Cloud : MonoBehaviour {
         _destroyPosition = new Vector3(destroyPosition, _myTransform.position.y, _myTransform.position.z);
     }
 
-    //public void SetLayerMask()
-    //{
-    //    if(LayerMasksList.Count > 1)
-    //    {
-    //        int ranIndex = Random.Range(0, LayerMasksList.Count);
-    //        Debug.Log(LayerMasksList[ranIndex]);
-    //        Debug.Log(gameObject.layer);
-    //        /////OVAKO NE RADI gameObject.layer = LayerMasksList[ranIndex];
-    //    }
-    //}
+    public void SetLayerMask(string layerName)
+    {
+        gameObject.layer = LayerMask.NameToLayer(layerName);        
+    }
+
+    public void CreateShadow(string shadowLayerName, Vector3 shadowOffset, string shadowSortingLayer)
+    {
+        GameObject cloudShadow = Instantiate(gameObject, transform.position + shadowOffset, Quaternion.identity, transform);
+
+        Collider2D shadowCollider = cloudShadow.GetComponent<Collider2D>();
+        if(shadowCollider)
+            Destroy(shadowCollider);
+
+        cloudShadow.layer = LayerMask.NameToLayer(shadowLayerName);
+
+        int goLayerIndexChange = gameObject.layer;
+
+        if (goLayerIndexChange != _startingLayerIndex)
+            cloudShadow.transform.localScale = Vector3.one * 0.6f;
+        else
+            cloudShadow.transform.localScale = Vector3.one * 0.8f;
+
+        SpriteRenderer sprite = cloudShadow.GetComponent<SpriteRenderer>();
+
+        if (sprite)
+        {
+            Color spriteColor = sprite.color;
+            spriteColor = Color.black;
+            float ranAlpha = Random.Range(0.1f, 0.5f);
+            spriteColor.a = ranAlpha;
+            sprite.color = spriteColor;
+
+            sprite.sortingLayerName = shadowSortingLayer;
+        }
+
+        
+    }
 
     public void StartMoving()
     {

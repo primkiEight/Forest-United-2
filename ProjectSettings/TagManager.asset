@@ -20,7 +20,7 @@ TagManager:
   - Fields
   - Buldozers
   - Trees
-  - 
+  - Clouds_Shadows
   - 
   - 
   - 
@@ -60,6 +60,9 @@ TagManager:
     locked: 0
   - name: Powers
     uniqueID: 3218657829
+    locked: 0
+  - name: Clouds_Shadow_Sorting
+    uniqueID: 2413186463
     locked: 0
   - name: Clouds1
     uniqueID: 995740455
