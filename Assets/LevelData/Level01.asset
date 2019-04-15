@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf8ef18ff094744a84db0e049e5f7a2, type: 3}
   m_Name: Level01
   m_EditorClassIdentifier: 
-  Xmax: 25
-  Ymax: 50
+  Xmax: 15
+  Ymax: 10
   Xmin: 3
   Ymin: 3
   BuldozerMoveSpeed: {x: 0, y: 0}
@@ -26,6 +26,19 @@ MonoBehaviour:
   AnimalMoveSpeed: {x: 0, y: 0}
   FieldForestPrefab: {fileID: 114441192943305382, guid: 3db9fa7f608423c4fa5440ca11447252,
     type: 2}
+  FieldSpritesList:
+  - {fileID: 21300000, guid: da997106ed7de09429cc99cea53efa1b, type: 3}
+  - {fileID: 21300000, guid: a6c0952379989234bb3bad4ee3e49d33, type: 3}
+  - {fileID: 21300000, guid: ae435fffd8da1c440bb53e145ef5c329, type: 3}
+  - {fileID: 21300000, guid: c8f598286188ec44d9308af38106ad49, type: 3}
+  - {fileID: 21300000, guid: 9417dc12da9a3ff489c359f68f540f7f, type: 3}
+  - {fileID: 21300000, guid: d58efd08ab1ab2545969ea4d7b550925, type: 3}
+  - {fileID: 21300000, guid: 83ab755e62570c7418549cac8bd12c62, type: 3}
+  - {fileID: 21300000, guid: 1f9c0350a33167945acd1f76b1b1e2fb, type: 3}
+  - {fileID: 21300000, guid: 2fc06ea965ce23a49a0fd95d654e0f1e, type: 3}
+  - {fileID: 21300000, guid: 6d386b587a776d649b7014e276e9d014, type: 3}
+  - {fileID: 21300000, guid: ebfdb6c6ca147064894223d3eaae9146, type: 3}
+  - {fileID: 21300000, guid: 686cc073e21ef7a4fafce6507c105a98, type: 3}
   LevelHomeList:
   - {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
   - {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544, type: 2}

@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 114324279336411664}
   - component: {fileID: 70382643743414132}
   - component: {fileID: 50591925800463944}
-  - component: {fileID: 114319835400317922}
   m_Layer: 11
   m_Name: BuldozerFireTest
   m_TagString: Untagged
@@ -80,20 +79,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.043664824, y: -0.9410522}
   m_Size: {x: 2.9200246, y: 0.3198388}
   m_Direction: 1
---- !u!114 &114319835400317922
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1481152756611424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4aed6e587d550045b544b0952b811ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sortingOrderBase: 5000
-  _offset: 0
-  _runOnlyOnce: 0
 --- !u!114 &114324279336411664
 MonoBehaviour:
   m_ObjectHideFlags: 1

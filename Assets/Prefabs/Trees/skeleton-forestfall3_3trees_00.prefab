@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 114217451261547822}
   - component: {fileID: 70761985374564586}
   - component: {fileID: 50924416561399174}
-  - component: {fileID: 114179371060857126}
   m_Layer: 12
   m_Name: skeleton-forestfall3_3trees_00
   m_TagString: Tree
@@ -79,20 +78,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.08488975, y: -0.8246363}
   m_Size: {x: 3.884335, y: 0.70103115}
   m_Direction: 1
---- !u!114 &114179371060857126
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1138730119951184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4aed6e587d550045b544b0952b811ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sortingOrderBase: 5000
-  _offset: 0
-  _runOnlyOnce: 1
 --- !u!114 &114217451261547822
 MonoBehaviour:
   m_ObjectHideFlags: 1

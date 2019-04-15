@@ -61,6 +61,9 @@ TagManager:
   - name: Powers
     uniqueID: 3218657829
     locked: 0
+  - name: Fog
+    uniqueID: 503362817
+    locked: 0
   - name: Clouds_Shadow_Sorting
     uniqueID: 2413186463
     locked: 0

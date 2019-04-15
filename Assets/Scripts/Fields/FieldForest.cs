@@ -34,14 +34,13 @@ public class FieldForest : Field {
     //TEST
     public Color ActiveColor;
     public Color InactiveColor;
-    private SpriteRenderer mySprite;
+    private SpriteRenderer _mySprite;
 
     private void Awake()
     {
         FieldController = FindObjectOfType<FieldController>();
         _myBoxCollider2D = GetComponent<BoxCollider2D>();
-        mySprite = GetComponent<SpriteRenderer>();
-        mySprite.color = InactiveColor;
+        _mySprite = GetComponent<SpriteRenderer>();
         _mound = HolePosition.GetComponent<SpriteRenderer>();
         SetMound(false);
         MyFieldPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
@@ -50,6 +49,13 @@ public class FieldForest : Field {
     private void Start()
     {
         _theLevelManager = LevelManager.Instance;
+
+        if (_mySprite)
+        {
+            int ranIndex = Random.Range(0, _theLevelManager.LevelData.FieldSpritesList.Count);
+            _mySprite.sprite = _theLevelManager.LevelData.FieldSpritesList[ranIndex];
+            _mySprite.color = InactiveColor;
+        }
 
         FieldsWithAnimalsInTheHoodList.Clear();
 
@@ -172,7 +178,7 @@ public class FieldForest : Field {
         IsFieldActive = setState;
         if (IsFieldActive)
         {
-            mySprite.color = ActiveColor;
+            _mySprite.color = ActiveColor;
             //Animal animacija ide u stanje animairanja
             if (FieldController.GetSelectedField != null &&
                 FieldController.GetSelectedField != this)
@@ -181,7 +187,7 @@ public class FieldForest : Field {
         }
         else
         {
-            mySprite.color = InactiveColor;
+            _mySprite.color = InactiveColor;
             //Ako postoji animal, Animal animacija ide u stanje mirovanja
             FieldController.SetActiveField(null);
         }

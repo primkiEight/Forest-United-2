@@ -23,10 +23,9 @@ GameObject:
   - component: {fileID: 114418798087987424}
   - component: {fileID: 70510970219231748}
   - component: {fileID: 50683132241959760}
-  - component: {fileID: 114970822578303582}
   m_Layer: 12
   m_Name: skeleton-forestfall1_5trees_00
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,20 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8cbb993ec91ed43998b6848cc4fb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114970822578303582
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1357870941209050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4aed6e587d550045b544b0952b811ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sortingOrderBase: 5000
-  _offset: 0
-  _runOnlyOnce: 1
 --- !u!212 &212076870366288246
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -33,6 +33,9 @@ public class LevelData : ScriptableObject {
     [Header("Field Prefab")]
     public FieldForest FieldForestPrefab;
 
+    [Header("Field Prefab")]
+    public List<Sprite> FieldSpritesList = new List<Sprite> { };
+
     [Header("Number and types of Homes")]
     public List<FieldHome> LevelHomeList= new List<FieldHome> {};
     [Header("Number and types of Animals")]
