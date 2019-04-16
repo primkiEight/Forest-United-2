@@ -33,9 +33,9 @@ public class LevelData : ScriptableObject {
     [Header("Field Prefab")]
     public FieldForest FieldForestPrefab;
 
-    [Header("Field Prefab")]
-    public List<Sprite> FieldSpritesList = new List<Sprite> { };
-
+    //[Header("Field Sprites")]
+    //public List<Sprite> FieldSpritesList = new List<Sprite> { };
+    //
     [Header("Number and types of Homes")]
     public List<FieldHome> LevelHomeList= new List<FieldHome> {};
     [Header("Number and types of Animals")]
@@ -43,7 +43,7 @@ public class LevelData : ScriptableObject {
     [Header("Number and types of Buldozers")]
     public List<Buldozer> LevelBuldozersList = new List<Buldozer> { };
     [Header("Types of Forests")]
-    public List<Trees> LevelTreesList = new List<Trees> { };
+    public List<Trees> LevelForestsList = new List<Trees> { };
     [Header("Types of Clouds")]
     public List<Cloud> LevelCloudsList = new List<Cloud> { };
 }

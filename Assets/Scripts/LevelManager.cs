@@ -6,7 +6,10 @@ public class LevelManager : MonoBehaviour {
 
     [Header("Level prefabs")]
     public LevelData LevelData;
-    
+
+    [Header("Theme prefabs")]
+    public ThemeData ThemeData;
+
     private Transform _myTransform;
     public Field[,] _levelFieldMatrix;
 
@@ -159,8 +162,8 @@ public class LevelManager : MonoBehaviour {
             {
                 FieldForest ForestClone = Instantiate(LevelData.FieldForestPrefab, new Vector3(x, y, 0.0f), Quaternion.identity, ForestParent.transform);
 
-                int TreesListIndex = Random.Range(0, LevelData.LevelTreesList.Count);
-                ForestClone.TreesOnMyField = Instantiate(LevelData.LevelTreesList[TreesListIndex], ForestClone.TreesPosition.position, Quaternion.identity, ForestClone.TreesPosition);
+                int ForestsListIndex = Random.Range(0, LevelData.LevelForestsList.Count);
+                ForestClone.TreesOnMyField = Instantiate(LevelData.LevelForestsList[ForestsListIndex], ForestClone.TreesPosition.position, Quaternion.identity, ForestClone.TreesPosition);
 
                 _levelFieldMatrix[x, y] = ForestClone;
             }

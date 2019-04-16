@@ -52,8 +52,8 @@ public class FieldForest : Field {
 
         if (_mySprite)
         {
-            int ranIndex = Random.Range(0, _theLevelManager.LevelData.FieldSpritesList.Count);
-            _mySprite.sprite = _theLevelManager.LevelData.FieldSpritesList[ranIndex];
+            int ranIndex = Random.Range(0, _theLevelManager.ThemeData.FieldSpritesList.Count);
+            _mySprite.sprite = _theLevelManager.ThemeData.FieldSpritesList[ranIndex];
             _mySprite.color = InactiveColor;
         }
 
