@@ -253,10 +253,6 @@ public class FieldForest : Field {
         if (PowerOnMyField)
             Destroy(PowerOnMyField.gameObject);
 
-        ////DODATI OVDJE LOGIKU AKO SU ŽIVOTINJA I SUSJEDE I BULDOŽER
-        ////DODATI OVDJE LOGIKU AKO SU ŽIVOTINJA I NISU SUSJEDE I BULDOŽER
-        ////DODATI OVDJE LOGIKU AKO NIJE ŽIVOTINJA ALI JEST BULDOŽER
-
         if(BuldozerOnMyField == null && AnimalsInTheHood == true && AnimalInMyHole == true)
         {
             CastSuperPower();
@@ -273,17 +269,6 @@ public class FieldForest : Field {
                 Destroy(PowerOnMyField);
             BuldozerOnMyField.ReSetBuldozingBreak();
         }
-
-
-
-        //if (AnimalsInTheHood)
-        //{
-        //    CastSuperPower();
-        //}
-        //else
-        //{
-        //    CastMidPower();
-        //}        
     }
     
     public void CastMidPower()
@@ -293,24 +278,7 @@ public class FieldForest : Field {
 
         PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
         PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
-
-        //if (BuldozerOnMyField != null)
-        //{
-        //    if (AnimalInMyHole)
-        //    {
-        //        PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-        //        PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
-        //        Debug.Log("CastingMidPower");
-        //    } else
-        //    {
-        //        BuldozerOnMyField.ReSetBuldozingBreak();
-        //        //////BuldozerOnMyField.StartMyEngines();
-        //    }
-        //} else
-        //{
-        //    if (PowerOnMyField)
-        //        Destroy(PowerOnMyField.gameObject);
-        //}       
+ 
     }
 
     public void CastSuperPower()
@@ -321,23 +289,5 @@ public class FieldForest : Field {
         PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
         PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
 
-        //if (AnimalInMyHole)
-        //{
-        //    if (AnimalInMyHole)
-        //    {
-        //        PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-        //
-        //        if(BuldozerOnMyField != null)
-        //        {
-        //            PowerOnMyField.DestroyBuldozer(BuldozerOnMyField);
-        //            Debug.Log("CastingSuperPower");
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    if (PowerOnMyField)
-        //        Destroy(PowerOnMyField.gameObject);
-        //}
     }
 }
