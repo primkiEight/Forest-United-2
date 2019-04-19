@@ -25,4 +25,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ebfdb6c6ca147064894223d3eaae9146, type: 3}
   - {fileID: 21300000, guid: 686cc073e21ef7a4fafce6507c105a98, type: 3}
   TreesPrefabsList:
-  - {fileID: 114844193322401718, guid: 7523629994a746540bded10a22e8a567, type: 2}
+  - {fileID: 114231317187495826, guid: ac0d6257a35908548a6198bde3ce056f, type: 2}
+  - {fileID: 114896519379383152, guid: b6609862ca5e1324c9118198c17bcd5b, type: 2}
+  - {fileID: 114694358180471298, guid: fd8aa3265013fb54d87fe9cfcdc89a57, type: 2}

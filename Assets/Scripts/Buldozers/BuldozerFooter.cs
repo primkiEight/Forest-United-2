@@ -5,7 +5,9 @@ using UnityEngine;
 public class BuldozerFooter : MonoBehaviour {
 
     private SpriteRenderer _mySpriteRenderer;
+    [SerializeField]
     private int _mySortingOrder = 0;
+    [SerializeField]
     private int _mySortingOrderExtra = 0;
     public LayerMask OtherLayerMask;
 
@@ -13,7 +15,7 @@ public class BuldozerFooter : MonoBehaviour {
     {
         _mySpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _mySortingOrder = _mySpriteRenderer.sortingOrder;
-        _mySortingOrderExtra += _mySortingOrder;
+        _mySortingOrderExtra = _mySortingOrder + 1;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,7 +28,7 @@ public class BuldozerFooter : MonoBehaviour {
 
         if (collision.CompareTag("Tree"))
         {
-            _mySpriteRenderer.sortingOrder = 1;
+            _mySpriteRenderer.sortingOrder = _mySortingOrderExtra;
             Debug.Log("Dotaknuo sam drvo preko taga!");
         }
 
@@ -42,7 +44,7 @@ public class BuldozerFooter : MonoBehaviour {
 
         if (collision.CompareTag("Tree"))
         {
-            _mySpriteRenderer.sortingOrder = 0;
+            _mySpriteRenderer.sortingOrder = _mySortingOrder;
             Debug.Log("Maknuo sam se s drveta preko taga!");
         }
     }

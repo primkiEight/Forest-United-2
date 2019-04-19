@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 4405163154680610}
   - component: {fileID: 212706539898019948}
   - component: {fileID: 114160937650564622}
+  - component: {fileID: 114751314074647738}
   m_Layer: 10
   m_Name: FieldHome
   m_TagString: Untagged
@@ -121,6 +122,21 @@ MonoBehaviour:
   BuldozerOnMyField: {fileID: 0}
   TreesPosition: {fileID: 0}
   TreesOnMyField: {fileID: 0}
+--- !u!114 &114751314074647738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1758104991655780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc27e4785d7c69a48aecf7d97424b0a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PointerCanvas: {fileID: 1487352901803902, guid: 3972ce888630cca4b820a225565043d1,
+    type: 2}
+  PointerArrowPrefab: {fileID: 1199331074778826, guid: 9558bf3271c2e2e40895c780219c9ca6,
+    type: 2}
 --- !u!212 &212706539898019948
 SpriteRenderer:
   m_ObjectHideFlags: 1

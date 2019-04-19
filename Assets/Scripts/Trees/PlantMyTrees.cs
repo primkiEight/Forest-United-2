@@ -9,7 +9,7 @@ public class PlantMyTrees : MonoBehaviour {
     [Header("Tree Position Shifts")]
     public Vector2 ShiftRangeX = Vector2.zero;
     public Vector2 ShiftRangeY = Vector2.zero;
-    [Header("Random Scale")]
+    [Header("Random Tree Hight Scale")]
     public Vector2 ScaleOnYMinAndMax = Vector2.one;
     private int[] _orientation = { -1, 1 };
 

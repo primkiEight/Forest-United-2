@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: TreeOakACO
+  m_Controller: {fileID: 9100000, guid: edfefd558aee9a949809236fff24f3e8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 0f7dc2e7e695d404b83fa04ff3c25d56, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: abffb67cc2e4d2b48aa66ac8dc5c7cde, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fb741e5506f44fe448cb9a5f0ad07216, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3660e6bfa28ff2d4aabae881b1f60e5a, type: 2}

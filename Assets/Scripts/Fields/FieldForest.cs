@@ -83,7 +83,7 @@ public class FieldForest : Field {
             //Else if an animal is not here
             else
             {
-                FieldForest otherSelectedField = FieldController.GetSelectedField;                
+                FieldForest otherSelectedField = FieldController.GetSelectedField;
 
                 //If there is an active field in the FieldController (that is not me), then clear that field,
                 //move the animal there and set that field IsAnimalHere to true and IsFieldActive of that field to false

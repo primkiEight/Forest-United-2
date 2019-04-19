@@ -28,7 +28,7 @@ public class Tree : MonoBehaviour {
         yield return new WaitForSeconds(animationLag);
         _myAC.SetBool("IsFalling", _isFalling);
 
-        Destroy(gameObject, AnimationDuration);
+        //Destroy(gameObject, AnimationDuration);
         //StartCoroutine(CoDestroyMe());
     }
 
