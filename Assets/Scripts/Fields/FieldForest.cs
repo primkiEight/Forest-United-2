@@ -32,8 +32,8 @@ public class FieldForest : Field {
     public Color InactiveColor;
     private SpriteRenderer _mySprite;
 
-    private Vector2 origin = Vector2.zero;
-    private Vector2 direction = Vector2.zero;
+    private Vector3 origin = Vector3.zero;
+    private Vector3 direction = Vector3.zero;
 
     private void Awake()
     {
@@ -62,57 +62,69 @@ public class FieldForest : Field {
     }
 
 
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButtonUp(0))
-    //    {
-    //        //Vector2 origin = Vector2.zero;
-    //        //Vector2 direction = Vector2.zero;
-    //
-    //        origin = Camera.main.transform.localPosition;
-    //        Debug.Log(origin);
-    //        direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //        Debug.Log(direction);
-    //
-    //        //Definirati preko inspektora
-    //        LayerMask mask = LayerMask.GetMask("Fields");
-    //        RaycastHit2D hit = Physics2D.Raycast(origin, direction, 50.0f, mask);
-    //
-    //        if (hit)
-    //        {
-    //            CheckMouseClick();
-    //            return;
-    //        }
-    //    }
-    //}
-
-    private void OnDrawGizmos()
+    private void Update()
     {
-        Gizmos.DrawRay(origin, direction);
-    }
+        if (Input.GetMouseButtonUp(0)) {
+        //Vector2 origin = Vector2.zero;
+        ////Vector2 direction = Vector2.zero;
 
-    private void OnMouseUp()
-    {
-        if (Input.GetMouseButtonUp(0))
+        //origin = Camera.main.transform.position;
+        origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        direction = new Vector3(origin.x, origin.y, 20f);
+
+        //Definirati preko inspektora
+        LayerMask mask = LayerMask.GetMask("Fields");
+        //RaycastHit2D hit = Physics2D.Raycast(origin, direction, 50.0f, mask);
+        RaycastHit hit;
+
+        bool isHit = Physics.Raycast(origin, Vector3.forward * 30, out hit, Mathf.Infinity, mask);
+
+        if (isHit)
         {
+            Debug.Log("Hit");
             CheckMouseClick();
+            return;
+        }
+
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(origin, Vector3.forward*30);
+    }
+
+    //private void OnMouseUp()
+    //{
+    //    if (Input.GetMouseButtonUp(0))
+    //    {
+    //        CheckMouseClick();
+    //    }
+    //}
+
     private void CheckMouseClick()
     {
-        //Vector2 origin = Vector2.zero;
-        ////Vector2 direction = Vector2.zero;
-        
-        origin = Camera.main.transform.position;
-        direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-        //Definirati preko inspektora
-        LayerMask mask = LayerMask.GetMask("Fields");
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, 50.0f, mask);
-        
-        if (hit)
-        {
+        ////Vector2 origin = Vector2.zero;
+        //////Vector2 direction = Vector2.zero;
+        //
+        ////origin = Camera.main.transform.position;
+        //origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        ////direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        ////direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //direction = new Vector3(origin.x, origin.y, 20f);
+        //
+        ////Definirati preko inspektora
+        //LayerMask mask = LayerMask.GetMask("Fields");
+        ////RaycastHit2D hit = Physics2D.Raycast(origin, direction, 50.0f, mask);
+        //RaycastHit hit;
+        //
+        //bool isHit = Physics.Raycast(origin, Vector3.forward*30, out hit, Mathf.Infinity, ~mask);
+        //
+        //if (isHit)
+        //{
+        //    Debug.Log("Hit");
             //If I am already active and you click me, then deactivate me,
             //and tell FieldController I am no longer the selected field
             if (IsFieldActive)
@@ -148,7 +160,7 @@ public class FieldForest : Field {
                         return;
                     }
                 }
-            }
+            //}
         }
     }
     
