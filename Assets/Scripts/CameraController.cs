@@ -52,7 +52,7 @@ public class CameraController : MonoBehaviour {
         _panLimit = new Vector2(_theLevelManager.LevelData.Xmax, _theLevelManager.LevelData.Ymax);
 
         //SETTING THE MINIMAP CAMERA OPTIONS
-        SetMiniCameraOptions();
+        //SetMiniCameraOptions();
         
         //ZOOOM with MouseWheel limits
 
@@ -148,24 +148,22 @@ public class CameraController : MonoBehaviour {
         }
     }
 
-    private void SetMiniCameraOptions()
-    {
-        MiniMapCamera.transform.position = new Vector3((float)((_panLimit.x + 1) / 2), (float)((_panLimit.y + 1) / 2), MiniMapCamera.transform.position.z);
-        float screenRatio = (float)Screen.width / (float)Screen.height;
-
-        float miniOrthographicSizeV = _levelWidth * Screen.height / Screen.width * 0.5f;
-        float miniOrthographicSizeH = _levelHight * 0.5f;
-
-        if(screenRatio >= _levelRatio)
-        {
-            MiniMapCamera.orthographicSize = _levelHight / 2;
-        } else
-        {
-            float differenceInSize = _levelRatio / screenRatio;
-            //MiniMapCamera.orthographicSize = miniOrthographicSizeH * differenceInSize;
-            MiniMapCamera.orthographicSize = _levelHight / 2 * differenceInSize;
-        }
-
-        
-    }
+    //private void SetMiniCameraOptions()
+    //{
+    //    MiniMapCamera.transform.position = new Vector3((float)((_panLimit.x + 1) / 2), (float)((_panLimit.y + 1) / 2), MiniMapCamera.transform.position.z);
+    //    float screenRatio = (float)Screen.width / (float)Screen.height;
+    //
+    //    float miniOrthographicSizeV = _levelWidth * Screen.height / Screen.width * 0.5f;
+    //    float miniOrthographicSizeH = _levelHight * 0.5f;
+    //
+    //    if(screenRatio >= _levelRatio)
+    //    {
+    //        MiniMapCamera.orthographicSize = _levelHight / 2;
+    //    } else
+    //    {
+    //        float differenceInSize = _levelRatio / screenRatio;
+    //        //MiniMapCamera.orthographicSize = miniOrthographicSizeH * differenceInSize;
+    //        MiniMapCamera.orthographicSize = _levelHight / 2 * differenceInSize;
+    //    }
+    //}
 }

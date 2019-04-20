@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
-    [Header("Level prefabs")]
+    [Header("Level Prefabs")]
     public LevelData LevelData;
 
-    [Header("Theme prefabs")]
+    [Header("Theme Prefabs")]
     public ThemeData ThemeData;
 
     private Transform _myTransform;
@@ -18,7 +18,12 @@ public class LevelManager : MonoBehaviour {
     public float CircleForHomeMin = 0.35f;
     public float CircleForHomeMax = 0.65f;
     public float CircleForAnimalsMax = 0.9f;
-    
+
+    [Header("UI ArrowPointers Data")]
+    public Canvas PointerArrowsCanvas;
+    public Camera UICamera;
+    public ScreenArrowPointer PointerArrowPrefab;
+
     [SerializeField]
     private List<Vector2Int> _circleHomeList = new List<Vector2Int> { };
     public List<Vector2Int> LevelHomePositionsList = new List<Vector2Int> { };
@@ -195,14 +200,13 @@ public class LevelManager : MonoBehaviour {
 
                 HomeClone.MyFieldPosition = new Vector2Int(ranHomePosition.x, ranHomePosition.y);
 
+                //Set UI ArrowPointers for Homes
+                InstantiateUIPointerArrow(HomeClone.transform);
+                
                 //Adding the home positions to the list, for the buldozers
                 LevelHomePositionsList.Add(HomeClone.MyFieldPosition);
 
                 _levelFieldMatrix[ranHomePosition.x, ranHomePosition.y] = HomeClone;
-
-                //Vector2Int positionToRemove = _circleHomeList[i];
-
-                //_circleAnimalsList.Remove(positionToRemove);
 
                 _circleAnimalsList.Remove(ranHomePosition);
 
@@ -226,15 +230,11 @@ public class LevelManager : MonoBehaviour {
 
                 FieldForest thisForestField = _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>();
 
-                //_fieldsWithAnimals.Add(thisForestField);
-
                 Animal animalInTheHole = Instantiate(LevelData.LevelAnimalsList[i], thisForestField.AnimalPosition.position, Quaternion.identity, thisForestField.AnimalPosition);
 
                 thisForestField.SetMound(true);
 
                 _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalInMyHole = animalInTheHole;
-
-                //_levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalInMyHole = Instantiate(LevelData.LevelAnimalsList[i], _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalPosition.position, Quaternion.identity, _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().AnimalPosition);
 
                 _levelFieldMatrix[ranAnimalPosition.x, ranAnimalPosition.y].GetComponent<FieldForest>().IsAnimalHere = true;
                 
@@ -256,8 +256,6 @@ public class LevelManager : MonoBehaviour {
                 {
                     FieldForest ForestClone = Instantiate(LevelData.FieldForestPrefab, new Vector3(x, y, 0.0f), Quaternion.identity, BoundaryParent.transform);
 
-                    //DODATI DIO KOJI ONEMOGUĆUJE DA KAMERA IDE PREKO OVIH POLJA
-
                     _levelFieldMatrix[x, y] = ForestClone;
 
                     Vector2Int boundaryPosition = new Vector2Int(x, y);
@@ -270,5 +268,13 @@ public class LevelManager : MonoBehaviour {
         }
 
         _buldozerSpawner.StartSpawning();
+    }
+
+    private void InstantiateUIPointerArrow(Transform fieldHome)
+    {
+        ScreenArrowPointer PointerArrowClone = Instantiate(PointerArrowPrefab, PointerArrowsCanvas.transform);
+        //PointerArrowClone.transform.SetParent(PointerCanvas.transform, false);
+        //PointerArrowClone.gameObject.GetComponent<ScreenArrowPointer>().SetTheHomeTarget(transform);
+        PointerArrowClone.SetTheHomeTargetAndUICamera(fieldHome, UICamera);
     }
 }

@@ -3,29 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//https://www.youtube.com/watch?v=VHFJgQraVUs
-//https://www.youtube.com/watch?v=dHzeHh-3bp4
+//https://youtu.be/mKLp-2iseDc (Angle for rotation)
+//https://www.youtube.com/watch?v=VHFJgQraVUs (UI Camera)
+//https://www.youtube.com/watch?v=dHzeHh-3bp4 (Arrows)
 
 public class ScreenArrowPointer : MonoBehaviour {
 
-    public Camera UICamera;
-    //public Transform TargetTransform;
+    private Camera _UICamera;
     public float BorderSize = 50f;
 
     private Vector3 _targetPosition;
     private RectTransform _pointerRectTransform;
-
-    //private void Awake()
-    //{
-    //    _targetPosition = TargetTransform.position;
-    //    //_pointerRectTransform = transform.GetComponent<RectTransform>();
-    //    
-    //}
-
-    public void SetTheHomeTarget(Transform homeTarget)
+    
+    public void SetTheHomeTargetAndUICamera(Transform homeTarget, Camera UICamera)
     {
         _pointerRectTransform = gameObject.GetComponent<RectTransform>();
         _targetPosition = homeTarget.position;
+        _UICamera = UICamera;
     }
 
     private void LateUpdate()
@@ -45,12 +39,8 @@ public class ScreenArrowPointer : MonoBehaviour {
 
             Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(_targetPosition);
 
-            Debug.Log(targetPositionScreenPoint);
-
             bool isOffScreen = targetPositionScreenPoint.x <= BorderSize || targetPositionScreenPoint.x >= Screen.width - BorderSize || targetPositionScreenPoint.y <= BorderSize || targetPositionScreenPoint.y >= Screen.height - BorderSize;
-
-            //Debug.Log(isOffScreen + " " + targetPositionScreenPoint);
-
+            
             if (isOffScreen)
             {
 
@@ -64,11 +54,8 @@ public class ScreenArrowPointer : MonoBehaviour {
                 if (cappedTargetScreenPosition.y <= BorderSize) cappedTargetScreenPosition.y = BorderSize;
                 if (cappedTargetScreenPosition.y >= Screen.height - BorderSize) cappedTargetScreenPosition.y = Screen.height - BorderSize;
 
-                //Debug.Log(cappedTargetScreenPosition);
-
-                Vector3 pointerWorldPosition = UICamera.ScreenToWorldPoint(cappedTargetScreenPosition);
+                Vector3 pointerWorldPosition = _UICamera.ScreenToWorldPoint(cappedTargetScreenPosition);
                 _pointerRectTransform.position = pointerWorldPosition;
-                //_pointerRectTransform.localPosition = pointerWorldPosition;
                 _pointerRectTransform.localPosition = new Vector3(_pointerRectTransform.localPosition.x, _pointerRectTransform.localPosition.y, 0.0f);
             }
             else
