@@ -4,29 +4,25 @@ using UnityEngine;
 
 public class FieldForest : Field {
 
-    //[HideInInspector]
-    //public Animal AnimalInMyHole;
     private Animal _tempAnimalClone;
-    
-    //[HideInInspector]
-    //public Trees TreesOnMyField;
 
+    public Camera MainCamera;
+
+    [Header("Hole Position / Transform")]
     public Transform HolePosition;
     private SpriteRenderer _mound;
     private float _moundSpeedUp = 1.0f;
-    //public Transform AnimalPosition;
-    //public Transform PowerPosition;
-    //public Transform TreesPosition;
-    //public Transform BuldozerPosition;
-
+    
     //[SerializeField]
     public bool IsAnimalHere = false;
-    [SerializeField]
+    //[SerializeField]
     private bool IsFieldActive = false;
 
+    [HideInInspector]
     public LevelManager _theLevelManager;
-
+    [HideInInspector]
     public bool AnimalsInTheHood = false;
+    [HideInInspector]
     public List<Field> FieldsWithAnimalsInTheHoodList = new List<Field> { };
 
     private BoxCollider2D _myBoxCollider2D;
@@ -35,6 +31,9 @@ public class FieldForest : Field {
     public Color ActiveColor;
     public Color InactiveColor;
     private SpriteRenderer _mySprite;
+
+    private Vector2 origin = Vector2.zero;
+    private Vector2 direction = Vector2.zero;
 
     private void Awake()
     {
@@ -62,41 +61,92 @@ public class FieldForest : Field {
         CheckAnimalsInTheHood();
     }
 
+
+    //private void Update()
+    //{
+    //    if (Input.GetMouseButtonUp(0))
+    //    {
+    //        //Vector2 origin = Vector2.zero;
+    //        //Vector2 direction = Vector2.zero;
+    //
+    //        origin = Camera.main.transform.localPosition;
+    //        Debug.Log(origin);
+    //        direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //        Debug.Log(direction);
+    //
+    //        //Definirati preko inspektora
+    //        LayerMask mask = LayerMask.GetMask("Fields");
+    //        RaycastHit2D hit = Physics2D.Raycast(origin, direction, 50.0f, mask);
+    //
+    //        if (hit)
+    //        {
+    //            CheckMouseClick();
+    //            return;
+    //        }
+    //    }
+    //}
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(origin, direction);
+    }
+
     private void OnMouseUp()
     {
-        //If I am already active and you click me, then deactivate me,
-        //and tell FieldController I am no longer the selected field
-        if (IsFieldActive)
+        if (Input.GetMouseButtonUp(0))
         {
-            ChangeActive(false);
-            return;
+            CheckMouseClick();
         }
-        //Else, if I am not active, check the state of the readyness to be active
-        else
+    }
+
+    private void CheckMouseClick()
+    {
+        //Vector2 origin = Vector2.zero;
+        ////Vector2 direction = Vector2.zero;
+        
+        origin = Camera.main.transform.position;
+        direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        //Definirati preko inspektora
+        LayerMask mask = LayerMask.GetMask("Fields");
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, 50.0f, mask);
+        
+        if (hit)
         {
-            //If Animal is here (the field is ready to be activated and used)
-            //Active this field and tell the FieldController I am the active one, select me
-            if (IsAnimalHere)
+            //If I am already active and you click me, then deactivate me,
+            //and tell FieldController I am no longer the selected field
+            if (IsFieldActive)
             {
-                ChangeActive(true);
+                ChangeActive(false);
+                return;
             }
-            //Else if an animal is not here
+            //Else, if I am not active, check the state of the readyness to be active
             else
             {
-                FieldForest otherSelectedField = FieldController.GetSelectedField;
-
-                //If there is an active field in the FieldController (that is not me), then clear that field,
-                //move the animal there and set that field IsAnimalHere to true and IsFieldActive of that field to false
-                if (otherSelectedField != null)
+                //If Animal is here (the field is ready to be activated and used)
+                //Active this field and tell the FieldController I am the active one, select me
+                if (IsAnimalHere)
                 {
-                    //Starting a coroutine for emarging the selected animal
-                    StartCoroutine(CoEmargeAnimalInMyHole(otherSelectedField));
+                    ChangeActive(true);
                 }
-                //If there is no active field at all, return
+                //Else if an animal is not here
                 else
                 {
-                    //Play that funky music white boy
-                    return;
+                    FieldForest otherSelectedField = FieldController.GetSelectedField;
+
+                    //If there is an active field in the FieldController (that is not me), then clear that field,
+                    //move the animal there and set that field IsAnimalHere to true and IsFieldActive of that field to false
+                    if (otherSelectedField != null)
+                    {
+                        //Starting a coroutine for emarging the selected animal
+                        StartCoroutine(CoEmargeAnimalInMyHole(otherSelectedField));
+                    }
+                    //If there is no active field at all, return
+                    else
+                    {
+                        //Play that funky music white boy
+                        return;
+                    }
                 }
             }
         }
@@ -124,10 +174,8 @@ public class FieldForest : Field {
         //If there is a buldozer on that field, restore its speed
         if(otherSelectedField.BuldozerOnMyField != null)
             otherSelectedField.BuldozerOnMyField.ReSetBuldozingBreak();
-            ////BuldozerOnMyField.StartMyEngines();
             
-
-            //Check and clear the otherfield's neighbours' lists once the animal is gone from that field
+        //Check and clear the otherfield's neighbours' lists once the animal is gone from that field
 
             otherSelectedField.ReCheckAnimalsInTheHood();
         otherSelectedField.CheckAnimalsInTheHood();

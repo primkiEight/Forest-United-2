@@ -13,24 +13,23 @@ public class LevelManager : MonoBehaviour {
     private Transform _myTransform;
     public Field[,] _levelFieldMatrix;
 
-    [Header("Spawning Areas")]
-    public float CircleForAnimalsMin = 0.1f;
-    public float CircleForHomeMin = 0.35f;
-    public float CircleForHomeMax = 0.65f;
-    public float CircleForAnimalsMax = 0.9f;
+    private float _circleForAnimalsMin = 0.1f;
+    private float _circleForHomeMin = 0.35f;
+    private float _circleForHomeMax = 0.65f;
+    private float _circleForAnimalsMax = 0.9f;
 
     [Header("UI ArrowPointers Data")]
     public Canvas PointerArrowsCanvas;
     public Camera UICamera;
     public ScreenArrowPointer PointerArrowPrefab;
 
-    [SerializeField]
+    //[SerializeField]
     private List<Vector2Int> _circleHomeList = new List<Vector2Int> { };
+    [HideInInspector]
     public List<Vector2Int> LevelHomePositionsList = new List<Vector2Int> { };
-    [SerializeField]
+    //[SerializeField]
     private List<Vector2Int> _circleAnimalsList = new List<Vector2Int> { };
-    
-    [SerializeField]
+    //[SerializeField]
     private List<FieldForest> _circleBoundaryForestList = new List<FieldForest> { };
     public List<FieldForest> GetBoundaryForestList
     {
@@ -80,6 +79,11 @@ public class LevelManager : MonoBehaviour {
         if (LevelData.Ymax < LevelData.Ymin)
             LevelData.Ymax = LevelData.Ymin;
 
+        _circleForAnimalsMin = LevelData.CircleForAnimalsMin;
+        _circleForHomeMin = LevelData.CircleForHomeMin;
+        _circleForHomeMax = LevelData.CircleForHomeMax;
+        _circleForAnimalsMax = LevelData.CircleForAnimalsMax;
+
         _movingBuldozerParent = new GameObject("MovingBuldozersParent");
         _buldozerSpawner = GetComponent<BuldozerSpawner>();
 
@@ -121,16 +125,16 @@ public class LevelManager : MonoBehaviour {
         }*/
 
         //CircleForHome
-        int CircleForHomeXmin = (int)Mathf.Floor(LevelData.Xmax * CircleForHomeMin) + 1;
-        int CircleForHomeXmax = (int)Mathf.Round(LevelData.Xmax * CircleForHomeMax);
-        int CircleForHomeYmin = (int)Mathf.Floor(LevelData.Ymax * CircleForHomeMin) + 1;
-        int CircleForHomeYmax = (int)Mathf.Round(LevelData.Ymax * CircleForHomeMax);
+        int CircleForHomeXmin = (int)Mathf.Floor(LevelData.Xmax * _circleForHomeMin) + 1;
+        int CircleForHomeXmax = (int)Mathf.Round(LevelData.Xmax * _circleForHomeMax);
+        int CircleForHomeYmin = (int)Mathf.Floor(LevelData.Ymax * _circleForHomeMin) + 1;
+        int CircleForHomeYmax = (int)Mathf.Round(LevelData.Ymax * _circleForHomeMax);
 
         //CircleNotForAnimals
-        int CircleForAnimalsXmin = (int)Mathf.Floor(LevelData.Xmax * CircleForAnimalsMin) + 1;
-        int CircleForAnimalsXmax = (int)Mathf.Round(LevelData.Xmax * CircleForAnimalsMax);
-        int CircleForAnimalsYmin = (int)Mathf.Floor(LevelData.Ymax * CircleForAnimalsMin) + 1;
-        int CircleForAnimalsYmax = (int)Mathf.Round(LevelData.Ymax * CircleForAnimalsMax);
+        int CircleForAnimalsXmin = (int)Mathf.Floor(LevelData.Xmax * _circleForAnimalsMin) + 1;
+        int CircleForAnimalsXmax = (int)Mathf.Round(LevelData.Xmax * _circleForAnimalsMax);
+        int CircleForAnimalsYmin = (int)Mathf.Floor(LevelData.Ymax * _circleForAnimalsMin) + 1;
+        int CircleForAnimalsYmax = (int)Mathf.Round(LevelData.Ymax * _circleForAnimalsMax);
 
         //Set Homes' and Animals' Domains
         for (int x = 1; x <= LevelData.Xmax; x++)

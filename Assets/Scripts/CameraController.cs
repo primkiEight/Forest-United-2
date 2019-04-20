@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour {
     private Camera _mainCamera;
     public Camera SecondCamera;
     public Camera ThirdCamera;
-    public Camera MiniMapCamera;
+    //public Camera MiniMapCamera;
 
     private void Awake()
     {

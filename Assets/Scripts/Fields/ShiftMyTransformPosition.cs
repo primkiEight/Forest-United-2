@@ -11,10 +11,10 @@ public class ShiftMyTransformPosition : MonoBehaviour {
     private void Awake()
     {
         _myTransform = transform;
-
+        
         float ranX = Random.Range(ShiftRangeX.x, ShiftRangeX.y);
         float ranY = Random.Range(ShiftRangeY.x, ShiftRangeY.y);
-
+        
         _myTransform.position = new Vector3(_myTransform.position.x + ranX, _myTransform.position.y + ranY, _myTransform.position.z);
     }
 

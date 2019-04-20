@@ -15,7 +15,11 @@ MonoBehaviour:
   Ymax: 10
   Xmin: 3
   Ymin: 3
-  BuldozerMoveSpeed: {x: 0, y: 0}
+  CircleForAnimalsMin: 0.1
+  CircleForHomeMin: 0.35
+  CircleForHomeMax: 0.65
+  CircleForAnimalsMax: 0.9
+  BuldozerMoveSpeedModifier: 1
   BuldozerSpawnerMinNMax: {x: 2, y: 5}
   TimeForTheFirstBuldozerSpawn: 2
   NoOfBuldozersToSpawn: 4

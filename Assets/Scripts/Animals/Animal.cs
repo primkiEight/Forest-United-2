@@ -4,17 +4,11 @@ using UnityEngine;
 
 public abstract class Animal : MonoBehaviour {
 
-    //protected Field[,] _LevelFields;
-    //public virtual void Initialize(Field[,] levelFields)
-    //{
-    //    _LevelFields = levelFields;
-    //}
-
     public Sprite MySprite;
 
     public float DiggingSpeed;
 
-    public float PowerDuration;
+    //public float PowerDuration;
     public Power MidPowerPrefab;
     public Power SuperPowerPrefab;
     //public Transform PowerPosition;

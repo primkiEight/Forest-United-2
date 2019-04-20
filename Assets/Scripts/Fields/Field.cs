@@ -6,21 +6,22 @@ public abstract class Field : MonoBehaviour {
 
     [HideInInspector]
     public FieldController FieldController;
-
     [HideInInspector]
     public Vector2Int MyFieldPosition;
 
-    public Animal AnimalInMyHole;
+    [Header("Instantiate Positions / Transforms")]
     public Transform AnimalPosition;
     public Transform PowerPosition;
-    public Power PowerOnMyField;
-
     public Transform BuldozerPosition;
-    //[HideInInspector]
-    public Buldozer BuldozerOnMyField;
-    //[HideInInspector]
     public Transform TreesPosition;
-    //[HideInInspector]
+
+    [HideInInspector]
+    public Animal AnimalInMyHole;
+    [HideInInspector]
+    public Power PowerOnMyField;
+    [HideInInspector]
+    public Buldozer BuldozerOnMyField;
+    [HideInInspector]
     public Trees TreesOnMyField;
 
     
@@ -38,23 +39,7 @@ public abstract class Field : MonoBehaviour {
     {
 
     }
-
-    //public bool CheckThisFieldForAnimal()
-    //{
-    //    if (AnimalInMyHole != null)
-    //        return true;
-    //    else
-    //        return false;
-    //}
-    //
-    //public bool CheckThisFieldForBuldozer()
-    //{
-    //    if (BuldozerOnMyField != null)
-    //        return true;
-    //    else
-    //        return false;
-    //}
-
+    
     public virtual void CheckAnimalsInTheHood()
     {
 

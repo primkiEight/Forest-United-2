@@ -11,6 +11,22 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1624256626532078}
   m_IsPrefabAsset: 1
+--- !u!1 &1180458998089554
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4822753528602134}
+  - component: {fileID: 212349265036615920}
+  m_Layer: 0
+  m_Name: InitialMound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1454980862239844
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,10 +130,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1914707783443672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.4, y: -0.4, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4225433289431078}
+  - {fileID: 4822753528602134}
   m_Father: {fileID: 4629509474996408}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -176,6 +193,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4629509474996408}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4822753528602134
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1180458998089554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 4140115674185914}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4956157336883382
 Transform:
@@ -241,17 +271,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FieldController: {fileID: 0}
   MyFieldPosition: {x: 0, y: 0}
-  AnimalInMyHole: {fileID: 0}
   AnimalPosition: {fileID: 4225433289431078}
   PowerPosition: {fileID: 4495757443493476}
-  PowerOnMyField: {fileID: 0}
   BuldozerPosition: {fileID: 4797911480230250}
-  BuldozerOnMyField: {fileID: 0}
   TreesPosition: {fileID: 4956157336883382}
+  AnimalInMyHole: {fileID: 0}
+  PowerOnMyField: {fileID: 0}
+  BuldozerOnMyField: {fileID: 0}
   TreesOnMyField: {fileID: 0}
+  MainCamera: {fileID: 20336584103157188, guid: 3e914d695bf177f4082e9eea8532dd3c,
+    type: 2}
   HolePosition: {fileID: 4140115674185914}
   IsAnimalHere: 0
-  IsFieldActive: 0
   _theLevelManager: {fileID: 0}
   AnimalsInTheHood: 0
   FieldsWithAnimalsInTheHoodList: []
@@ -268,8 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a9665ce1c43ec4f820f8dbe3c5c72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftRangeX: {x: -0.2, y: 0.2}
-  ShiftRangeY: {x: -0.2, y: 0.2}
+  ShiftRangeX: {x: 0, y: 0}
+  ShiftRangeY: {x: 0, y: 0}
 --- !u!212 &212077518873868166
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -311,6 +342,52 @@ SpriteRenderer:
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.32, y: 1.16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!212 &212349265036615920
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1180458998089554}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -310547191
+  m_SortingLayer: 5
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: afe196e36f6df444b893eb5655685d6d, type: 3}
+  m_Color: {r: 0.455565, g: 0.6132076, b: 0.39627093, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.90625, y: 0.453125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

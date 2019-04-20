@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222314210709421134}
   - component: {fileID: 114322684387587318}
   - component: {fileID: 114441200308297624}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PointerArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd34e1574e0da544fa44a60751d64117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UICamera: {fileID: 20947649607373864, guid: 57984a9483ee98646ac000593ba04c63, type: 2}
   BorderSize: 50
 --- !u!222 &222314210709421134
 CanvasRenderer:

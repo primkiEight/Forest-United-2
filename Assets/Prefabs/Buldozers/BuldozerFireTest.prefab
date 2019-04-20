@@ -91,9 +91,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyMatrixPosition: {x: 0, y: 0}
   MySprite: {fileID: 21300000, guid: 8f22d894172801742b688cdba4d1a733, type: 3}
-  _breakA: 0
-  _breakB: 0
-  _breakC: 0
   MovingSpeed: 0.2
   BuldozingDuration: 5
   WaitOnTheEmptyField: 0

@@ -14,7 +14,7 @@ public abstract class Buldozer : MonoBehaviour {
 
     private Transform _myTransform;
 
-    //[HideInInspector]
+    [HideInInspector]
     public Vector2Int MyMatrixPosition;
     private Transform _myStartingPosition;
     private Field _thisField = null;
@@ -31,23 +31,26 @@ public abstract class Buldozer : MonoBehaviour {
 
     public Sprite MySprite;
 
-    [SerializeField]
+    //[SerializeField]
     //Disables/Enables setting a new field to move to
     private bool _breakA = false;
-    [SerializeField]
+    //[SerializeField]
     //Desables/Enables Update's move and setting a new field to move to
     private bool _breakB = false;
-    [SerializeField]
+    //[SerializeField]
     //Enables/Disables moving from the current field
     private bool _breakC = true;
 
     private bool _isMoving = false;
-    public float MovingSpeed;
+    [Range(0.1f, 0.5f)]
+    public float MovingSpeed = 0.2f;
+    private float _levelMovingSpeedModifier;
     private float _buldozingBreakTemp;
     private float _buldozingBreakPerma = 1.0f;
-
-    public float BuldozingDuration;
-    public float WaitOnTheEmptyField;
+    [Range(4f, 10f)]
+    public float BuldozingDuration = 5f;
+    [Range(0.0f, 2.0f)]
+    public float WaitOnTheEmptyField = 0f;
 
     private Animator _myAnimator;
 
@@ -62,8 +65,7 @@ public abstract class Buldozer : MonoBehaviour {
         _myTransform = transform;
 
         _myStartingPosition = _myTransform;
-        //MyPosition = new Vector2Int ((int)_myStartingPosition.x, (int)_myStartingPosition.y);
-
+        
         if (GetComponent<Animator>() != null)
             _myAnimator = GetComponent<Animator>();
 
@@ -83,10 +85,11 @@ public abstract class Buldozer : MonoBehaviour {
         _breakB = false;
         _breakC = true;
 
+        _levelMovingSpeedModifier = _theLevelManager.LevelData.BuldozerMoveSpeedModifier;
 
+        MovingSpeed *= _levelMovingSpeedModifier;
 
         StartMyEngines();
-
     }
 
     public void StartMyEngines()
@@ -97,8 +100,6 @@ public abstract class Buldozer : MonoBehaviour {
 
             SetMyMovingPattern();
         }
-
-        //_thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
 
         _buldozingBreakTemp = _buldozingBreakPerma;
 
@@ -259,15 +260,10 @@ public abstract class Buldozer : MonoBehaviour {
             //nego tako da provjeriš vrijednost buldozeronmyfield tog polja!
             if (_nextField.BuldozerOnMyField != null)
                 {
-                //_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>().Move();
                 StartCoroutine(CoWaitOnTheField(WaitOnTheEmptyField));
                 return;
             } else
             {
-                //_theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
-                
-                //_myTransform.parent = _theLevelManager.GetBuldozersParent();
-
                 //Postavi varijablu odakle krećeš kao svoj transform
                 _myStartingPosition = _myTransform;
                 //Postavi varijablu next target iz buldozer pozicije tog susjednog polja iz matrice

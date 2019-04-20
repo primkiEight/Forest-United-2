@@ -13,9 +13,20 @@ public class LevelData : ScriptableObject {
     [HideInInspector]
     public int Ymin = 6;
 
+    [Header("Level Spawning Areas [0.10, 0.35, 0.65, 0.90]")]
+    [Range(0.1f, 0.35f)]
+    public float CircleForAnimalsMin = 0.1f;
+    [Range(0.1f, 0.35f)]
+    public float CircleForHomeMin = 0.35f;
+    [Range(0.65f, 0.9f)]
+    public float CircleForHomeMax = 0.65f;
+    [Range(0.65f, 0.9f)]
+    public float CircleForAnimalsMax = 0.9f;
+
+
     [Header("Buldozer Options")]
-    //[Range(1,2)]
-    public Vector2 BuldozerMoveSpeed;
+    [Range(1f,1.5f)]
+    public float BuldozerMoveSpeedModifier = 1f;
     public Vector2 BuldozerSpawnerMinNMax;
     public float TimeForTheFirstBuldozerSpawn;
     public int NoOfBuldozersToSpawn;
