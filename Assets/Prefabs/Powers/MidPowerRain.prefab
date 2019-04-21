@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4154553876353530}
   - component: {fileID: 212516708082783334}
+  - component: {fileID: 95419480713485142}
   - component: {fileID: 114220310313384366}
   m_Layer: 0
   m_Name: MidPowerRain
@@ -34,13 +35,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147518818444832}
-  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &95419480713485142
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1147518818444832}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0aa70b0c62e35a04e85d69ffc14e4ebb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114220310313384366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,7 +107,7 @@ SpriteRenderer:
   m_SortingLayerID: -1076309467
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e71be9a638981c84db1540e19fbf6e02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ac433070f0c032342a7563ac2f4cb1aa, type: 3}
   m_Color: {r: 1, g: 0.5400758, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

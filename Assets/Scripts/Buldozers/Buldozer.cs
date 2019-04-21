@@ -337,12 +337,11 @@ public abstract class Buldozer : MonoBehaviour {
     private void Update()
     {
 
-        _mySpriteRenderer.sortingOrder = (int) (-(_myTransform.position.y * 100));
-
-
         if (_isMoving && !_breakB)
         {
             _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed * _buldozingBreakTemp);
+
+            _mySpriteRenderer.sortingOrder = (int)(-(_myTransform.position.y * 100));
 
             float distance = Vector3.Distance(_myTransform.position, _myNextPosition.position);
 

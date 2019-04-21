@@ -6,7 +6,7 @@ public class FieldForest : Field {
 
     private Animal _tempAnimalClone;
 
-    public Camera MainCamera;
+    //public Camera MainCamera;
 
     [Header("Hole Position / Transform")]
     public Transform HolePosition;

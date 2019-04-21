@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4822753528602134}
   - component: {fileID: 212349265036615920}
+  - component: {fileID: 114404950605837112}
   m_Layer: 0
   m_Name: InitialMound
   m_TagString: Untagged
@@ -158,7 +159,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1740172165512922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4629509474996408}
@@ -258,6 +259,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShiftRangeX: {x: 0, y: 0.25}
   ShiftRangeY: {x: -0.1, y: 0.25}
+--- !u!114 &114404950605837112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1180458998089554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4aed6e587d550045b544b0952b811ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114441192943305382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -279,8 +291,6 @@ MonoBehaviour:
   PowerOnMyField: {fileID: 0}
   BuldozerOnMyField: {fileID: 0}
   TreesOnMyField: {fileID: 0}
-  MainCamera: {fileID: 20336584103157188, guid: 3e914d695bf177f4082e9eea8532dd3c,
-    type: 2}
   HolePosition: {fileID: 4140115674185914}
   IsAnimalHere: 0
   _theLevelManager: {fileID: 0}
@@ -299,8 +309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a9665ce1c43ec4f820f8dbe3c5c72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftRangeX: {x: 0, y: 0.1}
-  ShiftRangeY: {x: 0, y: 0.1}
+  ShiftRangeX: {x: 0, y: 0.15}
+  ShiftRangeY: {x: 0, y: 0.15}
 --- !u!212 &212077518873868166
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -333,7 +343,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -310547191
+  m_SortingLayerID: 1920439863
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e71be9a638981c84db1540e19fbf6e02, type: 3}
@@ -379,9 +389,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -310547191
+  m_SortingLayerID: 1920439863
   m_SortingLayer: 4
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: afe196e36f6df444b893eb5655685d6d, type: 3}
   m_Color: {r: 0.455565, g: 0.6132076, b: 0.39627093, a: 1}
   m_FlipX: 0
