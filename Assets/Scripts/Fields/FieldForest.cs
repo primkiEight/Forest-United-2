@@ -61,7 +61,7 @@ public class FieldForest : Field {
         CheckAnimalsInTheHood();
     }
 
-
+    /*
     private void Update()
     {
         if (Input.GetMouseButtonUp(0)) {
@@ -90,41 +90,23 @@ public class FieldForest : Field {
 
         }
     }
+    */
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(origin, Vector3.forward*30);
     }
 
-    //private void OnMouseUp()
-    //{
-    //    if (Input.GetMouseButtonUp(0))
-    //    {
-    //        CheckMouseClick();
-    //    }
-    //}
-
-    private void CheckMouseClick()
+    private void OnMouseUp()
     {
-        ////Vector2 origin = Vector2.zero;
-        //////Vector2 direction = Vector2.zero;
-        //
-        ////origin = Camera.main.transform.position;
-        //origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        ////direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        ////direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //direction = new Vector3(origin.x, origin.y, 20f);
-        //
-        ////Definirati preko inspektora
-        //LayerMask mask = LayerMask.GetMask("Fields");
-        ////RaycastHit2D hit = Physics2D.Raycast(origin, direction, 50.0f, mask);
-        //RaycastHit hit;
-        //
-        //bool isHit = Physics.Raycast(origin, Vector3.forward*30, out hit, Mathf.Infinity, ~mask);
-        //
-        //if (isHit)
-        //{
-        //    Debug.Log("Hit");
+        if (Input.GetMouseButtonUp(0))
+        {
+            CheckMouseClick();
+        }
+    }
+
+    public void CheckMouseClick()
+    {
             //If I am already active and you click me, then deactivate me,
             //and tell FieldController I am no longer the selected field
             if (IsFieldActive)
@@ -160,7 +142,6 @@ public class FieldForest : Field {
                         return;
                     }
                 }
-            //}
         }
     }
     

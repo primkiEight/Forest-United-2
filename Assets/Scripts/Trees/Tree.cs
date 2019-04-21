@@ -9,9 +9,15 @@ public class Tree : MonoBehaviour {
     public Vector2 AnimationLag = Vector2.zero;
     private bool _isFalling = false;
 
+    private SpriteRenderer _mySpriteRenderer;
+
     private void Awake()
     {
-        _myAC = GetComponent<Animator>();        
+        _myAC = GetComponent<Animator>();
+
+        _mySpriteRenderer = GetComponent<SpriteRenderer>();
+
+        _mySpriteRenderer.sortingOrder = (int) -(transform.position.y * 100);
     }
 
     public void AnimateAndDestroy()

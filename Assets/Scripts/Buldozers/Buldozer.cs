@@ -13,6 +13,15 @@ public abstract class Buldozer : MonoBehaviour {
     }
 
     private Transform _myTransform;
+    private SpriteRenderer _mySpriteRenderer;
+
+    private Animator _myAnimator;
+
+    public AudioClip AudioBuldoze;
+    public AudioClip AudioMove;
+    public AudioClip AudioDeath;
+
+    private LevelManager _theLevelManager;
 
     [HideInInspector]
     public Vector2Int MyMatrixPosition;
@@ -52,25 +61,20 @@ public abstract class Buldozer : MonoBehaviour {
     [Range(0.0f, 2.0f)]
     public float WaitOnTheEmptyField = 0f;
 
-    private Animator _myAnimator;
-
-    public AudioClip AudioBuldoze;
-    public AudioClip AudioMove;
-    public AudioClip AudioDeath;
-
-    private LevelManager _theLevelManager;
-    
     public void Awake()
     {
         _myTransform = transform;
 
         _myStartingPosition = _myTransform;
-        
+
         if (GetComponent<Animator>() != null)
             _myAnimator = GetComponent<Animator>();
 
         if (GetComponent<SpriteRenderer>() != null)
-            GetComponent<SpriteRenderer>().sprite = MySprite;        
+        {
+            _mySpriteRenderer = GetComponent<SpriteRenderer>();
+            _mySpriteRenderer.sprite = MySprite;
+        }                  
     }
 
     private void Start()
@@ -332,6 +336,10 @@ public abstract class Buldozer : MonoBehaviour {
     //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
     private void Update()
     {
+
+        _mySpriteRenderer.sortingOrder = (int) (-(_myTransform.position.y * 100));
+
+
         if (_isMoving && !_breakB)
         {
             _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed * _buldozingBreakTemp);

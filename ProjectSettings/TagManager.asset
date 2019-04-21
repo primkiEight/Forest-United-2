@@ -49,14 +49,14 @@ TagManager:
   - name: Field
     uniqueID: 3612369449
     locked: 0
-  - name: ForestAndBuldozer
-    uniqueID: 1920439863
-    locked: 0
   - name: Animal
     uniqueID: 2120359233
     locked: 0
   - name: Mound
     uniqueID: 3984420105
+    locked: 0
+  - name: ForestAndBuldozer
+    uniqueID: 1920439863
     locked: 0
   - name: Powers
     uniqueID: 3218657829
