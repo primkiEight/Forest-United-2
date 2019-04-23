@@ -28,6 +28,7 @@ MonoBehaviour:
   CloudSpawnerMinNMax: {x: 3, y: 9}
   TimeForTheFirstCloudSpawn: 1
   AnimalMoveSpeed: {x: 0, y: 0}
+  ManaFillUpSpeed: 60
   FieldForestPrefab: {fileID: 114441192943305382, guid: 3db9fa7f608423c4fa5440ca11447252,
     type: 2}
   LevelHomeList:

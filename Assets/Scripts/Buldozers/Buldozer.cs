@@ -51,6 +51,7 @@ public abstract class Buldozer : MonoBehaviour {
     private bool _breakC = true;
 
     private bool _isMoving = false;
+    private bool _isSlowedDown = false;
     [Range(0.1f, 0.5f)]
     public float MovingSpeed = 0.2f;
     private float _levelMovingSpeedModifier;
@@ -93,6 +94,8 @@ public abstract class Buldozer : MonoBehaviour {
 
         MovingSpeed *= _levelMovingSpeedModifier;
 
+        _buldozingBreakTemp = _buldozingBreakPerma;
+
         StartMyEngines();
     }
 
@@ -105,7 +108,7 @@ public abstract class Buldozer : MonoBehaviour {
             SetMyMovingPattern();
         }
 
-        _buldozingBreakTemp = _buldozingBreakPerma;
+        //_buldozingBreakTemp = _buldozingBreakPerma;
 
         StartMoving();
     }
@@ -226,7 +229,7 @@ public abstract class Buldozer : MonoBehaviour {
 
     public void TriggerMoving(bool trigger)
     {
-        _buldozingBreakTemp = _buldozingBreakPerma;
+        //_buldozingBreakTemp = _buldozingBreakPerma;
         _isMoving = trigger;
     }
 
@@ -259,11 +262,8 @@ public abstract class Buldozer : MonoBehaviour {
             }
             
             //Provjeri je li buldozer na toj lokaciji, ako je, pričekaj na ovom polju
-            //al ne Mario na način da provjeravaš ima li objekta kao child:
-            //if (_nextField.BuldozerPosition.GetComponentInChildren<Buldozer>() != null)
-            //nego tako da provjeriš vrijednost buldozeronmyfield tog polja!
             if (_nextField.BuldozerOnMyField != null)
-                {
+            {
                 StartCoroutine(CoWaitOnTheField(WaitOnTheEmptyField));
                 return;
             } else
@@ -278,6 +278,8 @@ public abstract class Buldozer : MonoBehaviour {
 
                 //Podešavam zajedničkog parenta dok se mičem
                 _myTransform.parent = _theLevelManager.GetBuldozersParent();
+
+                //_thisField.Casting();
 
                 //Oslobađam ovo polje od buldožera
                 _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y].SetBuldozerOnMyField(null);
@@ -301,7 +303,7 @@ public abstract class Buldozer : MonoBehaviour {
     public void SetBuldozingBreak()
     {
         _breakA = true;
-        
+
         //*****************************************************************************************************
         //upitno je trebam li ovu dolje liniju uključiti ili isključiti
         //Također Casting na Field skripti kod postavljanja buldožera
@@ -318,9 +320,17 @@ public abstract class Buldozer : MonoBehaviour {
         }
     }
 
-    public void SetBuldozingSpeed(float _buldozingBreakSpeed)
+    public void SetBuldozingSpeed(float buldozingBreakDuration)
     {
-        _buldozingBreakTemp = _buldozingBreakSpeed;
+        if (_buldozingBreakTemp == _buldozingBreakPerma)
+            StartCoroutine(BreakBuldozerForAmountOfTimeCo(buldozingBreakDuration));            
+    }
+
+    private IEnumerator BreakBuldozerForAmountOfTimeCo(float buldozingBreakDuration)
+    {
+        _buldozingBreakTemp = 0.5f;
+        yield return new WaitForSeconds(buldozingBreakDuration);
+        _buldozingBreakTemp = _buldozingBreakPerma;
     }
 
     public void ReSetBuldozingBreak()
@@ -332,7 +342,7 @@ public abstract class Buldozer : MonoBehaviour {
         if (!_isMoving)
             TriggerMoving(true);
     }
-
+    
     //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
     private void Update()
     {
@@ -398,7 +408,7 @@ public abstract class Buldozer : MonoBehaviour {
     {
         yield return new WaitForSeconds(duration);
 
-        //ReSetBuldozingBreak();
+        //Dok on ovdje čeka, dogodi se da power ne upali
 
         StartMoving();
     }
@@ -408,6 +418,9 @@ public abstract class Buldozer : MonoBehaviour {
         //Animiraj rezanje
         treesOnThisField.StartBuldozingMe(this);
         yield return new WaitForSeconds(BuldozingDuration);
+
+        //Dok on ovdje čeka, dogodi se da power ne upali
+
         StartMoving();
     }
 

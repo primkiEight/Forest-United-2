@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd34e1574e0da544fa44a60751d64117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BorderSize: 50
+  BorderSize: 60
 --- !u!222 &222314210709421134
 CanvasRenderer:
   m_ObjectHideFlags: 1

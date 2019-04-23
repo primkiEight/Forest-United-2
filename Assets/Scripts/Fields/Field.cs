@@ -15,11 +15,11 @@ public abstract class Field : MonoBehaviour {
     public Transform BuldozerPosition;
     public Transform TreesPosition;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Animal AnimalInMyHole;
-    [HideInInspector]
+    //[HideInInspector]
     public Power PowerOnMyField;
-    [HideInInspector]
+    //[HideInInspector]
     public Buldozer BuldozerOnMyField;
     [HideInInspector]
     public Trees TreesOnMyField;

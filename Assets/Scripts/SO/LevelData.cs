@@ -23,7 +23,6 @@ public class LevelData : ScriptableObject {
     [Range(0.65f, 0.9f)]
     public float CircleForAnimalsMax = 0.9f;
 
-
     [Header("Buldozer Options")]
     [Range(1f,1.5f)]
     public float BuldozerMoveSpeedModifier = 1f;
@@ -40,6 +39,10 @@ public class LevelData : ScriptableObject {
     [Header("Animal Options")]
     //[Range(1, 2)]
     public Vector2 AnimalMoveSpeed;
+
+    [Header("Power Options (pts/min)")]
+    [Range(1f, 100f)]
+    public float ManaFillUpSpeed = 100f;
 
     [Header("Field Prefab")]
     public FieldForest FieldForestPrefab;

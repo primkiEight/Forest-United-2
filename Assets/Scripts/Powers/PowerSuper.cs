@@ -6,7 +6,7 @@ public class PowerSuper : Power {
 
     private void Awake()
     {
-        BuldozingBreak = 1.0f;
+        BuldozingBreakDuration = 0.0f;
     }
 
     public override void BreakBuldozer(Buldozer buldozer)

@@ -6,8 +6,6 @@ public class FieldForest : Field {
 
     private Animal _tempAnimalClone;
 
-    //public Camera MainCamera;
-
     [Header("Hole Position / Transform")]
     public Transform HolePosition;
     private SpriteRenderer _mound;
@@ -20,24 +18,25 @@ public class FieldForest : Field {
 
     [HideInInspector]
     public LevelManager _theLevelManager;
-    [HideInInspector]
+    //[HideInInspector]
     public bool AnimalsInTheHood = false;
     [HideInInspector]
     public List<Field> FieldsWithAnimalsInTheHoodList = new List<Field> { };
 
     private BoxCollider2D _myBoxCollider2D;
+
+    private PowerManager _powerManager;
     
     //TEST
     public Color ActiveColor;
     public Color InactiveColor;
     private SpriteRenderer _mySprite;
 
-    private Vector3 origin = Vector3.zero;
-    private Vector3 direction = Vector3.zero;
+    //private Vector3 origin = Vector3.zero;
+    //private Vector3 direction = Vector3.zero;
 
     private void Awake()
     {
-        FieldController = FindObjectOfType<FieldController>();
         _myBoxCollider2D = GetComponent<BoxCollider2D>();
         _mySprite = GetComponent<SpriteRenderer>();
         _mound = HolePosition.GetComponent<SpriteRenderer>();
@@ -48,6 +47,10 @@ public class FieldForest : Field {
     private void Start()
     {
         _theLevelManager = LevelManager.Instance;
+
+        FieldController = _theLevelManager.GetComponent<FieldController>();
+
+        _powerManager = _theLevelManager.PowerManager;
 
         if (_mySprite)
         {
@@ -60,43 +63,7 @@ public class FieldForest : Field {
 
         CheckAnimalsInTheHood();
     }
-
-    /*
-    private void Update()
-    {
-        if (Input.GetMouseButtonUp(0)) {
-        //Vector2 origin = Vector2.zero;
-        ////Vector2 direction = Vector2.zero;
-
-        //origin = Camera.main.transform.position;
-        origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        direction = new Vector3(origin.x, origin.y, 20f);
-
-        //Definirati preko inspektora
-        LayerMask mask = LayerMask.GetMask("Fields");
-        //RaycastHit2D hit = Physics2D.Raycast(origin, direction, 50.0f, mask);
-        RaycastHit hit;
-
-        bool isHit = Physics.Raycast(origin, Vector3.forward * 30, out hit, Mathf.Infinity, mask);
-
-        if (isHit)
-        {
-            Debug.Log("Hit");
-            CheckMouseClick();
-            return;
-        }
-
-        }
-    }
-    */
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(origin, Vector3.forward*30);
-    }
-
+    
     private void OnMouseUp()
     {
         if (Input.GetMouseButtonUp(0))
@@ -164,13 +131,13 @@ public class FieldForest : Field {
         _tempAnimalClone = Instantiate(otherSelectedField.AnimalInMyHole, AnimalPosition.position, Quaternion.identity, FieldController.GetAnimalLimboTransform());
         //Remove the animal from the previous field, animating it
         otherSelectedField.ClearField();
-        //If there is a buldozer on that field, restore its speed
+        //If there is a buldozer on that field, restore its movement
         if(otherSelectedField.BuldozerOnMyField != null)
             otherSelectedField.BuldozerOnMyField.ReSetBuldozingBreak();
             
         //Check and clear the otherfield's neighbours' lists once the animal is gone from that field
 
-            otherSelectedField.ReCheckAnimalsInTheHood();
+        otherSelectedField.ReCheckAnimalsInTheHood();
         otherSelectedField.CheckAnimalsInTheHood();
         otherSelectedField.Casting();
 
@@ -204,9 +171,9 @@ public class FieldForest : Field {
 
         //Provjeriti i očistiti listu susjednih životinja mog polja sada kada je ovdje životinja postavljena
         CheckAnimalsInTheHood();
-        ReCheckAnimalsInTheHood();
         Casting();
-
+        ReCheckAnimalsInTheHood();
+        
         //Return the status of the boxcollider to active
         _myBoxCollider2D.enabled = true;
         //izbaciti animaciju, strelicu iznat tog polja s facom životinje koja se treba pojaviti
@@ -294,11 +261,11 @@ public class FieldForest : Field {
         if (PowerOnMyField)
             Destroy(PowerOnMyField.gameObject);
 
-        if(BuldozerOnMyField == null && AnimalsInTheHood == true && AnimalInMyHole == true)
+        /*if (BuldozerOnMyField == null && AnimalsInTheHood == true && AnimalInMyHole != null)
         {
             CastSuperPower();
         }
-        else if (BuldozerOnMyField != null && AnimalsInTheHood == true  && AnimalInMyHole != null)
+        else*/ if (/*BuldozerOnMyField != null && */AnimalsInTheHood == true  && AnimalInMyHole != null)
         {
             CastSuperPower();
         } else if (BuldozerOnMyField != null && AnimalsInTheHood == false && AnimalInMyHole != null)
@@ -317,9 +284,11 @@ public class FieldForest : Field {
         if(PowerOnMyField)
             Destroy(PowerOnMyField.gameObject);
 
-        PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-        PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
- 
+        if (_powerManager.MagicPoolTake(AnimalInMyHole.MidPowerPrefab.ManaCost))
+        {
+            PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+            PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+        }
     }
 
     public void CastSuperPower()
@@ -327,8 +296,16 @@ public class FieldForest : Field {
         if (PowerOnMyField)
             Destroy(PowerOnMyField.gameObject);
 
-        PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-        PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
-
+        if (BuldozerOnMyField != null)
+        {
+            if (_powerManager.MagicPoolTake(AnimalInMyHole.SuperPowerPrefab.ManaCost))
+            {
+                PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+                PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+            }
+        } else if (BuldozerOnMyField == null)
+        {
+            PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+        }
     }
 }

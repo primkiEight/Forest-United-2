@@ -4,7 +4,10 @@ using UnityEngine;
 
 public abstract class Power : MonoBehaviour {
 
-    public float BuldozingBreak;
+    [Header("Duration Of Buldozer SlowDown (sec)")]
+    public float BuldozingBreakDuration;
+    [Range(0f, 100f)]
+    public float ManaCost;
 
     public virtual void BreakBuldozer(Buldozer buldozer)
     {

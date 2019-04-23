@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuldozingBreak: 1
+  ManaCost: 30
 --- !u!212 &212507526545390432
 SpriteRenderer:
   m_ObjectHideFlags: 1

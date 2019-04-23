@@ -45,6 +45,9 @@ public class LevelManager : MonoBehaviour {
     private CloudSpawner _cloudSpawner;
     private GameObject _movingCloudsParent;
 
+    [HideInInspector]
+    public PowerManager PowerManager;
+
     //Singleton
     private static LevelManager _instance;
     public static LevelManager Instance
@@ -89,6 +92,8 @@ public class LevelManager : MonoBehaviour {
 
         _movingCloudsParent = new GameObject("CloudsParent");
         _cloudSpawner = GetComponent<CloudSpawner>();
+
+        PowerManager = GetComponent<PowerManager>();
 
         CreateLevelFields();
     }

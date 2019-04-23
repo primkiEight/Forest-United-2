@@ -7,6 +7,6 @@ public class PowerRain : Power {
     public override void BreakBuldozer(Buldozer buldozer)
     {
         if (buldozer)
-            buldozer.SetBuldozingSpeed(BuldozingBreak);
+            buldozer.SetBuldozingSpeed(BuldozingBreakDuration);
     }
 }
