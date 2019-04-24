@@ -16,9 +16,15 @@ public class PowerManager : MonoBehaviour {
     private float _timer = 0.0f;
 
     private LevelManager _theLevelManager;
+    private Animator _myAC;
+
+    private void Awake()
+    {
+        _myAC = MagicPool.GetComponent<Animator>();
+    }
 
     // Use this for initialization
-	void Start () {
+    void Start () {
         _manaMax = MagicPool.maxValue;
         _manaMin = MagicPool.minValue;
         //MagicPool.value = _manaMax;
@@ -43,6 +49,11 @@ public class PowerManager : MonoBehaviour {
                 _timer = _fillUpRate;
             }
         }
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    _myAC.SetTrigger("Grow");
+        //}
     }
 
     public void MagicPoolAdd (float powerToAdd) {
@@ -72,26 +83,13 @@ public class PowerManager : MonoBehaviour {
             return true;
         } else if (powerToTake > _manaCurrent){
             //Animiraj power slider
-            ////return false;
-
-
-
-
-
-
-            return true;
-
-
-
-
-
-
-
-
+            Debug.Log("Nema dovoljno mane");
+            _myAC.SetTrigger("Grow");
+            return false;
         }
 
         return false;
     }
 
-
+    
 }

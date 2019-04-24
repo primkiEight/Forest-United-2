@@ -52,8 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8934c59c59e12a048bd75f70f54d0dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuldozingBreak: 1
-  ManaCost: 50
+  BuldozingBreakDuration: 0
+  ManaCost: 30
 --- !u!212 &212562810127644962
 SpriteRenderer:
   m_ObjectHideFlags: 1

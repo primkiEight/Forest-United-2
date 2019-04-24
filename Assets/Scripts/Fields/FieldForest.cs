@@ -132,13 +132,18 @@ public class FieldForest : Field {
         //Remove the animal from the previous field, animating it
         otherSelectedField.ClearField();
         //If there is a buldozer on that field, restore its movement
+        //you don't have to do that in the Casting method for when Animal is leaving the field
         if(otherSelectedField.BuldozerOnMyField != null)
             otherSelectedField.BuldozerOnMyField.ReSetBuldozingBreak();
-            
+
         //Check and clear the otherfield's neighbours' lists once the animal is gone from that field
 
+        //For each neightbouring animal, recheck and change the status of the AnimalsInTheHood
+        //and call Casting method on them to change/clear their powers
         otherSelectedField.ReCheckAnimalsInTheHood();
+        //then clear the neighbouring list from that field once the animal is gone
         otherSelectedField.CheckAnimalsInTheHood();
+        //and call the Casting method to clear that field from powers
         otherSelectedField.Casting();
 
         //Calculate the distance between the fields, and wait for that long for the animal to emarge
@@ -169,9 +174,12 @@ public class FieldForest : Field {
         //Animate the animal emarging
         AnimalInMyHole.Emerge();
 
-        //Provjeriti i očistiti listu susjednih životinja mog polja sada kada je ovdje životinja postavljena
+        //Check the reset the neighouring animals list for this field once the animal appears here
         CheckAnimalsInTheHood();
+        //then call the Casting method here to check the buldozers once I know my neighbours
         Casting();
+        //then tell other neighbours to recheck their neighbouring lists (adding - me)
+        //and then call the Casting method on themselves once they now this field has an animal here
         ReCheckAnimalsInTheHood();
         
         //Return the status of the boxcollider to active
@@ -258,6 +266,98 @@ public class FieldForest : Field {
     
     public override void Casting()
     {
+        //Buldožer je na polju ali tamo nema životinje, niti ima susjeda, uobičajen poziv
+        if (BuldozerOnMyField != null && AnimalInMyHole == null && AnimalsInTheHood == false)
+        {
+            if (PowerOnMyField)
+                Destroy(PowerOnMyField.gameObject);
+            //if (BuldozerOnMyField.IsBroken == true)
+            //    BuldozerOnMyField.ReSetBuldozingBreak();
+            return;
+        }
+        //Životinja je na polju ali tamo nema buldožera, niti ima susjeda, uobičajen poziv
+        else if (BuldozerOnMyField == null && AnimalInMyHole != null && AnimalsInTheHood == false)
+        {
+            if (PowerOnMyField)
+                Destroy(PowerOnMyField.gameObject);
+            return;
+        }
+        //Buldozer je na tvom polju i ti si jedina životinja
+        else if(BuldozerOnMyField != null && AnimalInMyHole != null && AnimalsInTheHood == false)
+        {
+            if (PowerOnMyField)
+                Destroy(PowerOnMyField.gameObject);
+
+            //MID POWER KOJI NAPLATIŠ
+            bool hasEnoughMana = _powerManager.MagicPoolTake(AnimalInMyHole.MidPowerPrefab.ManaCost);
+
+            if (hasEnoughMana)
+            {
+                PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+                PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+            } else
+            {
+                //Animacija se treba izvoditi na power manageru
+                return;
+            }
+        }
+        //Buldozer je na tvom polju i imaš susjede
+        else if (BuldozerOnMyField != null && AnimalInMyHole != null && AnimalsInTheHood == true)
+        {
+            if (PowerOnMyField)
+                Destroy(PowerOnMyField.gameObject);
+
+            //SUPER POWER KOJI NAPLATIŠ
+            bool hasEnoughMana = _powerManager.MagicPoolTake(AnimalInMyHole.SuperPowerPrefab.ManaCost);
+
+            if (hasEnoughMana)
+            {
+                PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+                PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+            } else
+            {
+                //Animacija se treba izvoditi na power manageru
+                return;
+            }
+        }
+        //Buldozer nije na tvom polju nego na susjednom na kojem je druga životinja
+        else if (BuldozerOnMyField == null && AnimalInMyHole != null && AnimalsInTheHood == true)
+        {
+            //Čudno izgleda i ne funkcionira sasvim dobro, jer se naplaćuje i ukoliko se s prvim potroši mana
+            //onda se tamo magija pokaže, ali ne i ovdje
+            //možda da samo probam s animacijom životinje???
+            
+            
+            /*if (PowerOnMyField)
+                Destroy(PowerOnMyField.gameObject);
+
+            //SUPER POWER KOJI NE NAPLATIŠ
+
+            //ČUDNO IZGLEDA - MOŽDA IPAK BOLJE STAVITI NAPLATU, ALI ONDA CIJENA DA JE DUPLO MANJA, ISTO I GORE??
+            //PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+
+            bool hasEnoughMana = _powerManager.MagicPoolTake(AnimalInMyHole.SuperPowerPrefab.ManaCost / 2);
+
+            if (hasEnoughMana)
+            {
+                PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+                PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+            }
+            else
+            {
+                //Animacija se treba izvoditi na power manageru
+                return;
+            }*/
+        }
+        //Buldozer nije na ovom polju a nije više niti životinja
+        else if(BuldozerOnMyField == null && AnimalInMyHole == null)
+        {
+            //AKO POSTOJI IKAKAV POWER, UNIŠTI GA
+            if (PowerOnMyField)
+                Destroy(PowerOnMyField.gameObject);
+        }
+
+        /*
         if (PowerOnMyField)
             Destroy(PowerOnMyField.gameObject);
 
@@ -265,7 +365,7 @@ public class FieldForest : Field {
         {
             CastSuperPower();
         }
-        else*/ if (/*BuldozerOnMyField != null && */AnimalsInTheHood == true  && AnimalInMyHole != null)
+        else if (BuldozerOnMyField != null && AnimalsInTheHood == true  && AnimalInMyHole != null)
         {
             CastSuperPower();
         } else if (BuldozerOnMyField != null && AnimalsInTheHood == false && AnimalInMyHole != null)
@@ -275,10 +375,10 @@ public class FieldForest : Field {
         {
             if (PowerOnMyField)
                 Destroy(PowerOnMyField);
-            BuldozerOnMyField.ReSetBuldozingBreak();
-        }
+            //BuldozerOnMyField.ReSetBuldozingBreak(); >>>> Već gore u skripti imam restoranje movementa kad se životinja makne
+        }*/
     }
-    
+    /*
     public void CastMidPower()
     {
         if(PowerOnMyField)
@@ -307,5 +407,5 @@ public class FieldForest : Field {
         {
             PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
         }
-    }
+    }*/
 }

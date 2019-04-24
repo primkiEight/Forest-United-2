@@ -22,8 +22,8 @@ MonoBehaviour:
   BuldozerMoveSpeedModifier: 1
   BuldozerSpawnerMinNMax: {x: 2, y: 5}
   TimeForTheFirstBuldozerSpawn: 2
-  NoOfBuldozersToSpawn: 4
-  IncludeClouds: 1
+  NoOfBuldozersToSpawn: 3
+  IncludeClouds: 0
   CloudMoveSpeed: {x: 1, y: 5}
   CloudSpawnerMinNMax: {x: 3, y: 9}
   TimeForTheFirstCloudSpawn: 1
