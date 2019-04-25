@@ -23,7 +23,7 @@ MonoBehaviour:
   BuldozerSpawnerMinNMax: {x: 2, y: 5}
   TimeForTheFirstBuldozerSpawn: 2
   NoOfBuldozersToSpawn: 3
-  IncludeClouds: 0
+  IncludeClouds: 1
   CloudMoveSpeed: {x: 1, y: 5}
   CloudSpawnerMinNMax: {x: 3, y: 9}
   TimeForTheFirstCloudSpawn: 1
@@ -47,3 +47,4 @@ MonoBehaviour:
   LevelCloudsList:
   - {fileID: 114778261140680280, guid: 92301732fef9b56469773ca428e6763c, type: 2}
   - {fileID: 114778261140680280, guid: 6ba4e0c4d49d2cb4ab2b5fe6dae7d41c, type: 2}
+  - {fileID: 114778261140680280, guid: dc5fa58ea556f684d805541407ed941f, type: 2}

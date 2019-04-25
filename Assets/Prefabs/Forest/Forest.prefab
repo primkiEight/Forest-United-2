@@ -1608,7 +1608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810ec62186360724e95fb3f88086611b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftRangeX: {x: 0, y: 0.15}
+  ShiftRangeX: {x: 0, y: -0.15}
   ShiftRangeY: {x: -0.15, y: 0.15}
   ScaleOnYMinAndMax: {x: 0.8, y: 1.2}
 --- !u!114 &114876293828613218

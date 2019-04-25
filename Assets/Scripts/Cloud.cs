@@ -15,7 +15,7 @@ public class Cloud : MonoBehaviour {
     {
         _myTransform = transform;
 
-        float ranSize = Random.Range(1.0f, 2.0f);
+        float ranSize = Random.Range(0.6f, 1.2f);
 
         Vector3 newSize = Vector3.one * ranSize;
 
@@ -44,10 +44,19 @@ public class Cloud : MonoBehaviour {
     {
         GameObject cloudShadow = Instantiate(gameObject, transform.position + shadowOffset, Quaternion.identity, transform);
 
-        Collider2D shadowCollider = cloudShadow.GetComponent<Collider2D>();
+        foreach (Transform child in cloudShadow.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        CompositeCollider2D shadowCollider = cloudShadow.GetComponent<CompositeCollider2D>();
         if(shadowCollider)
             Destroy(shadowCollider);
 
+        Rigidbody2D shadowRigidBody2D = cloudShadow.GetComponent<Rigidbody2D>();
+        if (shadowRigidBody2D)
+            Destroy(shadowRigidBody2D);
+        
         cloudShadow.layer = LayerMask.NameToLayer(shadowLayerName);
 
         int goLayerIndexChange = gameObject.layer;

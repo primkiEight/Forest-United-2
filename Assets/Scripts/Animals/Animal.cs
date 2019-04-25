@@ -8,12 +8,13 @@ public abstract class Animal : MonoBehaviour {
 
     public float DiggingSpeed;
 
-    //public float PowerDuration;
     public Power MidPowerPrefab;
     public Power SuperPowerPrefab;
-    //public Transform PowerPosition;
-
+    
     private Animator _myAnimator;
+
+    [HideInInspector]
+    public bool IsCasting = false;
 
     public AudioClip AudioDig;
     public AudioClip AudioActive;
@@ -32,64 +33,45 @@ public abstract class Animal : MonoBehaviour {
 
     public virtual void Submerge()
     {
-        //Animiraj zaranjanje
-        Destroy(gameObject, 0.5f);
-    }
-
-    public virtual void Emerge()
-    {
-        //Animiraj izranjanje
-    }
-
-    public virtual void Move(float diggingSpeed)
-    {
-        StartCoroutine("Digging", diggingSpeed);
-    }
-
-    private IEnumerator Digging(float diggingSpeed)
-    {
         AnimateExit();
-        yield return new WaitForSeconds(diggingSpeed);
-        AnimateEnter();
+        Destroy(gameObject, _myAnimator.GetCurrentAnimatorStateInfo(0).length);
     }
 
-    public void CastMidPower()
-    {
-
-    }
-
-    public void CastSuperPower()
-    {
-
-    }
-
-    public virtual void Attack()
-    {
-        
-    }
+    //public virtual void Move(float diggingSpeed)
+    //{
+    //    StartCoroutine("Digging", diggingSpeed);
+    //}
 
     public virtual void AnimateIdle()
     {
+        IsCasting = false;
+        _myAnimator.SetBool("IsActive", false);
+        //_myAnimator.SetBool("IsCasting", false);
+    }
 
+    public virtual void AnimateNotCastingAnymore()
+    {
+        IsCasting = false;
+        _myAnimator.SetBool("IsCasting", false);
+        _myAnimator.SetBool("IsActive", false);
     }
 
     public virtual void AnimateActive()
     {
-
+        IsCasting = false;
+        _myAnimator.SetBool("IsCasting", false);
+        _myAnimator.SetBool("IsActive", true);
     }
 
     public virtual void AnimateCasting()
     {
-
-    }
-
-    public virtual void AnimateEnter()
-    {
-
+        IsCasting = true;
+        _myAnimator.SetBool("IsActive", false);
+        _myAnimator.SetBool("IsCasting", true);
     }
 
     public virtual void AnimateExit()
     {
-
+        _myAnimator.SetBool("IsSubmerge", true);
     }
 }

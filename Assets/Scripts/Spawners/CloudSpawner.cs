@@ -7,8 +7,6 @@ public class CloudSpawner : MonoBehaviour {
     private float _freq = 0.0f;
     private int _offset = 2;
 
-    private int _counter = 1;
-    //public int StartingNoOfClouds = 10;
     public Vector3 ShadowOffset;
     public string ShadowsSortingLayerName;
 
@@ -22,32 +20,24 @@ public class CloudSpawner : MonoBehaviour {
         _theLevelManager = LevelManager.Instance;
         _freq = _theLevelManager.LevelData.TimeForTheFirstCloudSpawn;
 
+        SpawnStartingClouds();
+
         StartCoroutine(CoSpawnCloud());
     }
 
-    private void SpawnCloud(Cloud cloudToSpawn)
+    private void MakeACloud(float randomSpawnPositionX, float randomSpawnPositionY)
     {
-        int randomIndex = Random.Range(0, _theLevelManager.GetBoundaryForestList.Count);
+        int randomIndex = Random.Range(0, _theLevelManager.LevelData.LevelCloudsList.Count);
 
-        float randomSpawnPositionX = 0.0f;
-        float randomSpawnPositionY = 0.0f;
-
-        //if (_counter <= StartingNoOfClouds)
-        //{
-        //    randomSpawnPositionY = Random.Range(0.0f, (float)_theLevelManager.LevelData.Xmax);
-        //} else
-        //{
-            randomSpawnPositionX = _theLevelManager.LevelData.Xmax + _offset;
-        //}
-        randomSpawnPositionY = Random.Range(0.0f, (float) _theLevelManager.LevelData.Ymax);
+        Cloud cloudToSpawn = (_theLevelManager.LevelData.LevelCloudsList[randomIndex]);
 
         Vector3 randomSpawnPosition = new Vector3(randomSpawnPositionX, randomSpawnPositionY, 0.0f);
 
         Cloud cloudClone = Instantiate(cloudToSpawn, randomSpawnPosition, Quaternion.identity, _theLevelManager.GetCloudsParent());
 
         float cloneCloudSpeed = Random.Range(_theLevelManager.LevelData.CloudMoveSpeed.x, _theLevelManager.LevelData.CloudMoveSpeed.y) * 0.1f;
-
         cloudClone.SetCloudSpeed(cloneCloudSpeed);
+
         int cloneCloudDestroyPosition = -_offset;
         cloudClone.SetDestroyPosition(cloneCloudDestroyPosition);
 
@@ -57,6 +47,31 @@ public class CloudSpawner : MonoBehaviour {
         cloudClone.CreateShadow(CloudsLayersNamesList[0], ShadowOffset, ShadowsSortingLayerName);
 
         cloudClone.StartMoving();
+    }
+
+    private void SpawnStartingClouds()
+    {
+        int min = Mathf.Min(_theLevelManager.LevelData.Xmax, _theLevelManager.LevelData.Ymax);
+        int max = Mathf.Max(_theLevelManager.LevelData.Xmax, _theLevelManager.LevelData.Ymax);
+        int length = Random.Range(min, max);
+
+        for (int i = 0; i < length; i++)
+        {
+            float randomSpawnPositionX = Random.Range(0.0f, (float)_theLevelManager.LevelData.Xmax);
+            float randomSpawnPositionY = Random.Range(0.0f, (float)_theLevelManager.LevelData.Ymax);
+
+            MakeACloud(randomSpawnPositionX, randomSpawnPositionY);
+        }
+    }
+
+    private void SpawnCloud()
+    {
+        int randomIndex = Random.Range(0, _theLevelManager.GetBoundaryForestList.Count);
+
+        float randomSpawnPositionX = _theLevelManager.LevelData.Xmax + _offset;
+        float randomSpawnPositionY = Random.Range(0.0f, (float)_theLevelManager.LevelData.Ymax);
+        
+        MakeACloud(randomSpawnPositionX, randomSpawnPositionY);
 
         StartCoroutine(CoSpawnCloud());
     }
@@ -65,9 +80,7 @@ public class CloudSpawner : MonoBehaviour {
     {
         yield return new WaitForSeconds(_freq);
 
-        int randomIndex = Random.Range(0, _theLevelManager.LevelData.LevelCloudsList.Count);
-
-        SpawnCloud(_theLevelManager.LevelData.LevelCloudsList[randomIndex]);
+        SpawnCloud();
 
         _freq = Random.Range(_theLevelManager.LevelData.CloudSpawnerMinNMax.x, _theLevelManager.LevelData.CloudSpawnerMinNMax.y);        
     }

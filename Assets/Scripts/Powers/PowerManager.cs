@@ -18,6 +18,8 @@ public class PowerManager : MonoBehaviour {
     private LevelManager _theLevelManager;
     private Animator _myAC;
 
+    private bool _doFill = true;
+
     private void Awake()
     {
         _myAC = MagicPool.GetComponent<Animator>();
@@ -34,11 +36,13 @@ public class PowerManager : MonoBehaviour {
         _fillUpPoints = _theLevelManager.LevelData.ManaFillUpSpeed;
 
         _timer = _fillUpRate;
+
+
     }
 
     private void Update()
     {
-        if(_manaCurrent < _manaMax)
+        if(_manaCurrent < _manaMax && _doFill)
         {
             _timer -= Time.deltaTime;
         
@@ -48,11 +52,41 @@ public class PowerManager : MonoBehaviour {
                 MagicPool.value = _manaCurrent;
                 _timer = _fillUpRate;
             }
+        } else if (_manaCurrent <= 0){
+            _manaCurrent = 0;
+            MagicPool.value = _manaCurrent;
         }
+
+        /*if (MagicPool.value < _manaCurrent)
+        {
+            MagicPool.value += 0.2f;
+            if(MagicPool.value > MagicPool.maxValue)
+            {
+                _manaCurrent = MagicPool.maxValue;
+                MagicPool.value = MagicPool.maxValue;
+            }
+
+        } else */if (MagicPool.value > _manaCurrent)
+        {
+            _doFill = false;
+            MagicPool.value -= 0.5f;
+            if (MagicPool.value < MagicPool.minValue)
+            {
+                _manaCurrent = MagicPool.minValue;
+                MagicPool.value = MagicPool.minValue;
+            }
+        } else if (MagicPool.value <= _manaCurrent)
+        {
+            _doFill = true;
+        }
+
 
         //if (Input.GetMouseButtonDown(0))
         //{
-        //    _myAC.SetTrigger("Grow");
+        //    //_myAC.SetTrigger("Grow");
+        //
+        //    _manaCurrent -= 10;
+        //
         //}
     }
 
@@ -63,11 +97,11 @@ public class PowerManager : MonoBehaviour {
         if(currentMana + powerToAdd >= _manaMax)
         {
             _manaCurrent = _manaMax;
-            MagicPool.value = _manaCurrent;
+            //MagicPool.value = _manaCurrent;
             //return true;
         } else if (currentMana + powerToAdd < _manaMax) {
             _manaCurrent += powerToAdd;
-            MagicPool.value = _manaCurrent;
+            //MagicPool.value = _manaCurrent;
             //return true;
         }
 
@@ -79,7 +113,7 @@ public class PowerManager : MonoBehaviour {
         if(powerToTake <= _manaCurrent)
         {
             _manaCurrent -= powerToTake;
-            MagicPool.value = _manaCurrent;
+            //MagicPool.value = _manaCurrent;
             return true;
         } else if (powerToTake > _manaCurrent){
             //Animiraj power slider

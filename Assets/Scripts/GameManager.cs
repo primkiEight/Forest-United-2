@@ -18,12 +18,41 @@ public class GameManager : MonoBehaviour {
 
     private bool _gamePused = false;
 
-    private AudioSource _myAudioSource;
-    private float _maxVolume;
-    private float _currentVolume;
+    [Header("Audio Manager")]
+    public AudioSource AudioMusicSource;
+    public AudioSource AudioSFXSource;
+
+    //private AudioSource _myAudioSource;
+    //private float _maxVolume;
+    //private float _currentVolume;
+
+    //Singleton
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = (GameManager)FindObjectOfType(typeof(GameManager));
+
+                if (_instance == null)
+                    Debug.Log("An instance of GameManager doesn't exist!");
+                //Sad ćemo napisati poruku da ne postoji
+                //i da ga netko treba postaviti na scenu.
+                //To nije konačno rješenje; konačno rješenje bi bilo
+                //napraviti GameObject, dodati mu ovu skriptu, postaviti vrijednosti varijabli i vratimo taj objekt.
+            }
+            return _instance;
+        }
+    }
 
     private void Awake()
     {
+        //Singleton
+        if (Instance != this)
+            Destroy(gameObject);
+
         GameCanvases.gameObject.SetActive(false);
         PauseCanvas.gameObject.SetActive(false);
         OptionsCanvas.gameObject.SetActive(false);
@@ -32,9 +61,9 @@ public class GameManager : MonoBehaviour {
 
         _gamePused = false;
 
-        _myAudioSource = GetComponent<AudioSource>();
-        _maxVolume = _myAudioSource.volume;
-        _currentVolume = _maxVolume;
+        //_myAudioSource = GetComponent<AudioSource>();
+        //_maxVolume = _myAudioSource.volume;
+        //_currentVolume = _maxVolume;
 
         Time.timeScale = 1.0f;
     }
@@ -66,8 +95,8 @@ public class GameManager : MonoBehaviour {
     {
         _gamePused = isPaused;
         Time.timeScale = 0.0f;
-        _currentVolume = _maxVolume * 0.3f;
-        _myAudioSource.volume = _currentVolume;
+        //_currentVolume = _maxVolume * 0.3f;
+        //_myAudioSource.volume = _currentVolume;
         GameCanvases.gameObject.SetActive(false);
         PauseCanvas.gameObject.SetActive(true);
     }
@@ -76,8 +105,8 @@ public class GameManager : MonoBehaviour {
     {
         _gamePused = isPaused;
         Time.timeScale = 1.0f;
-        _currentVolume = _maxVolume;
-        _myAudioSource.volume = _currentVolume;
+        //_currentVolume = _maxVolume;
+        //_myAudioSource.volume = _currentVolume;
         GameCanvases.gameObject.SetActive(true);
         PauseCanvas.gameObject.SetActive(false);
     }
@@ -127,16 +156,16 @@ public class GameManager : MonoBehaviour {
 
     public void PlaySoundOneShot(AudioClip clipToPlay)
     {
-        _myAudioSource.pitch = Random.Range(0.8f, 1.2f);
-        _myAudioSource.PlayOneShot(clipToPlay);
-        _myAudioSource.pitch = 1.0f;
+        //_myAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        //_myAudioSource.PlayOneShot(clipToPlay);
+        //_myAudioSource.pitch = 1.0f;
     }
 
     public void PlaySoundDelayed(AudioClip clipToPlay, float delay)
     {
-        _myAudioSource.clip = clipToPlay;
-        _myAudioSource.pitch = Random.Range(0.8f, 1.2f);
-        _myAudioSource.PlayDelayed(delay);
-        _myAudioSource.pitch = 1.0f;
+        //_myAudioSource.clip = clipToPlay;
+        //_myAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        //_myAudioSource.PlayDelayed(delay);
+        //_myAudioSource.pitch = 1.0f;
     }
 }

@@ -48,6 +48,8 @@ public class LevelManager : MonoBehaviour {
     [HideInInspector]
     public PowerManager PowerManager;
 
+    private GameManager _theGameManager;
+
     //Singleton
     private static LevelManager _instance;
     public static LevelManager Instance
@@ -96,6 +98,11 @@ public class LevelManager : MonoBehaviour {
         PowerManager = GetComponent<PowerManager>();
 
         CreateLevelFields();
+    }
+
+    private void Start()
+    {
+        _theGameManager = GameManager.Instance;
     }
 
     public Transform GetBuldozersParent()

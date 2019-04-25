@@ -13,9 +13,4 @@ public abstract class Power : MonoBehaviour {
     {
         
     }
-
-    //public virtual void DestroyBuldozer(Buldozer buldozer)
-    //{
-    //    
-    //}
 }

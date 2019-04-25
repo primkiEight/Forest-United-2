@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: HedgehogACO
+  m_Controller: {fileID: 9100000, guid: 8ea486b57568ec240a09c50be51143b9, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: e064ca60962909240b34a4a025b034e7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2c7bab7b514c05d42b346ed21f3546a1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: bc1b929f8fb3a5d49be72340b557a8a2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 26378c9711b37f343913336f0cd179e3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 67b8310c29c8911489fd19bdc1e0525b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 15233ed1d784c8045a3568acfeb4ba3a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 328849da0df41a0438c30d99f069e32e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 252a92b9383a9b6479b49bc88f4ee9ff, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 92c47d1e758430a42aa63efcaae9dfe4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1372a814bcc08cd4da12432e90f2f1b3, type: 2}

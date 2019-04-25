@@ -53,7 +53,6 @@ public abstract class Buldozer : MonoBehaviour {
     //private bool _breakC = true;
 
     private bool _isMoving = false;
-    //private bool _isSlowedDown = false;
     [Range(0.1f, 0.5f)]
     public float MovingSpeed = 0.2f;
     private float _levelMovingSpeedModifier;
@@ -66,6 +65,7 @@ public abstract class Buldozer : MonoBehaviour {
 
 
     public bool IsBroken = false;
+    public bool IsSlowedDown = false;
 
 
     public void Awake()
@@ -345,6 +345,7 @@ public abstract class Buldozer : MonoBehaviour {
     {
         if (_buldozingBreakTemp == _buldozingBreakPerma)
         {
+            IsSlowedDown = true;
             _buldozingBreakTemp = 0.5f;
             StartCoroutine(BreakBuldozerForAmountOfTimeCo(buldozingBreakDuration));
         }   
@@ -354,21 +355,26 @@ public abstract class Buldozer : MonoBehaviour {
     {
         yield return new WaitForSeconds(buldozingBreakDuration);
         _buldozingBreakTemp = _buldozingBreakPerma;
+        IsSlowedDown = false;
     }
 
     public void ReSetBuldozingBreak()
     {
-        /*//_buldozingBreakTemp = _buldozingBreakPerma;
-        _breakA = false;
-        _breakB = false;
-        _breakC = true;
-        //if (!_isMoving)
-        //    TriggerMoving(true);
-        */
-        IsBroken = false;
-        //MyMatrixPosition = _thisField.MyFieldPosition;
-        //StartMoving();
-        StartMyEngines();
+        if(IsSlowedDown && !IsBroken)
+        {
+
+        } else if (!IsSlowedDown && IsBroken)
+        {
+            IsBroken = false;
+            StartMyEngines();
+        } else if (IsSlowedDown && IsBroken)
+        {
+            IsBroken = false;
+            StartMyEngines();
+        } else
+        {
+
+        }
     }
     
     //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
