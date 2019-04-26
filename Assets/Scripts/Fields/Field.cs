@@ -24,15 +24,24 @@ public abstract class Field : MonoBehaviour {
     [HideInInspector]
     public Trees TreesOnMyField;
 
-    
+    [HideInInspector]
+    public LevelManager _theLevelManager;
 
     public virtual void SetBuldozerOnMyField(Buldozer buldozerOnMyField)
     {
         BuldozerOnMyField = buldozerOnMyField;
+    }
 
-        //Ovo je upitno treba li ovdje :(
-        //if (AnimalInMyHole != null)
-        //    Casting();
+    public virtual void SetMyBackground(SpriteRenderer spriteRenderer, ThemeData themeData)
+    {
+        int ranIndex = Random.Range(0, themeData.FieldSpritesList.Count);
+        spriteRenderer.sprite = themeData.FieldSpritesList[ranIndex];
+        //spriteRenderer.color = InactiveColor;
+    }
+
+    public virtual void AnimateHomeEarthquake()
+    {
+
     }
 
     public virtual void Casting()

@@ -16,8 +16,8 @@ public class FieldForest : Field {
     //[SerializeField]
     private bool IsFieldActive = false;
 
-    [HideInInspector]
-    public LevelManager _theLevelManager;
+    //[HideInInspector]
+    //public LevelManager _theLevelManager;
     //[HideInInspector]
     public bool AnimalsInTheHood = false;
     [HideInInspector]
@@ -31,9 +31,6 @@ public class FieldForest : Field {
     public Color ActiveColor;
     public Color InactiveColor;
     private SpriteRenderer _mySprite;
-
-    //private Vector3 origin = Vector3.zero;
-    //private Vector3 direction = Vector3.zero;
 
     private void Awake()
     {
@@ -54,16 +51,19 @@ public class FieldForest : Field {
 
         if (_mySprite)
         {
-            int ranIndex = Random.Range(0, _theLevelManager.ThemeData.FieldSpritesList.Count);
-            _mySprite.sprite = _theLevelManager.ThemeData.FieldSpritesList[ranIndex];
-            _mySprite.color = InactiveColor;
+            //int ranIndex = Random.Range(0, _theLevelManager.ThemeData.FieldSpritesList.Count);
+            //_mySprite.sprite = _theLevelManager.ThemeData.FieldSpritesList[ranIndex];
+            //_mySprite.color = InactiveColor;
+
+            SetMyBackground(_mySprite, _theLevelManager.ThemeData);
+
         }
 
         FieldsWithAnimalsInTheHoodList.Clear();
 
         CheckAnimalsInTheHood();
     }
-    
+
     private void OnMouseUp()
     {
         if (Input.GetMouseButtonUp(0))

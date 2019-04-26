@@ -289,8 +289,6 @@ public class LevelManager : MonoBehaviour {
     private void InstantiateUIPointerArrow(Transform fieldHome)
     {
         ScreenArrowPointer PointerArrowClone = Instantiate(PointerArrowPrefab, PointerArrowsCanvas.transform);
-        //PointerArrowClone.transform.SetParent(PointerCanvas.transform, false);
-        //PointerArrowClone.gameObject.GetComponent<ScreenArrowPointer>().SetTheHomeTarget(transform);
         PointerArrowClone.SetTheHomeTargetAndUICamera(fieldHome, UICamera);
     }
 }

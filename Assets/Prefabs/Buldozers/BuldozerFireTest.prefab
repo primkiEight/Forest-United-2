@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4305724169850554}
   - component: {fileID: 212472966005516682}
   - component: {fileID: 114897070352661558}
-  - component: {fileID: 70382643743414132}
-  - component: {fileID: 50591925800463944}
   m_Layer: 11
   m_Name: BuldozerFireTest
   m_TagString: Buldozer
@@ -43,41 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50591925800463944
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1481152756611424}
-  m_BodyType: 1
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!70 &70382643743414132
-CapsuleCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1481152756611424}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0, y: 0.32000002}
-  m_Size: {x: 0.8, y: 0.64}
-  m_Direction: 1
 --- !u!114 &114897070352661558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,10 +56,13 @@ MonoBehaviour:
   AudioMove: {fileID: 0}
   AudioDeath: {fileID: 0}
   MyMatrixPosition: {x: 0, y: 0}
+  ChangeOrderInLayer: 1
   MySprite: {fileID: 21300000, guid: 8f22d894172801742b688cdba4d1a733, type: 3}
   MovingSpeed: 0.2
   BuldozingDuration: 5
   WaitOnTheEmptyField: 0.2
+  IsBroken: 0
+  IsSlowedDown: 0
 --- !u!212 &212472966005516682
 SpriteRenderer:
   m_ObjectHideFlags: 1

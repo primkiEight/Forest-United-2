@@ -36,22 +36,15 @@ public abstract class Buldozer : MonoBehaviour {
     private Trees _treesOnThisField = null;
 
     private List<Vector2Int> _forestHomesPositionsList = new List<Vector2Int>();
+    private Field _nearestHome = null;
     private int _distanceX;
     private int _distanceY;
     private List<_direction> _myMovingPatternList = new List<_direction>();
 
+    [HideInInspector]
+    public bool ChangeOrderInLayer = true;
     public Sprite MySprite;
-
-    //[SerializeField]
-    ////Disables/Enables setting a new field to move to
-    //public bool _breakA = false;
-    //[SerializeField]
-    ////Desables/Enables Update's move and setting a new field to move to
-    //private bool _breakB = false;
-    //[SerializeField]
-    ////Enables/Disables moving from the current field
-    //private bool _breakC = true;
-
+    
     private bool _isMoving = false;
     [Range(0.1f, 0.5f)]
     public float MovingSpeed = 0.2f;
@@ -92,10 +85,6 @@ public abstract class Buldozer : MonoBehaviour {
 
         _thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
 
-        //_breakA = false;
-        //_breakB = false;
-        //_breakC = true;
-        //
         IsBroken = false;
 
         _levelMovingSpeedModifier = _theLevelManager.LevelData.BuldozerMoveSpeedModifier;
@@ -118,8 +107,6 @@ public abstract class Buldozer : MonoBehaviour {
 
         TriggerMoving(false);
 
-        /////?????? //_buldozingBreakTemp = _buldozingBreakPerma;
-
         StartMoving();
     }
 
@@ -133,7 +120,9 @@ public abstract class Buldozer : MonoBehaviour {
         {
             if (Vector2.Distance(MyMatrixPosition, _forestHomesPositionsList[i]) < distance)
                 theNearestHomePosition = _forestHomesPositionsList[i];
-        }    
+        }
+
+        _nearestHome = _theLevelManager._levelFieldMatrix[theNearestHomePosition.x, theNearestHomePosition.y];
 
         return theNearestHomePosition;
     }
@@ -319,20 +308,8 @@ public abstract class Buldozer : MonoBehaviour {
 
     public void SetBuldozingBreak()
     {
-        /*_breakA = true;
-
-        //*****************************************************************************************************
-        //upitno je trebam li ovu dolje liniju uključiti ili isključiti
-        //Također Casting na Field skripti kod postavljanja buldožera
-        //jer se taj provjerava kod svakog spawnanja buldožera
-
-        //_breakB = true;
-        _breakC = false; */
-
         IsBroken = true;
 
-
-        //_buldozingBreakTemp = _buldozingBreakPower;
         if (_thisField.TreesOnMyField != null)
         {
             Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
@@ -340,7 +317,6 @@ public abstract class Buldozer : MonoBehaviour {
         }
     }
 
-    /// ?????
     public void SetBuldozingSpeed(float buldozingBreakDuration)
     {
         if (_buldozingBreakTemp == _buldozingBreakPerma)
@@ -350,7 +326,7 @@ public abstract class Buldozer : MonoBehaviour {
             StartCoroutine(BreakBuldozerForAmountOfTimeCo(buldozingBreakDuration));
         }   
     }
-    /// ????
+    
     private IEnumerator BreakBuldozerForAmountOfTimeCo(float buldozingBreakDuration)
     {
         yield return new WaitForSeconds(buldozingBreakDuration);
@@ -380,44 +356,12 @@ public abstract class Buldozer : MonoBehaviour {
     //Update funkcija pomiče buldozer s trenutne pozicije na next poziciju
     private void Update()
     {
-        /*
-        if (_isMoving && !_breakB)
-        {
-            _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed * _buldozingBreakTemp);
-
-            _mySpriteRenderer.sortingOrder = (int)(-(_myTransform.position.y * 100));
-
-            float distance = Vector3.Distance(_myTransform.position, _myNextPosition.position);
-
-            if ((distance <= 0.01f) && _breakC)
-            {
-                if (_breakA)
-                    _breakB = true;
-
-                TriggerMoving(false);
-
-                _breakC = false;
-
-                //if (_nextField.AnimalInMyHole != null)
-                //    _nextField.Casting();
-                //
-                //if (_thisField.AnimalInMyHole != null)
-                //    _thisField.Casting();
-
-                if (!_breakA && !_breakB)
-                {
-                    _breakC = true;
-                    SetNewPosition();
-                }   
-            }
-        }      
-        */
-
         if (_isMoving)
         {
             _myTransform.position = Vector3.MoveTowards(_myStartingPosition.position, _myNextPosition.position, Time.deltaTime * MovingSpeed * _buldozingBreakTemp);
 
-            _mySpriteRenderer.sortingOrder = (int)(-(_myTransform.position.y * 100));
+            if(ChangeOrderInLayer)
+                _mySpriteRenderer.sortingOrder = (int)(-(_myTransform.position.y * 100));
 
             float distance = Vector3.Distance(_myTransform.position, _myNextPosition.position);
 
@@ -450,14 +394,6 @@ public abstract class Buldozer : MonoBehaviour {
     //Ako je ovdje šuma, pokreni Attack; ako nije, ponovno pokreni ovaj Move
     private void SetNewPosition()
     {
-        //_myTransform.position = _myNextPosition.position;
-        //_myTransform.SetParent(_nextField.BuldozerPosition);
-
-        //MyMatrixPosition = _nextField.MyFieldPosition;
-
-        //Stavljam da je ovo novo polje trenutno this field, kako bih mogao dohvatiti životinje ili šumu iz njega
-        //_thisField = _theLevelManager._levelFieldMatrix[MyMatrixPosition.x, MyMatrixPosition.y];
-
         _treesOnThisField = _thisField.TreesOnMyField;
         if (_thisField.TreesOnMyField != null)
         {
@@ -474,10 +410,7 @@ public abstract class Buldozer : MonoBehaviour {
     {
         yield return new WaitForSeconds(duration);
 
-        //Dok on ovdje čeka, dogodi se da power ne upali
-
-        //_thisField.Casting();
-
+        
         StartMoving();
     }
 
@@ -487,9 +420,8 @@ public abstract class Buldozer : MonoBehaviour {
         treesOnThisField.StartBuldozingMe(this);
         yield return new WaitForSeconds(BuldozingDuration);
 
-        //Dok on ovdje čeka, dogodi se da power ne upali
-
-        //_thisField.Casting();
+        if(_nearestHome != null)
+            _nearestHome.AnimateHomeEarthquake();
 
         StartMoving();
     }

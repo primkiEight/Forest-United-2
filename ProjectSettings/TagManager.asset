@@ -55,6 +55,9 @@ TagManager:
   - name: ForestAndBuldozer
     uniqueID: 1920439863
     locked: 0
+  - name: Home
+    uniqueID: 1876449223
+    locked: 0
   - name: Animal
     uniqueID: 2120359233
     locked: 0
