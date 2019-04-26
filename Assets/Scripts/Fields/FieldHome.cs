@@ -6,8 +6,11 @@ public class FieldHome : Field {
 
     private SpriteRenderer _mySprite;
 
+    [Header("FieldHome Transforms")]
     public Transform TreeBottom;
     public Transform TreeBottomBackground;
+
+    [Header("Animator Controller")]
     public Animator HomeAnimator;
 
      private void Awake()
@@ -50,16 +53,14 @@ public class FieldHome : Field {
         {
             //Pokreni GameOver
 
-            SpriteRenderer buldozerSprite = BuldozerOnMyField.GetComponent<SpriteRenderer>();
-
-            buldozerSprite.sortingLayerName = TreeBottom.GetComponent<SpriteRenderer>().sortingLayerName;
-            BuldozerOnMyField.ChangeOrderInLayer = false;
-            buldozerSprite.sortingOrder = 2;
-
-            if (TreeBottom.gameObject.activeSelf != true)
-            {
-                TreeBottom.gameObject.SetActive(true);
-            }
+            //SpriteRenderer buldozerSprite = BuldozerOnMyField.GetComponent<SpriteRenderer>();
+            //buldozerSprite.sortingLayerName = TreeBottom.GetComponent<SpriteRenderer>().sortingLayerName;
+            //BuldozerOnMyField.ChangeOrderInLayer = false;
+            //buldozerSprite.sortingOrder = 2;
+            //if (TreeBottom.gameObject.activeSelf != true)
+            //{
+            //    TreeBottom.gameObject.SetActive(true);
+            //}
 
             AnimateHomeEarthquake();
 

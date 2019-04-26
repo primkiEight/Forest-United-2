@@ -52,8 +52,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4629509474996408}
   - component: {fileID: 61677438096730524}
-  - component: {fileID: 114441192943305382}
   - component: {fileID: 212430124375680374}
+  - component: {fileID: 114441192943305382}
   m_Layer: 10
   m_Name: FieldForest
   m_TagString: Untagged
@@ -272,21 +272,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FieldController: {fileID: 0}
   MyFieldPosition: {x: 0, y: 0}
-  AnimalPosition: {fileID: 4225433289431078}
-  PowerPosition: {fileID: 4495757443493476}
   BuldozerPosition: {fileID: 4797911480230250}
-  TreesPosition: {fileID: 4956157336883382}
   AnimalInMyHole: {fileID: 0}
   PowerOnMyField: {fileID: 0}
   BuldozerOnMyField: {fileID: 0}
   TreesOnMyField: {fileID: 0}
-  HolePosition: {fileID: 4140115674185914}
-  IsAnimalHere: 0
   _theLevelManager: {fileID: 0}
+  AnimalPosition: {fileID: 4225433289431078}
+  HolePosition: {fileID: 4140115674185914}
+  PowerPosition: {fileID: 4495757443493476}
+  TreesPosition: {fileID: 4956157336883382}
+  FirefliesPrefab: {fileID: 1215609666318472, guid: 5346148cc7f704c4ea69f5636a729da0,
+    type: 2}
+  IsAnimalHere: 0
   AnimalsInTheHood: 0
   FieldsWithAnimalsInTheHoodList: []
-  ActiveColor: {r: 0, g: 0, b: 0, a: 1}
-  InactiveColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114639541759762108
 MonoBehaviour:
   m_ObjectHideFlags: 1

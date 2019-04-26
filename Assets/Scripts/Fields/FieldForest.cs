@@ -6,19 +6,22 @@ public class FieldForest : Field {
 
     private Animal _tempAnimalClone;
 
-    [Header("Hole Position / Transform")]
+    [Header("FieldForest Position / Transform")]
+    public Transform AnimalPosition;
     public Transform HolePosition;
+    public Transform PowerPosition;
+    public Transform TreesPosition;
     private SpriteRenderer _mound;
     private float _moundSpeedUp = 1.0f;
-    
-    //[SerializeField]
+
+    [Header("FieldForest Prefabs")]
+    public GameObject FirefliesPrefab;
+
+    [HideInInspector]
     public bool IsAnimalHere = false;
-    //[SerializeField]
     private bool IsFieldActive = false;
 
-    //[HideInInspector]
-    //public LevelManager _theLevelManager;
-    //[HideInInspector]
+    [HideInInspector]
     public bool AnimalsInTheHood = false;
     [HideInInspector]
     public List<Field> FieldsWithAnimalsInTheHoodList = new List<Field> { };
@@ -27,9 +30,6 @@ public class FieldForest : Field {
 
     private PowerManager _powerManager;
     
-    //TEST
-    public Color ActiveColor;
-    public Color InactiveColor;
     private SpriteRenderer _mySprite;
 
     private void Awake()
@@ -51,12 +51,7 @@ public class FieldForest : Field {
 
         if (_mySprite)
         {
-            //int ranIndex = Random.Range(0, _theLevelManager.ThemeData.FieldSpritesList.Count);
-            //_mySprite.sprite = _theLevelManager.ThemeData.FieldSpritesList[ranIndex];
-            //_mySprite.color = InactiveColor;
-
             SetMyBackground(_mySprite, _theLevelManager.ThemeData);
-
         }
 
         FieldsWithAnimalsInTheHoodList.Clear();
@@ -136,7 +131,6 @@ public class FieldForest : Field {
         //Remove the animal from the previous field, animating it
         otherSelectedField.ClearField();
         
-
         //Check and clear the otherfield's neighbours' lists once the animal is gone from that field
 
         //For each neightbouring animal, recheck and change the status of the AnimalsInTheHood
@@ -151,13 +145,16 @@ public class FieldForest : Field {
         float distance = Vector2.Distance(otherSelectedField.transform.position, transform.position);
         //Deactivate my collider so that the player cannot select me while the animal is getting here
         _myBoxCollider2D.enabled = false;
-        //ubaciti animaciju, strelicu iznat tog polja s facom životinje koja se treba pojaviti
+
+        //Seting the animation of fireflies where the animal will show up
+        GameObject fireflies = Instantiate(FirefliesPrefab, HolePosition.transform.position, Quaternion.identity, HolePosition);
+
         //Set the boolean that the animal is now here (getting here)
         IsAnimalHere = true;
         //Wait for distance seconds for the animal to emarge here
         //including the speed of the animal
-        //i dodati provjeru je li rupa već iskopana ili nije
 
+        //Checking if the mound is allread here - if it is, the animal will travel faster
         if (_mound.enabled == true)
         {
             _moundSpeedUp = 0.8f;
@@ -174,6 +171,9 @@ public class FieldForest : Field {
         Destroy(_tempAnimalClone.gameObject);
         //Animate the animal emarging
         //nije potrebno
+
+        //Destroy the animation of fireflies
+        Destroy(fireflies.gameObject);
 
         //Check the reset the neighouring animals list for this field once the animal appears here
         CheckAnimalsInTheHood();
@@ -195,7 +195,6 @@ public class FieldForest : Field {
         IsFieldActive = setState;
         if (IsFieldActive)
         {
-            _mySprite.color = ActiveColor;
             //Animal animacija ide u stanje animairanja
             if(AnimalInMyHole)
                 AnimalInMyHole.AnimateActive();
@@ -206,7 +205,6 @@ public class FieldForest : Field {
         }
         else
         {
-            _mySprite.color = InactiveColor;
             //Ako postoji animal, Animal animacija ide u stanje mirovanja
             if (AnimalInMyHole)
                 AnimalInMyHole.AnimateIdle();
@@ -366,9 +364,5 @@ public class FieldForest : Field {
             if (PowerOnMyField)
                 Destroy(PowerOnMyField.gameObject);
         }
-
-
-
     }
-    
 }

@@ -9,17 +9,17 @@ public abstract class Field : MonoBehaviour {
     [HideInInspector]
     public Vector2Int MyFieldPosition;
 
-    [Header("Instantiate Positions / Transforms")]
-    public Transform AnimalPosition;
-    public Transform PowerPosition;
+    [Header("Field Positions / Transforms")]
+    //public Transform AnimalPosition;
+    //public Transform PowerPosition;
     public Transform BuldozerPosition;
-    public Transform TreesPosition;
+    //public Transform TreesPosition;
 
-    //[HideInInspector]
+    [HideInInspector]
     public Animal AnimalInMyHole;
-    //[HideInInspector]
+    [HideInInspector]
     public Power PowerOnMyField;
-    //[HideInInspector]
+    [HideInInspector]
     public Buldozer BuldozerOnMyField;
     [HideInInspector]
     public Trees TreesOnMyField;
@@ -35,8 +35,7 @@ public abstract class Field : MonoBehaviour {
     public virtual void SetMyBackground(SpriteRenderer spriteRenderer, ThemeData themeData)
     {
         int ranIndex = Random.Range(0, themeData.FieldSpritesList.Count);
-        spriteRenderer.sprite = themeData.FieldSpritesList[ranIndex];
-        //spriteRenderer.color = InactiveColor;
+        spriteRenderer.sprite = themeData.FieldSpritesList[ranIndex];        
     }
 
     public virtual void AnimateHomeEarthquake()

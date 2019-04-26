@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4946822782144160}
   - component: {fileID: 212507526545390432}
+  - component: {fileID: 95249271840188810}
   - component: {fileID: 114350346415162804}
   m_Layer: 0
   m_Name: MidPowerSnow
@@ -36,11 +37,29 @@ Transform:
   m_GameObject: {fileID: 1017473430983158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &95249271840188810
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1017473430983158}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4a31750c11c3a94a914cfdeab29171a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114350346415162804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -87,7 +106,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1076309467
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9ccea9df3932acd4da3997e2511b268f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
