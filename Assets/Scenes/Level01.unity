@@ -166,48 +166,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1694794558}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1001 &793622131
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4405163154680610, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405163154680610, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405163154680610, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405163154680610, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405163154680610, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405163154680610, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405163154680610, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405163154680610, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!223 &809282567 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 223311304974465164, guid: 9435a7b60749e2f49a4ddcca07af27db,

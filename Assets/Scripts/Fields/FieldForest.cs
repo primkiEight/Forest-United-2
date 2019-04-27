@@ -402,7 +402,7 @@ public class FieldForest : Field {
                 _theLevelManager.PowerManager.MagicPoolAdd(_totem.TotemManaValue);
             }
             //pokreni animaciju
-            Destroy(_totem.gameObject, 0.5f);
+            Destroy(_totem.gameObject, 1.5f);
             IsTotemHere = false;
         }
     }
