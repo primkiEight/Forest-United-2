@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour {
     //private float _maxVolume;
     //private float _currentVolume;
 
+    //Dodati dio koji će pratiti dan i noć i prema tome mijenjati osvjetljenje :)
+    //https://wiki.unity3d.com/index.php/DayNightController
+    [Header("Include Day and Night")]
+    public bool IncludeNightGameplay = true;
+
     //Singleton
     private static GameManager _instance;
     public static GameManager Instance

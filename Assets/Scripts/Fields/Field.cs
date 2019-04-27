@@ -10,10 +10,8 @@ public abstract class Field : MonoBehaviour {
     public Vector2Int MyFieldPosition;
 
     [Header("Field Positions / Transforms")]
-    //public Transform AnimalPosition;
-    //public Transform PowerPosition;
     public Transform BuldozerPosition;
-    //public Transform TreesPosition;
+    public Transform FogPosition;
 
     [HideInInspector]
     public Animal AnimalInMyHole;

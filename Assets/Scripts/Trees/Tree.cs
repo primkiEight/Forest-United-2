@@ -33,14 +33,5 @@ public class Tree : MonoBehaviour {
         float animationLag = Random.Range(AnimationLag.x, AnimationLag.y);
         yield return new WaitForSeconds(animationLag);
         _myAC.SetBool("IsFalling", _isFalling);
-
-        //Destroy(gameObject, AnimationDuration);
-        //StartCoroutine(CoDestroyMe());
     }
-
-    //private IEnumerator CoDestroyMe()
-    //{
-    //    yield return new WaitForSeconds(AnimationDuration);
-    //    Destroy(gameObject);
-    //}
 }
