@@ -44,6 +44,10 @@ public class LevelData : ScriptableObject {
     [Range(1f, 100f)]
     public float ManaFillUpSpeed = 100f;
 
+    [Header("Totem Options (app in sec)")]
+    public float TimeForTheFirstTotemSpawn;
+    public Vector2 TotemSpawnerMinNMax;
+
     [Header("Field Prefab")]
     public FieldForest FieldForestPrefab;
 

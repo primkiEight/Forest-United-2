@@ -10,12 +10,17 @@ public class FieldForest : Field {
     public Transform AnimalPosition;
     public Transform HolePosition;
     public Transform PowerPosition;
+    public Transform TotemPosition;
     public Transform TreesPosition;
     private SpriteRenderer _mound;
     private float _moundSpeedUp = 1.0f;
 
-    [Header("FieldForest Prefabs")]
+    [Header("FieldForest Prefab")]
     public GameObject FirefliesPrefab;
+
+    [HideInInspector]
+    public bool IsTotemHere = false;
+    private Totem _totem;
 
     [HideInInspector]
     public bool IsAnimalHere = false;
@@ -174,6 +179,10 @@ public class FieldForest : Field {
 
         //Destroy the animation of fireflies
         Destroy(fireflies.gameObject);
+
+        //If Totem is here, activate it
+        if (IsTotemHere)
+            ActivateTotem();
 
         //Check the reset the neighouring animals list for this field once the animal appears here
         CheckAnimalsInTheHood();
@@ -363,6 +372,38 @@ public class FieldForest : Field {
             //AKO POSTOJI IKAKAV POWER, UNIŠTI GA
             if (PowerOnMyField)
                 Destroy(PowerOnMyField.gameObject);
+        }
+    }
+
+    public bool InstantiateTotemHere(Totem totemPrefab)
+    {
+        if (!IsTotemHere && !IsAnimalHere)
+        {
+            _totem = Instantiate(totemPrefab, TotemPosition.position, Quaternion.identity, TotemPosition);
+            _totem.SetMyFieldForest(this);
+            IsTotemHere = true;
+            
+            //Stops the do-while loop if false
+            return false;
+        }
+
+        //Continues the do-while loop if true
+        return true;
+    }
+
+    public void ActivateTotem()
+    {
+        if (IsTotemHere)
+        {
+            _totem.TotemStoneAnimator.SetTrigger("TotemDisappear");
+            if (IsAnimalHere)
+            {
+                //Dodaj bodove na powerbar
+                _theLevelManager.PowerManager.MagicPoolAdd(_totem.TotemManaValue);
+            }
+            //pokreni animaciju
+            Destroy(_totem.gameObject, 0.5f);
+            IsTotemHere = false;
         }
     }
 }

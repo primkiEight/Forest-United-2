@@ -39,7 +39,7 @@ public class FieldHome : Field {
 
     public override void AnimateHomeEarthquake()
     {
-        if(HomeAnimator.enabled == true)
+        if(HomeAnimator.isActiveAndEnabled == true)
         {
             HomeAnimator.SetTrigger("HomeEarthquake");
         }

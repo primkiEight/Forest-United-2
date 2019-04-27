@@ -11,4 +11,7 @@ public class ThemeData : ScriptableObject {
     [Header("Trees Prefabs")]
     public List<Tree> TreesPrefabsList = new List<Tree> { };
 
+    [Header("Totem Prefabs")]
+    public List<Totem> TotemPrefabsList = new List<Totem> { };
+
 }

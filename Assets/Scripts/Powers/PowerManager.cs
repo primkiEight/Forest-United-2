@@ -5,7 +5,15 @@ using UnityEngine.UI;
 
 public class PowerManager : MonoBehaviour {
 
-    public Slider MagicPool;
+    public Slider MagicPoolSlider;
+
+    public Image MagicPoolSliderFill;
+    private float _red;
+    private float _green;
+    private float _blue;
+    private float _alpha;
+    private Color _barColor;
+
     private float _manaMax;
     private float _manaMin;
     private float _manaCurrent;
@@ -22,22 +30,26 @@ public class PowerManager : MonoBehaviour {
 
     private void Awake()
     {
-        _myAC = MagicPool.GetComponent<Animator>();
+        _myAC = MagicPoolSlider.GetComponent<Animator>();
     }
 
     // Use this for initialization
     void Start () {
-        _manaMax = MagicPool.maxValue;
-        _manaMin = MagicPool.minValue;
-        //MagicPool.value = _manaMax;
-        _manaCurrent = MagicPool.value;
+        _manaMax = MagicPoolSlider.maxValue;
+        _manaMin = MagicPoolSlider.minValue;
+        MagicPoolSlider.value = _manaMax;
+        _manaCurrent = MagicPoolSlider.value;
 
         _theLevelManager = GetComponent<LevelManager>();
         _fillUpPoints = _theLevelManager.LevelData.ManaFillUpSpeed;
 
+        _red = 1 - (_manaCurrent / _manaMax);
+        _green = 0f;
+        _blue = _manaCurrent / _manaMax;
+        _alpha = 1f;
+        _barColor = MagicPoolSliderFill.color;
+
         _timer = _fillUpRate;
-
-
     }
 
     private void Update()
@@ -49,12 +61,16 @@ public class PowerManager : MonoBehaviour {
             if (_timer <= 0)
             {
                 _manaCurrent += _fillUpPoints/60f * _fillUpRate;
-                MagicPool.value = _manaCurrent;
+
+                MagicPoolSlider.value = _manaCurrent;
+                SetBarColor();
+
                 _timer = _fillUpRate;
             }
         } else if (_manaCurrent <= 0){
             _manaCurrent = 0;
-            MagicPool.value = _manaCurrent;
+            MagicPoolSlider.value = _manaCurrent;
+            SetBarColor();
         }
 
         /*if (MagicPool.value < _manaCurrent)
@@ -66,28 +82,33 @@ public class PowerManager : MonoBehaviour {
                 MagicPool.value = MagicPool.maxValue;
             }
 
-        } else */if (MagicPool.value > _manaCurrent)
+        } else */if (MagicPoolSlider.value > _manaCurrent)
         {
             _doFill = false;
-            MagicPool.value -= 0.5f;
-            if (MagicPool.value < MagicPool.minValue)
+            MagicPoolSlider.value -= 0.5f;
+            SetBarColor();
+            if (MagicPoolSlider.value < MagicPoolSlider.minValue)
             {
-                _manaCurrent = MagicPool.minValue;
-                MagicPool.value = MagicPool.minValue;
+                _manaCurrent = MagicPoolSlider.minValue;
+                MagicPoolSlider.value = MagicPoolSlider.minValue;
+                SetBarColor();
             }
-        } else if (MagicPool.value <= _manaCurrent)
+        } else if (MagicPoolSlider.value <= _manaCurrent)
         {
             _doFill = true;
         }
 
+        /* TEST
+        if (Input.GetMouseButtonDown(0))
+        {
+            //_myAC.SetTrigger("Grow");
+            _manaCurrent -= 5;
+        }
 
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    //_myAC.SetTrigger("Grow");
-        //
-        //    _manaCurrent -= 10;
-        //
-        //}
+        if (Input.GetMouseButtonDown(1))
+        {
+            _manaCurrent += 5;
+        }*/
     }
 
     public void MagicPoolAdd (float powerToAdd) {
@@ -97,11 +118,13 @@ public class PowerManager : MonoBehaviour {
         if(currentMana + powerToAdd >= _manaMax)
         {
             _manaCurrent = _manaMax;
-            //MagicPool.value = _manaCurrent;
+            MagicPoolSlider.value = _manaCurrent;
+            SetBarColor();
             //return true;
         } else if (currentMana + powerToAdd < _manaMax) {
             _manaCurrent += powerToAdd;
-            //MagicPool.value = _manaCurrent;
+            MagicPoolSlider.value = _manaCurrent;
+            SetBarColor();
             //return true;
         }
 
@@ -117,7 +140,7 @@ public class PowerManager : MonoBehaviour {
             return true;
         } else if (powerToTake > _manaCurrent){
             //Animiraj power slider
-            Debug.Log("Nema dovoljno mane");
+            //Debug.Log("Nema dovoljno mane");
             _myAC.SetTrigger("Grow");
             return false;
         }
@@ -125,5 +148,15 @@ public class PowerManager : MonoBehaviour {
         return false;
     }
 
+    public void SetBarColor()
+    {
+        _red = 1 - (_manaCurrent / _manaMax);
+        _blue = _manaCurrent / _manaMax;
+        _barColor.r = _red;
+        _barColor.g = _green;
+        _barColor.b = _blue;
+        _barColor.a = _alpha;
+        MagicPoolSliderFill.color = _barColor;
+    }
     
 }

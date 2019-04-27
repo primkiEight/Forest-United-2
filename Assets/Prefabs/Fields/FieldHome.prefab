@@ -269,10 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FieldController: {fileID: 0}
   MyFieldPosition: {x: 0, y: 0}
-  AnimalPosition: {fileID: 0}
-  PowerPosition: {fileID: 0}
   BuldozerPosition: {fileID: 4912635903490930}
-  TreesPosition: {fileID: 0}
   AnimalInMyHole: {fileID: 0}
   PowerOnMyField: {fileID: 0}
   BuldozerOnMyField: {fileID: 0}
@@ -385,7 +382,7 @@ SpriteRenderer:
   m_SortingLayerID: 1920439863
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0372393203187784ba92994acfecaa57, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b512e12f574d4fe4d9db9c3962f748a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114158145827236128}
   - component: {fileID: 114463967325097286}
   - component: {fileID: 114479312467583908}
+  - component: {fileID: 114166405556083508}
   - component: {fileID: 95815234298266910}
   - component: {fileID: 212805004136646160}
   m_Layer: 0
@@ -75,6 +76,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1ea126acf5c084888289ad3e96eec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114166405556083508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955219089456004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8905e77376dfe94b93ca93d4441a2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114463967325097286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,7 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06609cda825a4df4fb6f930f8387d7d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MagicPool: {fileID: 0}
+  MagicPoolSlider: {fileID: 0}
+  MagicPoolSliderFill: {fileID: 0}
   _fillUpRate: 1
 --- !u!114 &114660359696143570
 MonoBehaviour:

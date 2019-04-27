@@ -45,6 +45,9 @@ public class LevelManager : MonoBehaviour {
     private CloudSpawner _cloudSpawner;
     private GameObject _movingCloudsParent;
 
+    private TotemSpawner _totemSpawner;
+    private List<FieldForest> _fieldForestList = new List<FieldForest> { };
+
     [HideInInspector]
     public PowerManager PowerManager;
 
@@ -94,6 +97,8 @@ public class LevelManager : MonoBehaviour {
 
         _movingCloudsParent = new GameObject("CloudsParent");
         _cloudSpawner = GetComponent<CloudSpawner>();
+
+        _totemSpawner = GetComponent<TotemSpawner>();
 
         PowerManager = GetComponent<PowerManager>();
 
@@ -260,6 +265,16 @@ public class LevelManager : MonoBehaviour {
 
         _circleAnimalsList.Clear();
 
+        //SetTotemSpawningFields
+        for (int x = 0; x < _levelFieldMatrix.GetLength(0); x++)
+        {
+            for (int y = 0; y < _levelFieldMatrix.GetLength(1); y++)
+            {
+                if (_levelFieldMatrix[x, y] is FieldForest)
+                    _fieldForestList.Add((FieldForest)_levelFieldMatrix[x, y]);
+            }
+        }
+
         //Set Boundaries
         GameObject BoundaryParent = new GameObject("BoundaryParent");
         BoundaryParent.transform.parent = transform;
@@ -284,6 +299,8 @@ public class LevelManager : MonoBehaviour {
         }
 
         _buldozerSpawner.StartSpawning();
+
+        _totemSpawner.StartSpawning(_fieldForestList);
     }
 
     private void InstantiateUIPointerArrow(Transform fieldHome)
