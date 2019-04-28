@@ -192,6 +192,12 @@ public class LevelManager : MonoBehaviour {
                 ForestClone.TreesOnMyField = Instantiate(LevelData.LevelForestsList[ForestsListIndex], ForestClone.TreesPosition.position, Quaternion.identity, ForestClone.TreesPosition);
 
                 _levelFieldMatrix[x, y] = ForestClone;
+
+                //Set Fog of War
+                if (LevelData.IncludeFogOfWar)
+                {
+                    ForestClone.FogOnMyField = Instantiate(LevelData.FogHolderPrefab, ForestClone.transform.position, Quaternion.identity, ForestClone.transform);
+                }
             }
         }
 
@@ -227,6 +233,12 @@ public class LevelManager : MonoBehaviour {
                 //Adding the home positions to the list, for the buldozers
                 LevelHomePositionsList.Add(HomeClone.MyFieldPosition);
 
+                //Set Fog of War
+                if (LevelData.IncludeFogOfWar)
+                {
+                    HomeClone.FogOnMyField = Instantiate(LevelData.FogHolderPrefab, HomeClone.transform.position, Quaternion.identity, HomeClone.transform);
+                }
+
                 _levelFieldMatrix[ranHomePosition.x, ranHomePosition.y] = HomeClone;
 
                 _circleAnimalsList.Remove(ranHomePosition);
@@ -237,7 +249,7 @@ public class LevelManager : MonoBehaviour {
 
         _circleHomeList.Clear();
         
-        //SetAnimals
+        //Set Animals
         if (LevelData.LevelAnimalsList.Count != 0)
         {
             for (int i = 0; i < LevelData.LevelAnimalsList.Count; i++)
@@ -265,15 +277,30 @@ public class LevelManager : MonoBehaviour {
 
         _circleAnimalsList.Clear();
 
-        //SetTotemSpawningFields
-        for (int x = 0; x < _levelFieldMatrix.GetLength(0); x++)
+        //Set Totem Spawning Fields
+        //Can not be a part of the Build Forest, since it is before setting of Homes,
+        //and totems can not be spawned where homes are
+        for (int x = 1; x <= LevelData.Xmax; x++)
         {
-            for (int y = 0; y < _levelFieldMatrix.GetLength(1); y++)
+            for (int y = 1; y <= LevelData.Ymax; y++)
             {
                 if (_levelFieldMatrix[x, y] is FieldForest)
                     _fieldForestList.Add((FieldForest)_levelFieldMatrix[x, y]);
             }
         }
+
+        //Create Fog
+        //if (LevelData.IncludeFogOfWar)
+        //{
+        //    for (int x = 1; x <= LevelData.Xmax; x++)
+        //    {
+        //        for (int y = 1; y <= LevelData.Ymax; y++)
+        //        {
+        //            //if (_levelFieldMatrix[x, y] is Field)
+        //                Instantiate(LevelData.FogHolderPrefab, transform.position, Quaternion.identity, transform);
+        //        }
+        //    }
+        //}
 
         //Set Boundaries
         GameObject BoundaryParent = new GameObject("BoundaryParent");

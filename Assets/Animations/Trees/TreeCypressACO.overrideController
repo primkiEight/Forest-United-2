@@ -8,11 +8,9 @@ AnimatorOverrideController:
   m_Name: TreeCypressACO
   m_Controller: {fileID: 9100000, guid: edfefd558aee9a949809236fff24f3e8, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: 7937030a662eb194cad629c426b9e7e0, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 7937030a662eb194cad629c426b9e7e0, type: 2}
-  - m_OriginalClip: {fileID: 7400000, guid: 5abf650032847f642b6d89632d9ba54b, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 5abf650032847f642b6d89632d9ba54b, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 0f7dc2e7e695d404b83fa04ff3c25d56, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 7937030a662eb194cad629c426b9e7e0, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: fb741e5506f44fe448cb9a5f0ad07216, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 5abf650032847f642b6d89632d9ba54b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1cfff9265a45b8f42a790d62abb0fdf4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7908e6886a5e42147b8769ec22a3d34e, type: 2}

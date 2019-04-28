@@ -7,7 +7,7 @@ public class Tree : MonoBehaviour {
     private Animator _myAC;
     public float AnimationDuration;
     public Vector2 AnimationLag = Vector2.zero;
-    private bool _isFalling = false;
+    private bool _isDying = false;
 
     private SpriteRenderer _mySpriteRenderer;
 
@@ -20,18 +20,29 @@ public class Tree : MonoBehaviour {
         _mySpriteRenderer.sortingOrder = (int) -(transform.position.y * 100);
     }
 
-    public void AnimateAndDestroy()
+    public void AnimateAndDestroy(Buldozer buldozer)
     {
         Transform newParent = transform.parent;
         transform.SetParent(newParent.parent);
-        StartCoroutine(CoAnimateMe());
+        if (buldozer is BuldozerGrr)
+            StartCoroutine(CoAnimateMeFalling());
+        if (buldozer is BuldozerFire)
+            StartCoroutine(CoAnimateMeBurning());
     }
 
-    private IEnumerator CoAnimateMe()
+    private IEnumerator CoAnimateMeFalling()
     {
-        _isFalling = true;
+        _isDying = true;
         float animationLag = Random.Range(AnimationLag.x, AnimationLag.y);
         yield return new WaitForSeconds(animationLag);
-        _myAC.SetBool("IsFalling", _isFalling);
+        _myAC.SetTrigger("IsFalling");
+    }
+
+    private IEnumerator CoAnimateMeBurning()
+    {
+        _isDying = true;
+        float animationLag = Random.Range(AnimationLag.x, AnimationLag.y);
+        yield return new WaitForSeconds(animationLag);
+        _myAC.SetTrigger("IsBurning");
     }
 }

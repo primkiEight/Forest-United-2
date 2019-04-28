@@ -11,8 +11,7 @@ public abstract class Field : MonoBehaviour {
 
     [Header("Field Positions / Transforms")]
     public Transform BuldozerPosition;
-    public Transform FogPosition;
-
+    
     [HideInInspector]
     public Animal AnimalInMyHole;
     [HideInInspector]
@@ -21,6 +20,8 @@ public abstract class Field : MonoBehaviour {
     public Buldozer BuldozerOnMyField;
     [HideInInspector]
     public Trees TreesOnMyField;
+    [HideInInspector]
+    public FogHolder FogOnMyField;
 
     [HideInInspector]
     public LevelManager _theLevelManager;
@@ -35,6 +36,8 @@ public abstract class Field : MonoBehaviour {
         int ranIndex = Random.Range(0, themeData.FieldSpritesList.Count);
         spriteRenderer.sprite = themeData.FieldSpritesList[ranIndex];        
     }
+
+
 
     public virtual void AnimateHomeEarthquake()
     {
@@ -56,7 +59,14 @@ public abstract class Field : MonoBehaviour {
 
     }
 
-    
-
+    public virtual void ClearFogFromMyField(float positionX)
+    {
+        if (FogOnMyField != null)
+        {
+            FogOnMyField.AnimateFog(positionX);
+            Destroy(FogOnMyField.gameObject, 2f);
+            FogOnMyField = null;
+        }
+    }
 }
 

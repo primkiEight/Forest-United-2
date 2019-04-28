@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class BuldozerFire : Buldozer {
 
-    //private void Awake()
-    //{
-    //    MyAwake();
-    //}
-    //
-    //private void Start()
-    //{
-    //    MyStart();
-    //}
-
-
+    
 }

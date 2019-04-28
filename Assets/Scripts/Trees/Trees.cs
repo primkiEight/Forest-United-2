@@ -27,7 +27,7 @@ public class Trees : MonoBehaviour {
 
         foreach (Tree child in allChildren)
         {
-            child.AnimateAndDestroy();
+            child.AnimateAndDestroy(theBuldozer);
         }
 
         Destroy(gameObject);

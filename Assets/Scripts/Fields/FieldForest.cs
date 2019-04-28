@@ -62,6 +62,9 @@ public class FieldForest : Field {
         FieldsWithAnimalsInTheHoodList.Clear();
 
         CheckAnimalsInTheHood();
+
+        if (_theLevelManager.LevelData.IncludeFogOfWar && AnimalInMyHole)
+            ClearFogByAnimal();
     }
 
     private void OnMouseUp()
@@ -171,6 +174,8 @@ public class FieldForest : Field {
         AnimalInMyHole = Instantiate(_tempAnimalClone, AnimalPosition.position, Quaternion.identity, AnimalPosition);
 
         SetMound(true);
+
+        ClearFogByAnimal();
 
         //Destroy the animal in the limbo
         Destroy(_tempAnimalClone.gameObject);
@@ -406,4 +411,42 @@ public class FieldForest : Field {
             IsTotemHere = false;
         }
     }
+
+    private void ClearFogByAnimal()
+    {
+        if (_theLevelManager.LevelData.IncludeFogOfWar)
+        {
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y].FogOnMyField != null)
+            {
+                _theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y].ClearFogFromMyField(transform.position.x);
+            }
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x + 1, MyFieldPosition.y].FogOnMyField != null)
+            {
+                _theLevelManager._levelFieldMatrix[MyFieldPosition.x + 1, MyFieldPosition.y].ClearFogFromMyField(transform.position.x);
+            }
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x - 1, MyFieldPosition.y].FogOnMyField != null)
+            {
+                _theLevelManager._levelFieldMatrix[MyFieldPosition.x - 1, MyFieldPosition.y].ClearFogFromMyField(transform.position.x);
+            }
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y + 1].FogOnMyField != null)
+            {
+                _theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y + 1].ClearFogFromMyField(transform.position.x);
+            }
+            if (_theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y - 1].FogOnMyField != null)
+            {
+                _theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y - 1].ClearFogFromMyField(transform.position.x);
+            }
+        }
+    } 
+
+    //PART of Field class (both FieldFOrest and FieldHome have fogs)
+    //public override void ClearFogFromMyField(float positionX)
+    //{
+    //    if(FogOnMyField != null)
+    //    {
+    //        FogOnMyField.AnimateFog(positionX);
+    //        Destroy(FogOnMyField.gameObject, 2f);
+    //        FogOnMyField = null;
+    //    }
+    //}
 }

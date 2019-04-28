@@ -38,7 +38,7 @@ public class Fog : MonoBehaviour {
     private void Start()
     {
         _theLevelManager = LevelManager.Instance;
-        List<Sprite> levelFogSpriteList = _theLevelManager.LevelData.LevelFogSpriteList;
+        List<Sprite> levelFogSpriteList = _theLevelManager.ThemeData.FogSpritesList;
 
         float RandomScaleX = Random.Range(LocalScalingXMinNMax.x, LocalScalingXMinNMax.y);
         float RandomScaleY = Random.Range(LocalScalingYMinNMax.x, LocalScalingYMinNMax.y);

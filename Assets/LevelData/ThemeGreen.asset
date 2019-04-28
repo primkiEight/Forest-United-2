@@ -30,3 +30,5 @@ MonoBehaviour:
   - {fileID: 114694358180471298, guid: fd8aa3265013fb54d87fe9cfcdc89a57, type: 2}
   TotemPrefabsList:
   - {fileID: 114995086515556772, guid: 0c017b91ff84c8d45a72bae34072d85e, type: 2}
+  FogSpritesList:
+  - {fileID: 21300000, guid: 808c60640f717b5408925c666010d81b, type: 3}
