@@ -7,7 +7,7 @@ public class Tree : MonoBehaviour {
     private Animator _myAC;
     public float AnimationDuration;
     public Vector2 AnimationLag = Vector2.zero;
-    private bool _isDying = false;
+    //private bool _isDying = false;
 
     private SpriteRenderer _mySpriteRenderer;
 
@@ -32,7 +32,7 @@ public class Tree : MonoBehaviour {
 
     private IEnumerator CoAnimateMeFalling()
     {
-        _isDying = true;
+        //_isDying = true;
         float animationLag = Random.Range(AnimationLag.x, AnimationLag.y);
         yield return new WaitForSeconds(animationLag);
         _myAC.SetTrigger("IsFalling");
@@ -40,7 +40,7 @@ public class Tree : MonoBehaviour {
 
     private IEnumerator CoAnimateMeBurning()
     {
-        _isDying = true;
+        //_isDying = true;
         float animationLag = Random.Range(AnimationLag.x, AnimationLag.y);
         yield return new WaitForSeconds(animationLag);
         _myAC.SetTrigger("IsBurning");

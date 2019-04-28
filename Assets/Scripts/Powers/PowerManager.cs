@@ -68,7 +68,7 @@ public class PowerManager : MonoBehaviour {
                 _timer = _fillUpRate;
             }
         } else if (_manaCurrent <= 0){
-            _manaCurrent = 0;
+            _manaCurrent = _manaMin;
             MagicPoolSlider.value = _manaCurrent;
             SetBarColor();
         }

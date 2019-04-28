@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour {
     private float _levelWidth;
     private float _levelHight;
     private float _screenRatio;
-    private float _levelRatio;
+    //private float _levelRatio;
     private float _xBorder;
     private float _yBorder;
 
@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour {
         _levelHight = _theLevelManager.LevelData.Ymax;
 
         _screenRatio = (float)_mainCamera.pixelWidth / (float)_mainCamera.pixelHeight;
-        _levelRatio = (float)_levelWidth / (float)_levelHight;
+        //_levelRatio = (float)_levelWidth / (float)_levelHight;
 
         //PANNING AND CAMERA BORDERS
 

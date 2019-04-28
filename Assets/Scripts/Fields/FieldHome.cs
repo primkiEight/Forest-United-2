@@ -71,7 +71,8 @@ public class FieldHome : Field {
             //    TreeBottom.gameObject.SetActive(true);
             //}
 
-            AnimateHomeEarthquake();
+            //Brejka se animacija
+            //AnimateHomeEarthquake();
 
             Debug.Log("GameOver");
         } else if (BuldozerOnMyField == null)

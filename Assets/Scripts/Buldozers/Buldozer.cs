@@ -25,7 +25,7 @@ public abstract class Buldozer : MonoBehaviour {
 
     private LevelManager _theLevelManager;
 
-    //[HideInInspector]
+    [HideInInspector]
     public Vector2Int MyMatrixPosition;
     private Transform _myStartingPosition;
     private Field _thisField = null;
@@ -310,6 +310,8 @@ public abstract class Buldozer : MonoBehaviour {
     {
         IsBroken = true;
 
+        _myAnimator.SetBool("IsHalted", true);
+
         if (_thisField.TreesOnMyField != null)
         {
             Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
@@ -322,6 +324,9 @@ public abstract class Buldozer : MonoBehaviour {
         if (_buldozingBreakTemp == _buldozingBreakPerma)
         {
             IsSlowedDown = true;
+
+            _myAnimator.SetBool("IsMovingSlowly", true);
+
             _buldozingBreakTemp = 0.5f;
             StartCoroutine(BreakBuldozerForAmountOfTimeCo(buldozingBreakDuration));
         }   
@@ -332,20 +337,24 @@ public abstract class Buldozer : MonoBehaviour {
         yield return new WaitForSeconds(buldozingBreakDuration);
         _buldozingBreakTemp = _buldozingBreakPerma;
         IsSlowedDown = false;
+
+        _myAnimator.SetBool("IsMovingSlowly", false);
     }
 
     public void ReSetBuldozingBreak()
     {
         if(IsSlowedDown && !IsBroken)
         {
-
+            
         } else if (!IsSlowedDown && IsBroken)
         {
             IsBroken = false;
+            _myAnimator.SetBool("IsHalted", false);
             StartMyEngines();
         } else if (IsSlowedDown && IsBroken)
         {
             IsBroken = false;
+            _myAnimator.SetBool("IsHalted", false);
             StartMyEngines();
         } else
         {
@@ -410,7 +419,6 @@ public abstract class Buldozer : MonoBehaviour {
     {
         yield return new WaitForSeconds(duration);
 
-        
         StartMoving();
     }
 
@@ -428,7 +436,9 @@ public abstract class Buldozer : MonoBehaviour {
 
     public virtual void Death()
     {
-        //Animiraj smrt
+
+        _myAnimator.SetTrigger("IsDestroyed");
+
         if (_thisField.TreesOnMyField != null)
         {
             Trees treesOnThisField = _thisField.TreesOnMyField.GetComponent<Trees>();
@@ -436,22 +446,7 @@ public abstract class Buldozer : MonoBehaviour {
         }
 
         //StopAllCoroutines();
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 0.8f);
         //Destroy(gameObject);
-    }
-
-    public virtual void AnimateMove()
-    {
-
-    }
-
-    public virtual void AnimateAttack()
-    {
-
-    }
-
-    public virtual void AnimateDeath()
-    {
-
     }
 }

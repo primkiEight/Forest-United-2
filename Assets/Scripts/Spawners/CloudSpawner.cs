@@ -66,7 +66,7 @@ public class CloudSpawner : MonoBehaviour {
 
     private void SpawnCloud()
     {
-        int randomIndex = Random.Range(0, _theLevelManager.GetBoundaryForestList.Count);
+        //int randomIndex = Random.Range(0, _theLevelManager.GetBoundaryForestList.Count);
 
         float randomSpawnPositionX = _theLevelManager.LevelData.Xmax + _offset;
         float randomSpawnPositionY = Random.Range(0.0f, (float)_theLevelManager.LevelData.Ymax);

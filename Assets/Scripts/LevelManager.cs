@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour {
     [Header("Theme Prefabs")]
     public ThemeData ThemeData;
 
-    private Transform _myTransform;
+    //private Transform _myTransform;
     public Field[,] _levelFieldMatrix;
 
     private float _circleForAnimalsMin = 0.1f;
@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour {
         if (Instance != this)
             Destroy(gameObject);
 
-        _myTransform = transform;        
+        //_myTransform = transform;        
         
         if (LevelData.Xmax < LevelData.Xmin)
             LevelData.Xmax = LevelData.Xmin;
