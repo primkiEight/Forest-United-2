@@ -9,11 +9,18 @@ public class Tree : MonoBehaviour {
     public Vector2 AnimationLag = Vector2.zero;
     //private bool _isDying = false;
 
+    public AudioClip TreeFalling;
+    public AudioClip TreeBurning;
+
     private SpriteRenderer _mySpriteRenderer;
+
+    private AudioSource _myAudioSource;
 
     private void Awake()
     {
         _myAC = GetComponent<Animator>();
+
+        _myAudioSource = GetComponent<AudioSource>();
 
         _mySpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -35,7 +42,8 @@ public class Tree : MonoBehaviour {
         //_isDying = true;
         float animationLag = Random.Range(AnimationLag.x, AnimationLag.y);
         yield return new WaitForSeconds(animationLag);
-        _myAC.SetTrigger("IsFalling");
+        PlaySoundOneShot(TreeFalling);
+        _myAC.SetTrigger("IsFalling");        
     }
 
     private IEnumerator CoAnimateMeBurning()
@@ -43,6 +51,14 @@ public class Tree : MonoBehaviour {
         //_isDying = true;
         float animationLag = Random.Range(AnimationLag.x, AnimationLag.y);
         yield return new WaitForSeconds(animationLag);
-        _myAC.SetTrigger("IsBurning");
+        PlaySoundOneShot(TreeBurning);
+        _myAC.SetTrigger("IsBurning");        
+    }
+
+    private void PlaySoundOneShot(AudioClip clipToPlay)
+    {
+        _myAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        _myAudioSource.PlayOneShot(clipToPlay);
+        _myAudioSource.pitch = 1.0f;
     }
 }

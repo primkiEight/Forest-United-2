@@ -9,6 +9,8 @@ public abstract class Power : MonoBehaviour {
     [Range(0f, 100f)]
     public float ManaCost;
 
+    public AudioClip AudioPower;
+
     public virtual void BreakBuldozer(Buldozer buldozer)
     {
         

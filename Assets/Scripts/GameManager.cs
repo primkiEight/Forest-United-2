@@ -8,10 +8,14 @@ public class GameManager : MonoBehaviour {
 
     [Header("Canvases")]
     public GameObject GameCanvases;
+    public Text TextBuldozerCount;
     public Canvas PauseCanvas;
     public Canvas OptionsCanvas;
     public Canvas WinCanvas;
     public Canvas LoseCanvas;
+
+    private int _buldozerCountTotal;
+    private int _forestCountTotal;
 
     [Header("Timers")]
     public float WaitToShowScreen = 1.0f;
@@ -21,6 +25,10 @@ public class GameManager : MonoBehaviour {
     [Header("Audio Manager")]
     public AudioSource AudioMusicSource;
     public AudioSource AudioSFXSource;
+
+    [Header("Sound Effects")]
+    public AudioClip Win;
+    public AudioClip Lose;
 
     //private AudioSource _myAudioSource;
     //private float _maxVolume;
@@ -158,12 +166,18 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene(0);
     }
 
+    public void PlayBackgroundMusic(AudioClip audioClip)
+    {
+        AudioMusicSource.clip = audioClip;
+        AudioMusicSource.playOnAwake = true;
+        AudioMusicSource.Play();
+    }
 
     public void PlaySoundOneShot(AudioClip clipToPlay)
     {
-        //_myAudioSource.pitch = Random.Range(0.8f, 1.2f);
-        //_myAudioSource.PlayOneShot(clipToPlay);
-        //_myAudioSource.pitch = 1.0f;
+        AudioSFXSource.pitch = Random.Range(0.8f, 1.2f);
+        AudioSFXSource.PlayOneShot(clipToPlay);
+        AudioSFXSource.pitch = 1.0f;
     }
 
     public void PlaySoundDelayed(AudioClip clipToPlay, float delay)
@@ -172,5 +186,19 @@ public class GameManager : MonoBehaviour {
         //_myAudioSource.pitch = Random.Range(0.8f, 1.2f);
         //_myAudioSource.PlayDelayed(delay);
         //_myAudioSource.pitch = 1.0f;
+    }
+
+    public void BuldozerCountSet(int buldozerCountTotal)
+    {
+        _buldozerCountTotal = buldozerCountTotal;
+        TextBuldozerCount.text = _buldozerCountTotal.ToString();
+    }
+
+    public void BuldozerCountReduce()
+    {
+        --_buldozerCountTotal;
+        TextBuldozerCount.text = _buldozerCountTotal.ToString();
+        if (_buldozerCountTotal <= 0)
+            GameWon();
     }
 }

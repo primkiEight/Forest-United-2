@@ -73,6 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuldozingBreakDuration: 0
   ManaCost: 30
+  AudioPower: {fileID: 8300000, guid: 48957f4669803d04fa302654f631b1f7, type: 3}
 --- !u!212 &212562810127644962
 SpriteRenderer:
   m_ObjectHideFlags: 1

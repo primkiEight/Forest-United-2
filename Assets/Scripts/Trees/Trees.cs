@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Trees : MonoBehaviour {
 
+    private bool _cancelDestroy = false;
+
     public void StartBuldozingMe(Buldozer theBuldozer)
     {
         if(theBuldozer != null)
@@ -17,19 +19,25 @@ public class Trees : MonoBehaviour {
     public void StopBuldozingMe()
     {
         StopCoroutine("CoBuldozingMe");
+        _cancelDestroy = true;
     }
 
     private IEnumerator CoBuldozingMe(Buldozer theBuldozer)
     {
         yield return new WaitForSeconds(theBuldozer.BuldozingDuration - 0.2f);
-    
-        Tree[] allChildren = GetComponentsInChildren<Tree>();
 
-        foreach (Tree child in allChildren)
+        if (!_cancelDestroy)
         {
-            child.AnimateAndDestroy(theBuldozer);
+            Tree[] allChildren = GetComponentsInChildren<Tree>();
+
+            foreach (Tree child in allChildren)
+            {
+                child.AnimateAndDestroy(theBuldozer);
+            }
+
+            Destroy(gameObject);
         }
 
-        Destroy(gameObject);
+        _cancelDestroy = false;
     }
 }

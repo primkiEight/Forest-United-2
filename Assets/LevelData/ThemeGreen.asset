@@ -32,3 +32,5 @@ MonoBehaviour:
   - {fileID: 114995086515556772, guid: 0c017b91ff84c8d45a72bae34072d85e, type: 2}
   FogSpritesList:
   - {fileID: 21300000, guid: 808c60640f717b5408925c666010d81b, type: 3}
+  MusicLibraryList:
+  - {fileID: 8300000, guid: c2eb01281f8727049b8166d30602f212, type: 3}

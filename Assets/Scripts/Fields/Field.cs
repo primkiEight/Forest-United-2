@@ -26,6 +26,9 @@ public abstract class Field : MonoBehaviour {
     [HideInInspector]
     public LevelManager _theLevelManager;
 
+    [HideInInspector]
+    public AudioSource _myAudioSource;
+
     public virtual void SetBuldozerOnMyField(Buldozer buldozerOnMyField)
     {
         BuldozerOnMyField = buldozerOnMyField;
@@ -36,9 +39,7 @@ public abstract class Field : MonoBehaviour {
         int ranIndex = Random.Range(0, themeData.FieldSpritesList.Count);
         spriteRenderer.sprite = themeData.FieldSpritesList[ranIndex];        
     }
-
-
-
+    
     public virtual void AnimateHomeEarthquake()
     {
 
@@ -67,6 +68,13 @@ public abstract class Field : MonoBehaviour {
             Destroy(FogOnMyField.gameObject, 2f);
             FogOnMyField = null;
         }
+    }
+
+    private void PlaySoundOneShot(AudioClip clipToPlay)
+    {
+        _myAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        _myAudioSource.PlayOneShot(clipToPlay);
+        _myAudioSource.pitch = 1.0f;
     }
 }
 

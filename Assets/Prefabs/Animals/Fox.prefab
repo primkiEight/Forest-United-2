@@ -78,11 +78,12 @@ MonoBehaviour:
     type: 2}
   SuperPowerPrefab: {fileID: 114258385207220358, guid: c7fe234ef17bd84409c68f97464b2635,
     type: 2}
-  AudioDig: {fileID: 0}
-  AudioActive: {fileID: 0}
+  IsCasting: 0
+  AudioDig: {fileID: 8300000, guid: 7748933245716264cbdef798c9db73d1, type: 3}
+  AudioActive: {fileID: 8300000, guid: 90373153aac6dfc4b89ea5a48502e952, type: 3}
   AudioCasting: {fileID: 0}
-  AudioEnter: {fileID: 0}
-  AudioExit: {fileID: 0}
+  AudioEnter: {fileID: 8300000, guid: 12a2f61c328735e4093e6c6281068ca1, type: 3}
+  AudioExit: {fileID: 8300000, guid: 7748933245716264cbdef798c9db73d1, type: 3}
 --- !u!114 &114466267630074358
 MonoBehaviour:
   m_ObjectHideFlags: 1

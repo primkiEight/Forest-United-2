@@ -19,11 +19,13 @@ public abstract class Buldozer : MonoBehaviour {
 
     private Animator _myAnimator;
 
+    private AudioSource _myAudioSource;
     public AudioClip AudioBuldoze;
     public AudioClip AudioMove;
     public AudioClip AudioDeath;
 
     private LevelManager _theLevelManager;
+    private GameManager _theGameManager;
 
     [HideInInspector]
     public Vector2Int MyMatrixPosition;
@@ -74,12 +76,16 @@ public abstract class Buldozer : MonoBehaviour {
         {
             _mySpriteRenderer = GetComponent<SpriteRenderer>();
             _mySpriteRenderer.sprite = MySprite;
-        }                  
+        }
+
+        _myAudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
     {
         _theLevelManager = LevelManager.Instance;
+
+        _theGameManager = GameManager.Instance;
 
         _forestHomesPositionsList = _theLevelManager.LevelHomePositionsList;
 
@@ -239,7 +245,7 @@ public abstract class Buldozer : MonoBehaviour {
     {
         if (!IsBroken) {
 
-            //Animiraj kretnju
+            _myAudioSource.PlayOneShot(AudioMove);
 
             //Odaberi na random sljedeću lokaciju iz liste svojih next lokacija
             if (_myMovingPatternList.Count != 0)
@@ -428,6 +434,8 @@ public abstract class Buldozer : MonoBehaviour {
         treesOnThisField.StartBuldozingMe(this);
         yield return new WaitForSeconds(BuldozingDuration);
 
+        _myAudioSource.PlayOneShot(AudioBuldoze);
+
         if(_nearestHome != null)
             _nearestHome.AnimateHomeEarthquake();
 
@@ -436,8 +444,10 @@ public abstract class Buldozer : MonoBehaviour {
 
     public virtual void Death()
     {
-
+        _myAudioSource.PlayOneShot(AudioDeath);
         _myAnimator.SetTrigger("IsDestroyed");
+
+        _theGameManager.BuldozerCountReduce();
 
         if (_thisField.TreesOnMyField != null)
         {

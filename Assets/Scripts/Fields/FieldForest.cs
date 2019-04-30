@@ -41,6 +41,7 @@ public class FieldForest : Field {
     {
         _myBoxCollider2D = GetComponent<BoxCollider2D>();
         _mySprite = GetComponent<SpriteRenderer>();
+        _myAudioSource = GetComponent<AudioSource>();
         _mound = HolePosition.GetComponent<SpriteRenderer>();
         SetMound(false);
         MyFieldPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
@@ -77,9 +78,13 @@ public class FieldForest : Field {
 
     public void CheckMouseClick()
     {
-            //If I am already active and you click me, then deactivate me,
-            //and tell FieldController I am no longer the selected field
-            if (IsFieldActive)
+        //If I am already active and you click me, then deactivate me,
+        //and tell FieldController I am no longer the selected field
+        
+        //Drugi dio koji provjerava koje je selektirano polje dodan je naknadno kako bi uklonio bug
+        //da jednom kada životinja izroni deaktivira drugo selektirano polje druge životinje...
+        //a prvi dio if provjere IsFieldActive je pisao i ranije prije ove dopune
+        if (IsFieldActive && FieldController.GetSelectedField == this)
             {
                 ChangeActive(false);
                 return;
@@ -117,7 +122,8 @@ public class FieldForest : Field {
     
     private void ClearField()
     {
-        AnimalInMyHole.Submerge();
+        _myAudioSource.PlayOneShot(AnimalInMyHole.AudioExit);
+        AnimalInMyHole.Submerge();        
         AnimalInMyHole = null;
         IsAnimalHere = false;
         ChangeActive(false);
@@ -173,6 +179,8 @@ public class FieldForest : Field {
         //Instantiate the animal (from the limbo) here on this field
         AnimalInMyHole = Instantiate(_tempAnimalClone, AnimalPosition.position, Quaternion.identity, AnimalPosition);
 
+        _myAudioSource.PlayOneShot(AnimalInMyHole.AudioEnter);
+
         SetMound(true);
 
         ClearFogByAnimal();
@@ -210,8 +218,11 @@ public class FieldForest : Field {
         if (IsFieldActive)
         {
             //Animal animacija ide u stanje animairanja
-            if(AnimalInMyHole)
+            if (AnimalInMyHole)
+            {
                 AnimalInMyHole.AnimateActive();
+                _myAudioSource.PlayOneShot(AnimalInMyHole.AudioActive);
+            }
             if (FieldController.GetSelectedField != null &&
                 FieldController.GetSelectedField != this)
                 FieldController.GetSelectedField.ChangeActive(false);
@@ -222,7 +233,12 @@ public class FieldForest : Field {
             //Ako postoji animal, Animal animacija ide u stanje mirovanja
             if (AnimalInMyHole)
                 AnimalInMyHole.AnimateIdle();
-            FieldController.SetActiveField(null);
+
+            //Ova if provjera dodana je naknadno kako bi ukolnila bug
+            //da jednom kada životinja izroni deaktivira drugo selektirano polje druge životinje...
+            //a naredba ispod je pisala i ranije prije ove izmjene
+            if(FieldController.GetSelectedField == this)
+                FieldController.SetActiveField(null);
         }
     }
 
@@ -314,6 +330,7 @@ public class FieldForest : Field {
             {
                 AnimalInMyHole.AnimateCasting();
                 PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+                _myAudioSource.PlayOneShot(PowerOnMyField.AudioPower);
                 PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
             } else
             {
@@ -334,6 +351,7 @@ public class FieldForest : Field {
             {
                 AnimalInMyHole.AnimateCasting();
                 PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
+                _myAudioSource.PlayOneShot(PowerOnMyField.AudioPower);
                 PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
             } else
             {
@@ -437,7 +455,7 @@ public class FieldForest : Field {
                 _theLevelManager._levelFieldMatrix[MyFieldPosition.x, MyFieldPosition.y - 1].ClearFogFromMyField(transform.position.x);
             }
         }
-    } 
+    }
 
     //PART of Field class (both FieldFOrest and FieldHome have fogs)
     //public override void ClearFogFromMyField(float positionX)

@@ -17,4 +17,7 @@ public class ThemeData : ScriptableObject {
     [Header("Types of Fogs")]
     public List<Sprite> FogSpritesList = new List<Sprite> { };
 
+    [Header("Music Library")]
+    public List<AudioClip> MusicLibraryList = new List<AudioClip> { };
+
 }

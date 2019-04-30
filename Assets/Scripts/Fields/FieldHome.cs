@@ -14,14 +14,18 @@ public class FieldHome : Field {
     [Header("Animator Controller")]
     public Animator HomeAnimator;
 
-     private void Awake()
+    private GameManager _theGameManager;
+
+    private void Awake()
     {
         _mySprite = GetComponent<SpriteRenderer>();
+        _myAudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
     {
         _theLevelManager = LevelManager.Instance;
+        _theGameManager = GameManager.Instance;
 
         if (_mySprite)
         {
@@ -61,6 +65,7 @@ public class FieldHome : Field {
         if (BuldozerOnMyField != null)
         {
             //Pokreni GameOver
+            _theGameManager.GameLost();
 
             //SpriteRenderer buldozerSprite = BuldozerOnMyField.GetComponent<SpriteRenderer>();
             //buldozerSprite.sortingLayerName = TreeBottom.GetComponent<SpriteRenderer>().sortingLayerName;
@@ -74,7 +79,7 @@ public class FieldHome : Field {
             //Brejka se animacija
             //AnimateHomeEarthquake();
 
-            Debug.Log("GameOver");
+            //Debug.Log("GameOver");
         } else if (BuldozerOnMyField == null)
         {
             //Ne bi se nikada trebalo dogoditi            

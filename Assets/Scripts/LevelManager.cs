@@ -108,6 +108,11 @@ public class LevelManager : MonoBehaviour {
     private void Start()
     {
         _theGameManager = GameManager.Instance;
+
+        int musicLibraryIndex = Random.Range(0, ThemeData.MusicLibraryList.Count);
+        _theGameManager.PlayBackgroundMusic(ThemeData.MusicLibraryList[musicLibraryIndex]);
+
+        _theGameManager.BuldozerCountSet(LevelData.NoOfBuldozersToSpawn);
     }
 
     public Transform GetBuldozersParent()
