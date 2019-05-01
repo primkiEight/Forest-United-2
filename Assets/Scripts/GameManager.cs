@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour {
     {
         GameCanvases.SetActive(true);
     }
-
+    /*
     private void Update()
     {
         //PAUSE
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
                 GameUnPause(false);
             }
         }
-    }
+    }*/
     
     public void GamePause(bool isPaused)
     {
@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour {
     public IEnumerator GameWonCo()
     {
         yield return new WaitForSeconds(WaitToShowScreen);
-        Time.timeScale = 0.0f;
+        //Time.timeScale = 0.0f;
         GameCanvases.gameObject.SetActive(false);
         WinCanvas.gameObject.SetActive(true);
     }
@@ -153,17 +153,38 @@ public class GameManager : MonoBehaviour {
 
     public void GameRastart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1.0f;
+        int thisLevelIndex = SceneManager.GetActiveScene().buildIndex;
+
+        //SceneManager.LoadScene(thisLevelIndex);
+        LoadingSceneManager.LoadScene(thisLevelIndex);
+    }
+
+    public void GameContinueToNextLevel()
+    {
+        int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        if (nextLevelIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            GameToMainMenu(); 
+        } else
+        {
+            //SceneManager.LoadScene(nextLevelIndex);
+            LoadingSceneManager.LoadScene(nextLevelIndex);
+        }
     }
 
     public void GameToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        Time.timeScale = 1.0f;
+        //SceneManager.LoadScene(0);
+        LoadingSceneManager.LoadScene(0);
     }
 
     public void GameQuit()
     {
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
+        LoadingSceneManager.LoadScene(0);
     }
 
     public void PlayBackgroundMusic(AudioClip audioClip)

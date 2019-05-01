@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FieldController : MonoBehaviour {
 
-    [SerializeField]
+    //[SerializeField]
     private FieldForest SelectedField = null;
     private GameObject AnimalLimbo;
 
@@ -19,6 +19,7 @@ public class FieldController : MonoBehaviour {
     public void Awake()
     {
         AnimalLimbo = new GameObject("Animal Limbo");
+        AnimalLimbo.transform.SetParent(transform);
         AnimalLimbo.SetActive(false);
     }
 

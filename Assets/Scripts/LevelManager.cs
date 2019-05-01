@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
-    [Header("Level Prefabs")]
+    [Header("This Level Prefabs")]
     public LevelData LevelData;
 
     [Header("Theme Prefabs")]
@@ -93,9 +93,11 @@ public class LevelManager : MonoBehaviour {
         _circleForAnimalsMax = LevelData.CircleForAnimalsMax;
 
         _movingBuldozerParent = new GameObject("MovingBuldozersParent");
+        _movingBuldozerParent.transform.SetParent(transform);
         _buldozerSpawner = GetComponent<BuldozerSpawner>();
 
         _movingCloudsParent = new GameObject("CloudsParent");
+        _movingCloudsParent.transform.SetParent(transform);
         _cloudSpawner = GetComponent<CloudSpawner>();
 
         _totemSpawner = GetComponent<TotemSpawner>();

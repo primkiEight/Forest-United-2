@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf8ef18ff094744a84db0e049e5f7a2, type: 3}
+  m_Name: Level02
+  m_EditorClassIdentifier: 
+  Xmax: 12
+  Ymax: 6
+  Xmin: 3
+  Ymin: 3
+  CircleForAnimalsMin: 0.1
+  CircleForHomeMin: 0.35
+  CircleForHomeMax: 0.65
+  CircleForAnimalsMax: 0.9
+  BuldozerMoveSpeedModifier: 1
+  BuldozerSpawnerMinNMax: {x: 2, y: 5}
+  TimeForTheFirstBuldozerSpawn: 2
+  NoOfBuldozersToSpawn: 3
+  IncludeClouds: 1
+  CloudMoveSpeed: {x: 1, y: 5}
+  CloudSpawnerMinNMax: {x: 3, y: 9}
+  TimeForTheFirstCloudSpawn: 1
+  AnimalMoveSpeed: {x: 0, y: 0}
+  ManaFillUpSpeed: 60
+  TimeForTheFirstTotemSpawn: 10
+  TotemSpawnerMinNMax: {x: 50, y: 70}
+  FieldForestPrefab: {fileID: 114441192943305382, guid: 3db9fa7f608423c4fa5440ca11447252,
+    type: 2}
+  IncludeFogOfWar: 1
+  FogHolderPrefab: {fileID: 114123944333901586, guid: e1d3377ede16e2049a115f931e3977e6,
+    type: 2}
+  LevelHomeList:
+  - {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
+  - {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
+  LevelAnimalsList:
+  - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
+  - {fileID: 114174679075697334, guid: b128ad54b6f53f948997d91ffa3c3ecc, type: 2}
+  - {fileID: 114108543324723584, guid: 59dbdce98ddf83344b0d3c44cc163f2f, type: 2}
+  LevelBuldozersList:
+  - {fileID: 114488668050690336, guid: eef1e475aeb21f2439511e5bc914efb1, type: 2}
+  - {fileID: 114065796069606178, guid: 0a918fce45974024e993a0b95a1b3fac, type: 2}
+  - {fileID: 114488668050690336, guid: eef1e475aeb21f2439511e5bc914efb1, type: 2}
+  LevelForestsList:
+  - {fileID: 114157257599232630, guid: 8f2cb4e92ad51164dac2619af785bd17, type: 2}
+  LevelCloudsList:
+  - {fileID: 114778261140680280, guid: 92301732fef9b56469773ca428e6763c, type: 2}
+  - {fileID: 114778261140680280, guid: 6ba4e0c4d49d2cb4ab2b5fe6dae7d41c, type: 2}
+  - {fileID: 114778261140680280, guid: dc5fa58ea556f684d805541407ed941f, type: 2}

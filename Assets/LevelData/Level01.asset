@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf8ef18ff094744a84db0e049e5f7a2, type: 3}
   m_Name: Level01
   m_EditorClassIdentifier: 
-  Xmax: 15
-  Ymax: 10
+  Xmax: 6
+  Ymax: 6
   Xmin: 3
   Ymin: 3
   CircleForAnimalsMin: 0.1
