@@ -27,7 +27,7 @@ public abstract class Field : MonoBehaviour {
     public LevelManager _theLevelManager;
 
     [HideInInspector]
-    public AudioSource _myAudioSource;
+    public AudioSource MyAudioSource;
 
     public virtual void SetBuldozerOnMyField(Buldozer buldozerOnMyField)
     {
@@ -72,9 +72,9 @@ public abstract class Field : MonoBehaviour {
 
     private void PlaySoundOneShot(AudioClip clipToPlay)
     {
-        _myAudioSource.pitch = Random.Range(0.8f, 1.2f);
-        _myAudioSource.PlayOneShot(clipToPlay);
-        _myAudioSource.pitch = 1.0f;
+        MyAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        MyAudioSource.PlayOneShot(clipToPlay);
+        MyAudioSource.pitch = 1.0f;
     }
 }
 

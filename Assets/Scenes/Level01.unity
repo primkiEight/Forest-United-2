@@ -135,7 +135,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 4351182573397190, guid: 3e914d695bf177f4082e9eea8532dd3c, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e914d695bf177f4082e9eea8532dd3c, type: 2}
   m_IsPrefabAsset: 0

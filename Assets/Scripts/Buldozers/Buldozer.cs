@@ -19,7 +19,10 @@ public abstract class Buldozer : MonoBehaviour {
 
     private Animator _myAnimator;
 
+    public Sprite MySprite;
+
     private AudioSource _myAudioSource;
+    [Header("Audio")]
     public AudioClip AudioBuldoze;
     public AudioClip AudioMove;
     public AudioClip AudioDeath;
@@ -45,9 +48,9 @@ public abstract class Buldozer : MonoBehaviour {
 
     [HideInInspector]
     public bool ChangeOrderInLayer = true;
-    public Sprite MySprite;
     
     private bool _isMoving = false;
+    [Header("Movement")]
     [Range(0.1f, 0.5f)]
     public float MovingSpeed = 0.2f;
     private float _levelMovingSpeedModifier;
@@ -58,8 +61,9 @@ public abstract class Buldozer : MonoBehaviour {
     [Range(0.0f, 2.0f)]
     public float WaitOnTheEmptyField = 0f;
 
-
+    [HideInInspector]
     public bool IsBroken = false;
+    [HideInInspector]
     public bool IsSlowedDown = false;
 
 

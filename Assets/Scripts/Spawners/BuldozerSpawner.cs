@@ -26,17 +26,19 @@ public class BuldozerSpawner : MonoBehaviour {
         {
             //Ako pokušavam spawnati na istoj poziciji, makni ovoga, pa nastavi dalje sa spawnanjem
             //samo je bitno da ne zaboravim na Move() staiviti i čišćenje (nulliranje) BuldozerOnMyielda
+
             
-        //_theLevelManager.GetBoundaryForestList[randomIndex].BuldozerOnMyField.Move();
         }
 
         if (_theLevelManager.GetBoundaryForestList[randomIndex].BuldozerOnMyField == null)
         {
-            Buldozer buldozerClone = Instantiate(buldozerToSpawn, randomSpawnPosition.position, Quaternion.identity, _theLevelManager.GetBoundaryForestList[randomIndex].BuldozerPosition);
+            SpawnOneBuldozer(buldozerToSpawn, randomIndex, randomSpawnPosition);
 
-            buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
-
-            _theLevelManager.GetBoundaryForestList[randomIndex].SetBuldozerOnMyField(buldozerClone);
+            //Buldozer buldozerClone = Instantiate(buldozerToSpawn, randomSpawnPosition.position, Quaternion.identity, _theLevelManager.GetBoundaryForestList[randomIndex].BuldozerPosition);
+            //
+            //buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
+            //
+            //_theLevelManager.GetBoundaryForestList[randomIndex].SetBuldozerOnMyField(buldozerClone);
         }
     }
 
@@ -51,5 +53,14 @@ public class BuldozerSpawner : MonoBehaviour {
 
             _freq = Random.Range(_theLevelManager.LevelData.BuldozerSpawnerMinNMax.x, _theLevelManager.LevelData.BuldozerSpawnerMinNMax.y);
         }        
+    }
+
+    private void SpawnOneBuldozer(Buldozer buldozerToSpawn, int randomIndex, Transform randomSpawnPosition)
+    {
+        Buldozer buldozerClone = Instantiate(buldozerToSpawn, randomSpawnPosition.position, Quaternion.identity, _theLevelManager.GetBoundaryForestList[randomIndex].BuldozerPosition);
+
+        buldozerClone.MyMatrixPosition = _theLevelManager.GetBoundaryForestList[randomIndex].MyFieldPosition;
+
+        _theLevelManager.GetBoundaryForestList[randomIndex].SetBuldozerOnMyField(buldozerClone);
     }
 }

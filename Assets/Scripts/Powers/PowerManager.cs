@@ -120,15 +120,11 @@ public class PowerManager : MonoBehaviour {
             _manaCurrent = _manaMax;
             MagicPoolSlider.value = _manaCurrent;
             SetBarColor();
-            //return true;
         } else if (currentMana + powerToAdd < _manaMax) {
             _manaCurrent += powerToAdd;
             MagicPoolSlider.value = _manaCurrent;
             SetBarColor();
-            //return true;
         }
-
-        //return false;
 	}
 
     public bool MagicPoolTake(float powerToTake)

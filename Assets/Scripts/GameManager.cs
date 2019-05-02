@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
     private int _forestCountTotal;
 
     [Header("Timers")]
-    public float WaitToShowScreen = 1.0f;
+    public float WaitToShowScreen = 4.0f;
 
     private bool _gamePused = false;
 
@@ -155,6 +155,7 @@ public class GameManager : MonoBehaviour {
     {
         Time.timeScale = 1.0f;
         int thisLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        PauseCanvas.gameObject.SetActive(true);
 
         //SceneManager.LoadScene(thisLevelIndex);
         LoadingSceneManager.LoadScene(thisLevelIndex);
@@ -162,6 +163,7 @@ public class GameManager : MonoBehaviour {
 
     public void GameContinueToNextLevel()
     {
+        Time.timeScale = 1.0f;
         int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (nextLevelIndex == SceneManager.sceneCountInBuildSettings)
@@ -178,12 +180,15 @@ public class GameManager : MonoBehaviour {
     {
         Time.timeScale = 1.0f;
         //SceneManager.LoadScene(0);
+        PauseCanvas.gameObject.SetActive(true);
         LoadingSceneManager.LoadScene(0);
     }
 
     public void GameQuit()
     {
+        Time.timeScale = 1.0f;
         //SceneManager.LoadScene(0);
+        PauseCanvas.gameObject.SetActive(true);
         LoadingSceneManager.LoadScene(0);
     }
 

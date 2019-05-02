@@ -8,19 +8,21 @@ public abstract class Animal : MonoBehaviour {
 
     public float DiggingSpeed;
 
+    [Header("Animal Powers")]
     public Power MidPowerPrefab;
     public Power SuperPowerPrefab;
     
     private Animator _myAnimator;
 
-    [HideInInspector]
-    public bool IsCasting = false;
-
+    [Header("Audio")]
     public AudioClip AudioDig;
     public AudioClip AudioActive;
     public AudioClip AudioCasting;
     public AudioClip AudioEnter;
     public AudioClip AudioExit;
+
+    [HideInInspector]
+    public bool IsCasting = false;
 
     private void Awake()
     {
@@ -36,11 +38,6 @@ public abstract class Animal : MonoBehaviour {
         AnimateExit();
         Destroy(gameObject, _myAnimator.GetCurrentAnimatorStateInfo(0).length);
     }
-
-    //public virtual void Move(float diggingSpeed)
-    //{
-    //    StartCoroutine("Digging", diggingSpeed);
-    //}
 
     public virtual void AnimateIdle()
     {

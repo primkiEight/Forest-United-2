@@ -382,6 +382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8cbb993ec91ed43998b6848cc4fb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TreeFalling: {fileID: 8300000, guid: bccbaedb617233b4ba117c3076c60043, type: 3}
+  TreeBurning: {fileID: 8300000, guid: 3f005369d6523c143bcb79fe9dd999a3, type: 3}
 --- !u!114 &114844246864611546
 MonoBehaviour:
   m_ObjectHideFlags: 1

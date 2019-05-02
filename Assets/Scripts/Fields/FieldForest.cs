@@ -5,7 +5,7 @@ using UnityEngine;
 public class FieldForest : Field {
 
     private Animal _tempAnimalClone;
-
+    
     [Header("FieldForest Position / Transform")]
     public Transform AnimalPosition;
     public Transform HolePosition;
@@ -41,7 +41,7 @@ public class FieldForest : Field {
     {
         _myBoxCollider2D = GetComponent<BoxCollider2D>();
         _mySprite = GetComponent<SpriteRenderer>();
-        _myAudioSource = GetComponent<AudioSource>();
+        MyAudioSource = GetComponent<AudioSource>();
         _mound = HolePosition.GetComponent<SpriteRenderer>();
         SetMound(false);
         MyFieldPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
@@ -122,7 +122,7 @@ public class FieldForest : Field {
     
     private void ClearField()
     {
-        _myAudioSource.PlayOneShot(AnimalInMyHole.AudioExit);
+        MyAudioSource.PlayOneShot(AnimalInMyHole.AudioExit);
         AnimalInMyHole.Submerge();        
         AnimalInMyHole = null;
         IsAnimalHere = false;
@@ -179,7 +179,7 @@ public class FieldForest : Field {
         //Instantiate the animal (from the limbo) here on this field
         AnimalInMyHole = Instantiate(_tempAnimalClone, AnimalPosition.position, Quaternion.identity, AnimalPosition);
 
-        _myAudioSource.PlayOneShot(AnimalInMyHole.AudioEnter);
+        MyAudioSource.PlayOneShot(AnimalInMyHole.AudioEnter);
 
         SetMound(true);
 
@@ -221,7 +221,7 @@ public class FieldForest : Field {
             if (AnimalInMyHole)
             {
                 AnimalInMyHole.AnimateActive();
-                _myAudioSource.PlayOneShot(AnimalInMyHole.AudioActive);
+                MyAudioSource.PlayOneShot(AnimalInMyHole.AudioActive);
             }
             if (FieldController.GetSelectedField != null &&
                 FieldController.GetSelectedField != this)
@@ -320,17 +320,22 @@ public class FieldForest : Field {
         //Buldozer je na tvom polju i ti si jedina životinja
         else if(BuldozerOnMyField != null && AnimalInMyHole != null && AnimalsInTheHood == false)
         {
-            if (PowerOnMyField)
-                Destroy(PowerOnMyField.gameObject);
+            //if (PowerOnMyField)
+            //    Destroy(PowerOnMyField.gameObject);
 
             //MID POWER KOJI NAPLATIŠ
             bool hasEnoughMana = _powerManager.MagicPoolTake(AnimalInMyHole.MidPowerPrefab.ManaCost);
 
             if (hasEnoughMana)
             {
+                //Naknadno prebačeno ovdje
+                if (PowerOnMyField)
+                    Destroy(PowerOnMyField.gameObject);
+
+
                 AnimalInMyHole.AnimateCasting();
                 PowerOnMyField = Instantiate(AnimalInMyHole.MidPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-                _myAudioSource.PlayOneShot(PowerOnMyField.AudioPower);
+                MyAudioSource.PlayOneShot(PowerOnMyField.AudioPower);
                 PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
             } else
             {
@@ -341,18 +346,23 @@ public class FieldForest : Field {
         //Buldozer je na tvom polju i imaš susjede
         else if (BuldozerOnMyField != null && AnimalInMyHole != null && AnimalsInTheHood == true)
         {
-            if (PowerOnMyField)
-                Destroy(PowerOnMyField.gameObject);
+            //if (PowerOnMyField)
+            //    Destroy(PowerOnMyField.gameObject);
 
             //SUPER POWER KOJI NAPLATIŠ
             bool hasEnoughMana = _powerManager.MagicPoolTake(AnimalInMyHole.SuperPowerPrefab.ManaCost);
 
             if (hasEnoughMana)
             {
+                //Naknadno prebačeno ovdje
+                if (PowerOnMyField)
+                    Destroy(PowerOnMyField.gameObject);
+
                 AnimalInMyHole.AnimateCasting();
                 PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-                _myAudioSource.PlayOneShot(PowerOnMyField.AudioPower);
+                MyAudioSource.PlayOneShot(PowerOnMyField.AudioPower);
                 PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
+                StartCoroutine(DeactivateCasting(4f, PowerOnMyField));
             } else
             {
                 //Animacija se treba izvoditi na power manageru
@@ -362,32 +372,11 @@ public class FieldForest : Field {
         //Buldozer nije na tvom polju nego na susjednom na kojem je druga životinja
         else if (BuldozerOnMyField == null && AnimalInMyHole != null && AnimalsInTheHood == true)
         {
-            //Čudno izgleda i ne funkcionira sasvim dobro, jer se naplaćuje i ukoliko se s prvim potroši mana
-            //onda se tamo magija pokaže, ali ne i ovdje
-            //možda da samo probam s animacijom životinje???
-
-            AnimalInMyHole.AnimateCasting();
-
-            /*if (PowerOnMyField)
-                Destroy(PowerOnMyField.gameObject);
-
-            //SUPER POWER KOJI NE NAPLATIŠ
-
-            //ČUDNO IZGLEDA - MOŽDA IPAK BOLJE STAVITI NAPLATU, ALI ONDA CIJENA DA JE DUPLO MANJA, ISTO I GORE??
-            //PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-
-            bool hasEnoughMana = _powerManager.MagicPoolTake(AnimalInMyHole.SuperPowerPrefab.ManaCost / 2);
-
-            if (hasEnoughMana)
-            {
-                PowerOnMyField = Instantiate(AnimalInMyHole.SuperPowerPrefab, PowerPosition.position, Quaternion.identity, PowerPosition);
-                PowerOnMyField.BreakBuldozer(BuldozerOnMyField);
-            }
-            else
-            {
-                //Animacija se treba izvoditi na power manageru
-                return;
-            }*/
+            //Ranije je bilo samo prvi if dio, naknadno sam dodao i drugu provjeru pokušavajući ih deanimirati od castanja
+            if (AnimalInMyHole.IsCasting == true)
+                AnimalInMyHole.AnimateNotCastingAnymore();
+            else if (AnimalInMyHole.IsCasting == false)
+                AnimalInMyHole.AnimateCasting();
         }
         //Buldozer nije na ovom polju a nije više niti životinja
         else if(BuldozerOnMyField == null && AnimalInMyHole == null)
@@ -396,6 +385,20 @@ public class FieldForest : Field {
             if (PowerOnMyField)
                 Destroy(PowerOnMyField.gameObject);
         }
+    }
+
+
+    //Naknadno dodano kako barem životinja u rupi ne bi animirala catanje (životinja pored animira i dalje :( )
+    public IEnumerator DeactivateCasting(float castingDuration, Power powerOnMyField)
+    {
+        yield return new WaitForSeconds(castingDuration);
+        if (AnimalInMyHole)
+            AnimalInMyHole.AnimateNotCastingAnymore();
+        if (PowerOnMyField)
+        {
+            Destroy(PowerOnMyField.gameObject);
+            PowerOnMyField = null;
+        }        
     }
 
     public bool InstantiateTotemHere(Totem totemPrefab)

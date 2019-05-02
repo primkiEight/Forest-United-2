@@ -21,7 +21,7 @@ MonoBehaviour:
   CircleForAnimalsMax: 0.9
   BuldozerMoveSpeedModifier: 1
   BuldozerSpawnerMinNMax: {x: 2, y: 5}
-  TimeForTheFirstBuldozerSpawn: 2
+  TimeForTheFirstBuldozerSpawn: 5
   NoOfBuldozersToSpawn: 3
   IncludeClouds: 1
   CloudMoveSpeed: {x: 1, y: 5}
@@ -38,7 +38,6 @@ MonoBehaviour:
     type: 2}
   LevelHomeList:
   - {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
-  - {fileID: 114160937650564622, guid: 963601b144df99c4381d3fcb397b0544, type: 2}
   LevelAnimalsList:
   - {fileID: 114181781576764294, guid: 49b3bcdd3dbe9804f87cfeecc60455ed, type: 2}
   - {fileID: 114174679075697334, guid: b128ad54b6f53f948997d91ffa3c3ecc, type: 2}
@@ -46,7 +45,6 @@ MonoBehaviour:
   LevelBuldozersList:
   - {fileID: 114488668050690336, guid: eef1e475aeb21f2439511e5bc914efb1, type: 2}
   - {fileID: 114065796069606178, guid: 0a918fce45974024e993a0b95a1b3fac, type: 2}
-  - {fileID: 114488668050690336, guid: eef1e475aeb21f2439511e5bc914efb1, type: 2}
   LevelForestsList:
   - {fileID: 114157257599232630, guid: 8f2cb4e92ad51164dac2619af785bd17, type: 2}
   LevelCloudsList:

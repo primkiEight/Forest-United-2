@@ -341,7 +341,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1892699830298786}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1663f4000d220a74b930062970af7b27, type: 2}
   m_CullingMode: 0
@@ -372,7 +372,7 @@ MonoBehaviour:
   TreesOnMyField: {fileID: 0}
   FogOnMyField: {fileID: 0}
   _theLevelManager: {fileID: 0}
-  _myAudioSource: {fileID: 0}
+  MyAudioSource: {fileID: 0}
   TreeTop: {fileID: 114722275563706912}
   TreeBottom: {fileID: 4313533934331158}
   TreeBottomBackground: {fileID: 4626131806522022}
@@ -481,7 +481,7 @@ SpriteRenderer:
   m_SortingLayerID: 1920439863
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0372393203187784ba92994acfecaa57, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 68c52ee522a802d45b8c66b07e7ddace, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -526,8 +526,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1876449223
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6fb8a22746b90ff478db0fba565c09ef, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 031bef9b3a25a5c4085939e918fb62d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -36,9 +36,9 @@ public class LevelData : ScriptableObject {
     public Vector2 CloudSpawnerMinNMax;
     public float TimeForTheFirstCloudSpawn;
 
-    [Header("Animal Options")]
+    //[Header("Animal Options")]
     //[Range(1, 2)]
-    public Vector2 AnimalMoveSpeed;
+    //public Vector2 AnimalMoveSpeed;
 
     [Header("Power Options (pts/min)")]
     [Range(1f, 100f)]
@@ -55,19 +55,14 @@ public class LevelData : ScriptableObject {
     public bool IncludeFogOfWar;
     public FogHolder FogHolderPrefab;
 
-    //[Header("Field Sprites")]
-    //public List<Sprite> FieldSpritesList = new List<Sprite> { };
-    //
     [Header("Number and types of Homes")]
     public List<FieldHome> LevelHomeList= new List<FieldHome> {};
     [Header("Number and types of Animals")]
     public List<Animal> LevelAnimalsList = new List<Animal> { };
-    [Header("Number and types of Buldozers")]
+    [Header("Types of Buldozers")]
     public List<Buldozer> LevelBuldozersList = new List<Buldozer> { };
     [Header("Types of Forest Formations")]
     public List<Trees> LevelForestsList = new List<Trees> { };
     [Header("Type of Clouds")]
-    public List<Cloud> LevelCloudsList = new List<Cloud> { };
-    //[Header("Type of Fogs")]
-    //public List<Sprite> LevelFogSpriteList = new List<Sprite> { };
+    public List<Cloud> LevelCloudsList = new List<Cloud> { };    
 }

@@ -63,21 +63,20 @@ public class LoadingSceneManager : MonoBehaviour {
         image.color = imageColor;
     }
 
+    private IEnumerator UnloadSceneAsync(Scene activeScene)
+    {
+        AsyncOperation unloadingAsyncOperationOldScene = SceneManager.UnloadSceneAsync(activeScene);
+        yield return null;
+    }
+
     private IEnumerator LoadSceneAsync(int sceneBuildIndex)
     {
         //FadeOut zaslona aktivne scene
         yield return StartCoroutine(Fade(SceneFadeOverlay, FadeDuration, true));
 
         //Unloading postojeće scene
-        //Trebalo bi provjeriti je li gotovo, prije prikazivanja nove scene
-        AsyncOperation unloadingAsyncOperationOldScene = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        //float unloadingProgress = 0.0f;
-        //while(unloadingAsyncOperationOldScene.progress < 0.9f)
-        //{
-        //    yield return null;
-        //    //unloadingProgress = unloadingAsyncOperationOldScene.progress;
-        //    // = unloadingProgress;
-        //}
+        //Trebalo bi provjeriti je li gotovo, prije prikazivanja nove scene (vjerojatno mogo dobiti čekanjem?)
+        yield return StartCoroutine(UnloadSceneAsync(SceneManager.GetActiveScene()));
 
         //Uključiti zaslon loading scene / progress bara, i progress bar
         LoadingSceneFadeOverlay.enabled = true;
@@ -126,7 +125,7 @@ public class LoadingSceneManager : MonoBehaviour {
 
         //FadeIn zaslona loading scene / progress bara
         yield return StartCoroutine(Fade(LoadingSceneFadeOverlay, FadeDuration, true));
-        
+
         //Ovime sada želimo uključiti novu učitanu scenu:
         loadingAsyncOperationNewScene.allowSceneActivation = true;
 
@@ -139,6 +138,8 @@ public class LoadingSceneManager : MonoBehaviour {
         yield return StartCoroutine(Fade(SceneFadeOverlay, FadeDuration, false));
 
         //Gasimo i ovu scenu
-        SceneManager.UnloadSceneAsync("LoadingScene");
+        //SceneManager.UnloadSceneAsync("LoadingScene");
+        Scene loadingScene = SceneManager.GetSceneByName("LoadingScene");
+        yield return StartCoroutine(UnloadSceneAsync(loadingScene));
     }
 }

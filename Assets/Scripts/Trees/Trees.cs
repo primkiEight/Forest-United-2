@@ -5,6 +5,14 @@ using UnityEngine;
 public class Trees : MonoBehaviour {
 
     private bool _cancelDestroy = false;
+    private AudioSource _fieldAudioSource;
+    public AudioClip TreeFalling;
+    public AudioClip TreeBurning;
+
+    public void SetAudioSource(AudioSource audioSource)
+    {
+        _fieldAudioSource = audioSource;
+    }
 
     public void StartBuldozingMe(Buldozer theBuldozer)
     {
@@ -35,7 +43,12 @@ public class Trees : MonoBehaviour {
                 child.AnimateAndDestroy(theBuldozer);
             }
 
-            Destroy(gameObject);
+            if (_fieldAudioSource != null && theBuldozer is BuldozerGrr)
+                _fieldAudioSource.PlayOneShot(TreeFalling);
+            if (_fieldAudioSource != null && theBuldozer is BuldozerFire)
+                _fieldAudioSource.PlayOneShot(TreeBurning);
+
+            Destroy(gameObject, 4.5f);
         }
 
         _cancelDestroy = false;

@@ -19,7 +19,7 @@ public class FieldHome : Field {
     private void Awake()
     {
         _mySprite = GetComponent<SpriteRenderer>();
-        _myAudioSource = GetComponent<AudioSource>();
+        MyAudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -66,18 +66,9 @@ public class FieldHome : Field {
         {
             //Pokreni GameOver
             _theGameManager.GameLost();
-
-            //SpriteRenderer buldozerSprite = BuldozerOnMyField.GetComponent<SpriteRenderer>();
-            //buldozerSprite.sortingLayerName = TreeBottom.GetComponent<SpriteRenderer>().sortingLayerName;
-            //BuldozerOnMyField.ChangeOrderInLayer = false;
-            //buldozerSprite.sortingOrder = 2;
-            //if (TreeBottom.gameObject.activeSelf != true)
-            //{
-            //    TreeBottom.gameObject.SetActive(true);
-            //}
-
-            //Brejka se animacija
-            //AnimateHomeEarthquake();
+            
+            //Brejka se animacija (možda je bilo do sorting ordera)
+            AnimateHomeEarthquake();
 
             //Debug.Log("GameOver");
         } else if (BuldozerOnMyField == null)

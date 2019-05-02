@@ -64,7 +64,5 @@ public class ScreenArrowPointer : MonoBehaviour {
                     _pointerRectTransform.gameObject.GetComponent<RawImage>().enabled = false;
             }
         }
-
     }
-
 }
