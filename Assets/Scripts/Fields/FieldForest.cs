@@ -68,13 +68,16 @@ public class FieldForest : Field {
             ClearFogByAnimal();
     }
 
+//#if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
     private void OnMouseUp()
     {
         if (Input.GetMouseButtonUp(0))
         {
-            CheckMouseClick();
+            if(!PublicVariable.ISPANNING)
+                CheckMouseClick();
         }
     }
+//#endif
 
     public void CheckMouseClick()
     {

@@ -27,7 +27,6 @@ MonoBehaviour:
   CloudMoveSpeed: {x: 1, y: 5}
   CloudSpawnerMinNMax: {x: 3, y: 9}
   TimeForTheFirstCloudSpawn: 1
-  AnimalMoveSpeed: {x: 0, y: 0}
   ManaFillUpSpeed: 60
   TimeForTheFirstTotemSpawn: 10
   TotemSpawnerMinNMax: {x: 50, y: 70}
